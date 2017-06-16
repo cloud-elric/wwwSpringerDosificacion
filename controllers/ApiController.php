@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use app\models\EntDoctores;
 use app\models\EntPacientes;
+use yii\data\ActiveDataProvider;
 
 class ApiController extends Controller
 {
@@ -64,16 +65,25 @@ class ApiController extends Controller
         return $respuesta;
     }
 
-    public function actionLeerDoctor(){
+    public function actionLeerDoctor($page = 0){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
-        $doctores = EntDoctores::find()->where(['b_habilitado'=>1])->all();
+        //$doctores = EntDoctores::find()->where(['b_habilitado'=>1])->all();
 
-        if($doctores){
+        $dataProvider = new ActiveDataProvider([
+			'query' => EntDoctores::find()->where(['b_habilitado'=>1]),
+			'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
+			'pagination' => [
+				'pageSize' => 20,
+				'page' => $page
+			]
+		]);
+
+        if($dataProvider->getModels()){
             $respuesta ['error'] = false;
             $respuesta ['message'] = 'Doctores mostrados';
-            $respuesta ['doctor'] = $doctores;
+            $respuesta ['doctor'] = $dataProvider->getModels();
         }else{
             $respuesta ['error'] = true;
             $respuesta ['message'] = 'No hay datos';
@@ -195,16 +205,25 @@ class ApiController extends Controller
         return $respuesta;
     }
 
-    public function actionLeerPaciente(){
+    public function actionLeerPaciente($page = 0){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
-        $pacientes = EntPacientes::find()->where(['b_habilitado'=>1])->all();
+        //$pacientes = EntPacientes::find()->where(['b_habilitado'=>1])->all();
+        
+        $dataProvider = new ActiveDataProvider([
+			'query' => EntPacientes::find()->where(['b_habilitado'=>1]),
+			'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
+			'pagination' => [
+				'pageSize' => 20,
+				'page' => $page
+			]
+		]);
 
-        if($pacientes){
+        if($dataProvider->getModels()){
             $respuesta ['error'] = false;
-            $respuesta ['message'] = 'Doctores mostrados';
-            $respuesta ['doctor'] = $pacientes;
+            $respuesta ['message'] = 'Pacientes mostrados';
+            $respuesta ['pacientes'] = $dataProvider->getModels();
         }else{
             $respuesta ['error'] = true;
             $respuesta ['message'] = 'No hay datos';
