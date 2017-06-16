@@ -168,12 +168,16 @@ class ApiController extends Controller
         $paciente = new EntPacientes;
 
         if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellidoPat']) && isset($_REQUEST['apellidoMat']) && isset($_REQUEST['email']) && isset($_REQUEST['telefono']) && isset($_REQUEST['nacimiento'])){
+            //Cambio de formato de fecha ej. "2/06/2000" a "2000-06-02" para guadarlo en la BD
+            $fecha = str_replace('/', '-', $_REQUEST['nacimiento']);
+            $fecha = date('Y-m-d', strtotime($fecha));
+
             $paciente->txt_nombre = $_REQUEST['nombre'];
             $paciente->txt_apellido_paterno = $_REQUEST['apellidoPat'];
             $paciente->txt_apellido_materno = $_REQUEST['apellidoMat'];
             $paciente->txt_email = $_REQUEST['email'];
             $paciente->txt_telefono_contacto = $_REQUEST['telefono'];
-            $paciente->fch_nacimiento = $_REQUEST['nacimiento'];
+            $paciente->fch_nacimiento = $fecha;
             if($paciente->save()){
                 $respuesta ['error'] = false;
                 $respuesta ['message'] = 'Paciente guardado';
