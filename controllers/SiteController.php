@@ -10,6 +10,8 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
+use app\models\EntDoctores;
+
 class SiteController extends Controller
 {
     /**
@@ -123,4 +125,60 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+
+    public function actionLogoutDoctor() {
+		Yii::$app->user->logout ();
+		
+		return $this->redirect ( [ 
+				'site/login-doctor' 
+		] );
+	}
+
+    public function actionLoginDoctor() {
+		$session = Yii::$app->session;
+		//$this->layout = 'mainEmpleado';
+		$session->set ( 'doctor', [ ] );
+		
+		return $this->render ( 'loginDoctores' );
+	}
+
+    public function actionDoctorLogin() {
+		$this->enableCsrfValidation = false;
+		//$this->layout = 'mainEmpleado';
+		$session = Yii::$app->session;
+		$usu = null;
+		$pass = null;
+		
+		if ($sesionDoctor = $session->get ( 'doctor' )) {
+			$usu = $sesionDoctor->txt_usuario;
+			$pass = $sesionDoctor->txt_password;
+		} else if (isset ( $_POST ['usu'] ) && $_POST ['pass']) {
+			$usu = $_POST ['usu'];
+			$pass = $_POST ['pass'];
+		}
+		
+		$doctorSess = $session->get ( 'empleado' );
+		
+		// echo $usu;
+		// echo $pass;
+		// exit();
+		
+		$doctor = EntDoctores::find ()->where ( [ 
+				'txt_email' => $usu 
+		] )->andWhere ( [ 
+				'txt_password' => $pass 
+		] )->one ();
+		
+		if (empty ( $doctor )) {
+			Yii::$app->session->setFlash ( 'error', 'Usuario y/o contraseña incorrecto' );
+			return $this->redirect ( [ 
+					'login-doctor' 
+			] );
+		}
+		
+		$session->set ( 'doctor', $doctorSess );
+		
+		return $this->redirect(['pacientes/index']);
+	}
 }

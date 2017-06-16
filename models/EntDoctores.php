@@ -42,11 +42,11 @@ class EntDoctores extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_doctor' => 'Id Doctor',
-            'txt_nombre' => 'Txt Nombre',
-            'txt_apellido_paterno' => 'Txt Apellido Paterno',
-            'txt_email' => 'Txt Email',
-            'txt_password' => 'Txt Password',
+            'id_doctor' => 'Id',
+            'txt_nombre' => 'Nombre',
+            'txt_apellido_paterno' => 'Apellido Paterno',
+            'txt_email' => 'Email',
+            'txt_password' => 'Password',
             'b_habilitado' => 'B Habilitado',
         ];
     }

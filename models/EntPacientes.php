@@ -45,13 +45,13 @@ class EntPacientes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_paciente' => 'Id Paciente',
-            'txt_nombre' => 'Txt Nombre',
-            'txt_apellido_paterno' => 'Txt Apellido Paterno',
-            'txt_apellido_materno' => 'Txt Apellido Materno',
-            'txt_email' => 'Txt Email',
-            'txt_telefono_contacto' => 'Txt Telefono Contacto',
-            'fch_nacimiento' => 'Fch Nacimiento',
+            'id_paciente' => 'Paciente',
+            'txt_nombre' => 'Nombre',
+            'txt_apellido_paterno' => 'Apellido Paterno',
+            'txt_apellido_materno' => 'Apellido Materno',
+            'txt_email' => 'Email',
+            'txt_telefono_contacto' => 'Telefono ',
+            'fch_nacimiento' => 'Fecha Nacimiento',
             'b_habilitado' => 'B Habilitado',
         ];
     }
