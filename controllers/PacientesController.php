@@ -25,11 +25,19 @@ class PacientesController extends Controller
 				'class' => AccessControl::className (),
 				'only' => [ 
 					'index',
+                    'view',
+                    'create',
+                    'update',
+                    'delete'
 				],
 				'rules' => [ 
 					[ 
 						'actions' => [ 
-							'index', 
+							'index',
+                            'view',
+                            'create',
+                            'update',
+                            'delete'
 						],
 						'allow' => true,
 						'roles' => [ '@' ] 
@@ -53,7 +61,7 @@ class PacientesController extends Controller
     {
         $searchModel = new EntPacientesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

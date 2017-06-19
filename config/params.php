@@ -4,7 +4,7 @@ return [
     'adminEmail' => 'admin@example.com',
     'modUsuarios' => [
         'facebook'=>[
-            'usarLoginFacebook'=>true,
+            'usarLoginFacebook'=>false,
             'APP_ID'=>'1754524001428992', // Identificador de la aplicación
             'APP_SECRET'=>'739c88b9290adb41a040bde473c1d54d', // Clave secreta de la aplicación
             'CALLBACK_URL'=>'http://notei.com.mx/test/wwwLogin/web/callback-facebook',

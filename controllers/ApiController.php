@@ -314,4 +314,42 @@ class ApiController extends Controller
 
         return $respuesta;
     }
+
+    public function actionBuscarPaciente($nombre = null, $apPaterno = null, $apMaterno = null, $email = null, $tel = null, $fecha = null){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan datos';
+        
+        if( isset($_REQUEST['nombre']) || isset($_REQUEST['apPaterno']) || isset($_REQUEST['apMaterno']) || isset($_REQUEST['email']) || isset($_REQUEST['tel']) || isset($_REQUEST['fecha'])) {
+            $query = EntPacientes::find()->where(['b_habilitado'=>1]);
+            // add conditions that should always apply here
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            // grid filtering conditions
+            $query->andFilterWhere([
+                //'id_paciente' => $query->id_paciente,
+                'fch_nacimiento' => $fecha,
+                //'b_habilitado' => $query->b_habilitado,
+            ]);
+
+            $query->andFilterWhere(['like', 'txt_nombre', $nombre])
+                ->andFilterWhere(['like', 'txt_apellido_paterno', $apPaterno])
+                ->andFilterWhere(['like', 'txt_apellido_materno', $apMaterno])
+                ->andFilterWhere(['like', 'txt_email', $email])
+                ->andFilterWhere(['like', 'txt_telefono_contacto', $tel]);
+            
+            if($dataProvider->getModels()){
+                $respuesta ['error'] = false;
+                $respuesta ['message'] = 'Paciente mostrado';
+                $respuesta ['paciente'] = $dataProvider->getModels();
+            }else{
+                $respuesta ['error'] = true;
+                $respuesta ['message'] = 'No hay datos';
+            }
+        }
+
+        return $respuesta;
+    }
 }

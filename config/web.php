@@ -23,7 +23,10 @@ $config = [
         'user' => [ 
             'identityClass' => 'app\modules\ModUsuarios\models\EntUsuarios',
             'enableAutoLogin' => false,
-            'authTimeout' => 3600 // Segundos que durara la sesion 
+            'authTimeout' => 3600, // Segundos que durara la sesion
+            'loginUrl' => [ 
+				'modUsuarios/manager/login' 
+			] 
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

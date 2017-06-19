@@ -32,7 +32,8 @@ class EntDoctores extends \yii\db\ActiveRecord
         return [
             [['txt_nombre', 'txt_apellido_paterno', 'txt_email', 'txt_password'], 'required'],
             [['b_habilitado'], 'integer'],
-            [['txt_nombre', 'txt_apellido_paterno', 'txt_email', 'txt_password'], 'string', 'max' => 50],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_password'], 'string', 'max' => 50],
+            [['txt_email'], 'email'],
         ];
     }
 

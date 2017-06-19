@@ -164,7 +164,7 @@ class ManagerController extends Controller {
 		$model->scenario = 'login';
 		if ($model->load ( Yii::$app->request->post () ) && $model->login ()) {
 			
-			return $this->goBack ();
+			return Yii::$app->getResponse()->redirect(Yii::$app->getUser()->getReturnUrl('site/secciones'));
 		}
 		return $this->render ( 'login', [ 
 				'model' => $model 

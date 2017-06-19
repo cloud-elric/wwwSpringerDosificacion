@@ -34,8 +34,9 @@ class EntPacientes extends \yii\db\ActiveRecord
         return [
             [['txt_nombre', 'txt_apellido_paterno'], 'required'],
             [['fch_nacimiento'], 'safe'],
-            [['b_habilitado'], 'integer'],
-            [['txt_nombre', 'txt_apellido_paterno', 'txt_apellido_materno', 'txt_email', 'txt_telefono_contacto'], 'string', 'max' => 50],
+            [['b_habilitado', 'txt_telefono_contacto'], 'integer'],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_apellido_materno', 'txt_email'], 'string', 'max' => 50],
+            [['txt_email'], 'email'],
         ];
     }
 
