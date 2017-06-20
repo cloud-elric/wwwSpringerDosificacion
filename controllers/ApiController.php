@@ -315,6 +315,29 @@ class ApiController extends Controller
         return $respuesta;
     }
 
+    public function actionGetPaciente(){
+         Yii::$app->response->format = Response::FORMAT_JSON;
+         $respuesta['error'] = true;
+         $respuesta['message'] = 'No existe paciente';
+         $idPaciente = 0;
+
+         if(isset($_REQUEST['idPaciente'])){
+            $idPaciente = $_REQUEST['idPaciente'];
+
+            $paciente = EntPacientes::find()->where(['id_paciente'=>$idPaciente])->one();
+
+            if($paciente){
+                $respuesta['error'] = false;
+                $respuesta['message'] = 'Paciente encontrado';
+                $respuesta['paciente'] = $paciente;
+            }
+         }
+
+         
+
+         return $respuesta;
+    }
+
     public function actionBuscarPaciente($nombre = null, $apPaterno = null, $apMaterno = null, $email = null, $tel = null, $fecha = null){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
