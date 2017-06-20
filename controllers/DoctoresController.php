@@ -9,6 +9,7 @@ use app\models\EntDoctoresSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Utils;
 
 /**
  * DoctoresController implements the CRUD actions for EntDoctores model.
@@ -90,6 +91,15 @@ class DoctoresController extends Controller
         $model = new EntDoctores();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $utils = new Utils();
+			$parametrosEmail = [
+				'nombre' => $model->txt_nombre,
+				'apellido' => $model->txt_apellido_paterno,
+				'password'=>$model->txt_password,
+				'email'=>$model->txt_email,
+			];	
+			$utils->sendCorreoBienvenida ( $model->txt_email, $parametrosEmail );
+            
             return $this->redirect(['view', 'id' => $model->id_doctor]);
         } else {
             return $this->render('create', [

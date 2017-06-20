@@ -86,9 +86,20 @@ class Utils {
 	 * @param array $parametrosEmail        	
 	 * @return boolean
 	 */
-	public function sendInvitacion($email, $parametrosEmail) {
+	public function sendCorreoBienvenida($email, $parametrosEmail) {
 		// Envia el correo electronico
-		return $this->sendEmail ( '@app/mail/layouts/confirmacion', '@app/mail/layouts/confirmacionText', 'no-reply@onex.mx', $email, 'Bienvenido al Consejo de Líderes 2017.', $parametrosEmail );
+		return $this->sendEmail ( '@app/mail/layouts/datosCuenta', '@app/mail/layouts/activarCuentaText', 'no-reply@onex.mx', $email, 'Bienvenido al Sistema Dosificacion.', $parametrosEmail );
+	}
+
+	/**
+	 * Envia el correo electronico para recuperar el correo electronico
+	 *
+	 * @param array $parametrosEmail        	
+	 * @return boolean
+	 */
+	public function sendCorreoPassword($email, $parametrosEmail) {
+		// Envia el correo electronico
+		return $this->sendEmail ( '@app/mail/layouts/recuperarPass', '@app/mail/layouts/activarCuentaText', 'no-reply@onex.mx', $email, 'Recuperacion de password.', $parametrosEmail );
 	}
 	
 	/**

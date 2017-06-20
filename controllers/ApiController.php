@@ -8,6 +8,7 @@ use yii\web\Response;
 use app\models\EntDoctores;
 use app\models\EntPacientes;
 use yii\data\ActiveDataProvider;
+use app\models\Utils;
 
 class ApiController extends Controller
 {
@@ -376,6 +377,38 @@ class ApiController extends Controller
             }else{
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'No hay datos';
+            }
+        }
+
+        return $respuesta;
+    }
+
+    public function actionMandarPassword(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'No existe doctor';
+
+        if( isset($_REQUEST['correo']) ){
+            $correo = $_REQUEST['correo'];
+            $doctor = EntDoctores::find()->where(['txt_email'=>$correo])->one();
+            if($doctor){
+                $utils = new Utils();
+                $parametrosEmail = [
+                    'nombre' => $doctor->txt_nombre,
+                    'apellido' => $doctor->txt_apellido_paterno,
+                    'password'=>$doctor->txt_password,
+                    'email'=>$doctor->txt_email,
+                ];
+                if($utils->sendCorreoPassword ( $doctor->txt_email, $parametrosEmail )){
+                    $respuesta['error'] = false;
+                    $respuesta['message'] = 'Correo enviado correctamente';
+                }else{
+                    $respuesta['error'] = true;
+                    $respuesta['message'] = 'Correo no enviado';
+                }
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'Email no registrado';
             }
         }
 
