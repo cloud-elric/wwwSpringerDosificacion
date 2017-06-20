@@ -342,18 +342,27 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
         
-        if( isset($_REQUEST['nombre']) || isset($_REQUEST['apPaterno']) || isset($_REQUEST['apMaterno']) || isset($_REQUEST['email']) || isset($_REQUEST['tel']) || isset($_REQUEST['fecha'])) {
+        if( (isset($_REQUEST['nombre']) || isset($_REQUEST['apPaterno']) || isset($_REQUEST['apMaterno']) || isset($_REQUEST['email']) || isset($_REQUEST['tel']) || isset($_REQUEST['fecha'])) && isset($_REQUEST['page']) ){
             $nombre = $_REQUEST['nombre'];
             $apPaterno = $_REQUEST['apPaterno'];
             $apMaterno = $_REQUEST['apMaterno'];
             $email = $_REQUEST['email'];
             $tel = $_REQUEST['tel'];
-            $fecha = $_REQUEST['fecha'];
+            if($_REQUEST['fecha']){
+                $fecha = Utils::changeFormatDateInput($_REQUEST['fecha']);
+            }else{
+                $fecha = $_REQUEST['fecha'];
+            }
+            $page = $_REQUEST['page'];
 
             $query = EntPacientes::find()->where(['b_habilitado'=>1]);
             // add conditions that should always apply here
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
+                'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
+                'pagination' => [
+                    'page' => $page
+                ]
             ]);
 
             // grid filtering conditions
@@ -399,13 +408,13 @@ class ApiController extends Controller
                     'password'=>$doctor->txt_password,
                     'email'=>$doctor->txt_email,
                 ];
-                if($utils->sendCorreoPassword ( $doctor->txt_email, $parametrosEmail )){
+                //if($utils->sendCorreoPassword ( $doctor->txt_email, $parametrosEmail )){
                     $respuesta['error'] = false;
                     $respuesta['message'] = 'Correo enviado correctamente';
-                }else{
+                /*}else{
                     $respuesta['error'] = true;
                     $respuesta['message'] = 'Correo no enviado';
-                }
+                }*/
             }else{
                 $respuesta['error'] = true;
                 $respuesta['message'] = 'Email no registrado';
