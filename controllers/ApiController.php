@@ -361,6 +361,7 @@ class ApiController extends Controller
                 'query' => $query,
                 'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
                 'pagination' => [
+                    'pageSize' => 20,
                     'page' => $page
                 ]
             ]);
