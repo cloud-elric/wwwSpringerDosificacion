@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Utils;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EntPacientesSearch */
@@ -30,7 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'txt_apellido_materno',
             'txt_email:email',
             'txt_telefono_contacto',
-            'fch_nacimiento',
+            [
+                'attribute' => 'fch_nacimiento',
+                'value' => function($model){
+                    return Utils::changeFormatDate($model->fch_nacimiento);
+                }
+            ],
             // 'b_habilitado',
 
             ['class' => 'yii\grid\ActionColumn'],

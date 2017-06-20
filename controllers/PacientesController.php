@@ -9,6 +9,7 @@ use app\models\EntPacientesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Utils;
 
 /**
  * PacientesController implements the CRUD actions for EntPacientes model.
@@ -89,8 +90,11 @@ class PacientesController extends Controller
     {
         $model = new EntPacientes();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_paciente]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->fch_nacimiento =  Utils::changeFormatDateInput($model->fch_nacimiento);
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id_paciente]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,

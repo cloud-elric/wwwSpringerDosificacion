@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Utils;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\EntPacientes */
@@ -34,7 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'txt_apellido_materno',
             'txt_email:email',
             'txt_telefono_contacto',
-            'fch_nacimiento',
+            [
+                'attribute' => 'fch_nacimiento',
+                'value' => Utils::changeFormatDate($model->fch_nacimiento)
+            ]
             //'b_habilitado',
         ],
     ]) ?>

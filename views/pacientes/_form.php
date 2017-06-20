@@ -19,11 +19,11 @@ use yii\web\View;
 
     <?= $form->field($model, 'txt_apellido_materno')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'fch_nacimiento')->textInput(['class'=>'form_datetime form-control']) ?>
+
     <?= $form->field($model, 'txt_email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'txt_telefono_contacto')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'fch_nacimiento')->textInput(['class'=>'form_datetime']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -46,6 +46,31 @@ $this->registerJs ( "
 		meridiem: []
 	};
 		
-	$('.form_datetime').datetimepicker({format: 'd-mm-yyyy', minView: 2, language: 'es', orientation: 'top'});
+	$('.form_datetime').datetimepicker({
+        orientation: 'top auto',
+        format: 'd-mm-yyyy', 
+        minView: 2, 
+        language: 'es',
+    });
+
+    function validarSoloNumeros(e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110]) !== -1 ||
+            // Allow: Ctrl+A, Command+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+            // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    }
+
+    $('#entpacientes-txt_telefono_contacto').keydown(function (e) {
+    validarSoloNumeros(e);
+    });
 ", View::POS_END );
 ?>

@@ -30,10 +30,10 @@ class EntDoctores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['txt_nombre', 'txt_apellido_paterno', 'txt_email', 'txt_password'], 'required'],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_email', 'txt_password'], 'required', 'message'=>'Campo requerido'],
             [['b_habilitado'], 'integer'],
             [['txt_nombre', 'txt_apellido_paterno', 'txt_password'], 'string', 'max' => 50],
-            [['txt_email'], 'email'],
+            [['txt_email'], 'email', 'message'=>'Ingrese una dirección válida'],
         ];
     }
 

@@ -32,11 +32,12 @@ class EntPacientes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['txt_nombre', 'txt_apellido_paterno'], 'required'],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_telefono_contacto', 'txt_email'], 'required', 'message'=>'Campo requerido'],
             [['fch_nacimiento'], 'safe'],
-            [['b_habilitado', 'txt_telefono_contacto'], 'integer'],
-            [['txt_nombre', 'txt_apellido_paterno', 'txt_apellido_materno', 'txt_email'], 'string', 'max' => 50],
-            [['txt_email'], 'email'],
+            [['b_habilitado'], 'integer'],
+            [['txt_telefono_contacto'], 'string', 'message'=>'Debe ser un valor númerico', 'max' => 10],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_apellido_materno'], 'string', 'max' => 50],
+            [['txt_email'], 'email', 'message'=>'Ingrese una dirección válida'],
         ];
     }
 
