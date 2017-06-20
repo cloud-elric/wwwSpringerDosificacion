@@ -315,12 +315,19 @@ class ApiController extends Controller
         return $respuesta;
     }
 
-    public function actionBuscarPaciente($nombre = null, $apPaterno = null, $apMaterno = null, $email = null, $tel = null, $fecha = null){
+    public function actionBuscarPaciente(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
         
         if( isset($_REQUEST['nombre']) || isset($_REQUEST['apPaterno']) || isset($_REQUEST['apMaterno']) || isset($_REQUEST['email']) || isset($_REQUEST['tel']) || isset($_REQUEST['fecha'])) {
+            $nombre = $_REQUEST['nombre'];
+            $apPaterno = $_REQUEST['apPaterno'];
+            $apMaterno = $_REQUEST['apMaterno'];
+            $email = $_REQUEST['email'];
+            $tel = $_REQUEST['tel'];
+            $fecha = $_REQUEST['fecha'];
+
             $query = EntPacientes::find()->where(['b_habilitado'=>1]);
             // add conditions that should always apply here
             $dataProvider = new ActiveDataProvider([
@@ -344,6 +351,7 @@ class ApiController extends Controller
                 $respuesta ['error'] = false;
                 $respuesta ['message'] = 'Paciente mostrado';
                 $respuesta ['paciente'] = $dataProvider->getModels();
+                $respuesta ['request'] = $_REQUEST;
             }else{
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'No hay datos';
