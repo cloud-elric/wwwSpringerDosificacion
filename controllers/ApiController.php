@@ -463,6 +463,7 @@ class ApiController extends Controller
             $dosis->fch_proxima_visita = Utils::changeFormatDateInput($_REQUEST['fch_visita']);
 
             $paciente = EntPacientes::find()->where(['id_paciente'=>$_REQUEST['id_paciente']])->one();
+            $doctor = EntDoctores::find()->where(['id_doctor'=>$_REQUEST['id_doctor']])->one();
 
             if($dosis->save()){
                 $html2pdf = new Html2Pdf();
@@ -478,6 +479,46 @@ class ApiController extends Controller
 
                 $html2pdf->writeHTML($vistaHtml);
                 $html2pdf->output($carpeta . '/' . $dosis->txt_token . '.pdf', 'F');
+
+                $email = $doctor->txt_email; 
+                $message = "Dosis de paciente"; 
+                $subject = "Dosis";//TEMA
+                $email_to = $email;
+                $email_from = 'email@email.com';
+
+                $separator = md5(time());
+                $eol = PHP_EOL;
+                $filename = $carpeta . '/' . $dosis->txt_token . '.pdf';
+
+                //$pdfdoc = file_get_contents($filename);
+                $attachment = chunk_split(base64_encode($filename));
+
+                $headers  = "From: \"TuEmpresa\"<" . $email_from . ">".$eol;
+                $headers .= "MIME-Version: 1.0".$eol; 
+                $headers .= "Content-Type: multipart/mixed; boundary=\"".$separator."\"";
+
+                $body = "--".$separator.$eol;
+
+                $body .= "Content-Type: text/html; charset=\"utf-8\"".$eol;
+                $body .= "Content-Transfer-Encoding: 8bit".$eol.$eol;
+                $body .= $message.$eol;
+
+                // adjunto
+                $body .= "--".$separator.$eol;
+                $body .= "Content-Type: application/octet-stream; name=\"".$filename."\"".$eol;
+                $body .= "Content-Transfer-Encoding: base64".$eol;
+                $body .= "Content-Disposition: attachment".$eol.$eol;
+                $body .= $attachment.$eol;
+                $body .= "--".$separator."--";
+
+                $error_ocurred = mail($email_to, $subject, $body, $headers);
+                if(!$error_ocurred){
+                    echo "<center>Ocurrio un problema al enviar su información, intente mas tarde.<br/>";
+                    echo "Si el problema persiste contacte a un administrador.</center>";
+                }else{
+                    echo "<center>Su informacion ha sido enviada correctamente a la direccion de email especificada.<br/>(sientase libre de cerrar esta ventana)</center>";
+                }
+
             }
         }
     }
