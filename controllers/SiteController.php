@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use Spipu\Html2Pdf\Html2Pdf;
 
 use app\models\EntDoctores;
 
@@ -135,5 +136,20 @@ class SiteController extends Controller
     public function actionSecciones(){
         
         return $this->render('secciones');
+    }
+
+    public function actionViewPdf(){
+        require __DIR__.'\..\vendor\autoload.php';
+        
+        $html2pdf = new Html2Pdf();
+        //$vistaHtml = $this->renderAjax('plantilla');
+        
+        /*$carpeta = '/ruta/a/mi/carpeta';
+        if (!file_exists($carpeta)) {
+            mkdir($carpeta, 0777, true);
+        }*/
+
+        $html2pdf->writeHTML($vistaHtml);
+        $html2pdf->output('ejemplo.pdf', 'F');
     }
 }

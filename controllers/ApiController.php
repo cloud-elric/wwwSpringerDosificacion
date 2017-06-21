@@ -9,6 +9,8 @@ use app\models\EntDoctores;
 use app\models\EntPacientes;
 use yii\data\ActiveDataProvider;
 use app\models\Utils;
+use app\models\EntDosis;
+use Spipu\Html2Pdf\Html2Pdf;
 
 class ApiController extends Controller
 {
@@ -361,7 +363,7 @@ class ApiController extends Controller
                 'query' => $query,
                 'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
                 'pagination' => [
-                    'pageSize' => 20,
+                    'pageSize' => 3,
                     'page' => $page
                 ]
             ]);
@@ -423,5 +425,60 @@ class ApiController extends Controller
         }
 
         return $respuesta;
+    }
+
+    public function actionGetDosisPaciente(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'No hay dosis asignada';
+
+        if( isset($_REQUEST['idPaciente']) ){
+            $id = $_REQUEST['idPaciente'];
+            $dosis = EntDosis::find()->where(['id_paciente'=>$id])->all();
+
+            if($dosis){
+                $respuesta['error'] = false;
+                $respuesta['message'] = 'Datos encontrados';
+                $respuesta['dosis'] = $dosis;
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'No se encontro paciente';
+            }
+        }
+
+        return $respuesta;
+    }
+
+    public function actionGenerarPdf(){
+        require __DIR__.'\..\vendor\autoload.php';
+        $utils = new Utils();
+
+        if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita']) ){
+            $dosis = new EntDosis();
+            $dosis->id_doctor = $_REQUEST['id_doctor'];
+            $dosis->id_paciente = $_REQUEST['id_paciente'];
+            $dosis->num_peso = $_REQUEST['num_peso'];
+            $dosis->num_estatura = $_REQUEST['num_estatura'];
+            $dosis->txt_token = $utils->generateToken();
+            $dosis->fch_proxima_visita = Utils::changeFormatDateInput($_REQUEST['fch_visita']);
+
+            $paciente = EntPacientes::find()->where(['id_paciente'=>$_REQUEST['id_paciente']])->one();
+
+            if($dosis->save()){
+                $html2pdf = new Html2Pdf();
+                $vistaHtml = $this->renderAjax('plantilla', [
+                    'dosis' => $dosis,
+                    'paciente' => $paciente
+                ]);
+                
+                $carpeta = 'pdfDosis/'. $paciente->txt_token;
+                if (!file_exists($carpeta)) {
+                    mkdir($carpeta, 0777, true);
+                }
+
+                $html2pdf->writeHTML($vistaHtml);
+                $html2pdf->output($carpeta . '/' . $dosis->txt_token . '.pdf', 'F');
+            }
+        }
     }
 }
