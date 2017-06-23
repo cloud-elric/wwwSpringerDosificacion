@@ -6,6 +6,11 @@ if (class_exists('yii\debug\Module')) {
     $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
 }
 ?>
+<style>
+    h1{
+        color:red;
+    }
+</style>
 <h1>Paciente: <?= $paciente->txt_nombre . ' ' . $paciente->txt_apellido_paterno . ' ' . $paciente->txt_apellido_materno ?> </h1>
 <h2>Email: <?= $paciente->txt_email ?> </h2>
 

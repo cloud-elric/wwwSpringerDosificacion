@@ -479,46 +479,23 @@ class ApiController extends Controller
 
                 $html2pdf->writeHTML($vistaHtml);
                 $html2pdf->output($carpeta . '/' . $dosis->txt_token . '.pdf', 'F');
+                
+                /* *********CORREO CON ARCHIVO ADJUNTO**********  */
 
-                $email = $doctor->txt_email; 
-                $message = "Dosis de paciente"; 
-                $subject = "Dosis";//TEMA
-                $email_to = $email;
-                $email_from = 'email@email.com';
-
-                $separator = md5(time());
-                $eol = PHP_EOL;
-                $filename = $carpeta . '/' . $dosis->txt_token . '.pdf';
-
-                //$pdfdoc = file_get_contents($filename);
-                $attachment = chunk_split(base64_encode($filename));
-
-                $headers  = "From: \"TuEmpresa\"<" . $email_from . ">".$eol;
-                $headers .= "MIME-Version: 1.0".$eol; 
-                $headers .= "Content-Type: multipart/mixed; boundary=\"".$separator."\"";
-
-                $body = "--".$separator.$eol;
-
-                $body .= "Content-Type: text/html; charset=\"utf-8\"".$eol;
-                $body .= "Content-Transfer-Encoding: 8bit".$eol.$eol;
-                $body .= $message.$eol;
-
-                // adjunto
-                $body .= "--".$separator.$eol;
-                $body .= "Content-Type: application/octet-stream; name=\"".$filename."\"".$eol;
-                $body .= "Content-Transfer-Encoding: base64".$eol;
-                $body .= "Content-Disposition: attachment".$eol.$eol;
-                $body .= $attachment.$eol;
-                $body .= "--".$separator."--";
-
-                $error_ocurred = mail($email_to, $subject, $body, $headers);
-                if(!$error_ocurred){
+                $pathArchivo = $carpeta . '/' . $dosis->txt_token . '.pdf';
+                $utils = new Utils();
+                $parametrosEmail = [
+                    'nombre' => $doctor->txt_nombre,
+                    'apellido' => $doctor->txt_apellido_paterno,
+                    'password'=>$doctor->txt_password,
+                    'email'=>$doctor->txt_email,
+                ];
+                if($utils->sendCorreoArchivo($doctor->txt_email, $parametrosEmail, $pathArchivo)){
+                    echo "<center>Su informacion ha sido enviada correctamente a la direccion de email especificada.<br/>(sientase libre de cerrar esta ventana)</center>";                    
+                }else{
                     echo "<center>Ocurrio un problema al enviar su información, intente mas tarde.<br/>";
                     echo "Si el problema persiste contacte a un administrador.</center>";
-                }else{
-                    echo "<center>Su informacion ha sido enviada correctamente a la direccion de email especificada.<br/>(sientase libre de cerrar esta ventana)</center>";
                 }
-
             }
         }
     }

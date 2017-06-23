@@ -101,6 +101,17 @@ class Utils {
 		// Envia el correo electronico
 		return $this->sendEmail ( '@app/mail/layouts/recuperarPass', '@app/mail/layouts/activarCuentaText', 'no-reply@onex.mx', $email, 'Recuperacion de password.', $parametrosEmail );
 	}
+
+	/**
+	 * Envia el correo electronico para recuperar el correo electronico
+	 *
+	 * @param array $parametrosEmail        	
+	 * @return boolean
+	 */
+	public function sendCorreoArchivo($email, $parametrosEmail, $pathArchivo) {
+		// Envia el correo electronico
+		return $this->sendEmailAdjunto ( '@app/mail/layouts/datosCuenta', '@app/mail/layouts/activarCuentaText', 'no-reply@onex.mx', $email, 'Recuperacion de password.', $parametrosEmail, $pathArchivo );
+	}
 	
 	/**
 	 * Envia mensaje de correo electronico
@@ -130,5 +141,18 @@ class Utils {
 		->setTextBody ( $templateTest )
 		->setHtmlBody ( $templateHtml )
 		->send ();
+	}
+
+	public function sendEmailAdjunto($templateHtml, $templateText, $from, $to, $subject, $params, $pathArchivo){
+		return Yii::$app->mailer->compose ( [
+				// 'html' => '@app/mail/layouts/example',
+				// 'text' => '@app/mail/layouts/text'
+				'html' => $templateHtml 
+		], 
+				// 'text' => $templateText
+				$params )->setFrom ( $from )->setTo ( $to )->setSubject ( $subject )->attach('../web/'.$pathArchivo)->send ();
+
+		//$message->attach($filename);
+		
 	}
 }
