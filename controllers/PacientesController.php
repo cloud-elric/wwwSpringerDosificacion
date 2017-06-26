@@ -89,11 +89,21 @@ class PacientesController extends Controller
     public function actionCreate()
     {
         $model = new EntPacientes();
+        $utils = new Utils();
 
         if ($model->load(Yii::$app->request->post()) ) {
             $model->fch_nacimiento =  Utils::changeFormatDateInput($model->fch_nacimiento);
-            if($model->save()){
-                return $this->redirect(['view', 'id' => $model->id_paciente]);
+            $model->txt_token = $utils->generateToken();
+
+            $buscar = EntPacientes::find()->where(['txt_email'=>$model->txt_email])->andWhere(['b_habilitado'=>1])->one();
+            if(!$buscar){
+                if($model->save()){
+                    return $this->redirect(['view', 'id' => $model->id_paciente]);
+                }else{
+                    return $this->redirect('create');
+                }
+            }else{
+                return $this->redirect('create');
             }
         } else {
             return $this->render('create', [

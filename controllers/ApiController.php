@@ -491,12 +491,42 @@ class ApiController extends Controller
                     'email'=>$doctor->txt_email,
                 ];
                 if($utils->sendCorreoArchivo($doctor->txt_email, $parametrosEmail, $pathArchivo)){
-                    echo "<center>Su informacion ha sido enviada correctamente a la direccion de email especificada.<br/>(sientase libre de cerrar esta ventana)</center>";                    
+                    echo "<center>Su informacion ha sido enviada correctamente a la direccion de email especificada.</center>";                    
                 }else{
                     echo "<center>Ocurrio un problema al enviar su información, intente mas tarde.<br/>";
                     echo "Si el problema persiste contacte a un administrador.</center>";
                 }
             }
+        }
+    }
+
+    public function actionDownloadPdf(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Datos incorrectos';
+
+        if(isset($_REQUEST['token'])){
+            $dosis = EntDosis::find()->where(['txt_token'=>$_REQUEST['token']])->one();
+            $paciente = $dosis->idPaciente;
+
+            $path = Yii::$app->homeUrl . 'pdfDosis/';
+            $file = 'pdfDosis/' . $paciente->txt_token . '/' . $_REQUEST['token'] . '.pdf';
+            
+            header("Content-Disposition: attachment; filename=" . urlencode($file));   
+            header("Content-Type: application/octet-stream");
+            header("Content-Type: application/download");
+            header("Content-Description: File Transfer");            
+            header("Content-Length: " . filesize($file));
+            flush(); // this doesn't really matter.
+            $fp = fopen($file, "r");
+            while (!feof($fp))
+            {
+                echo fread($fp, 65536);
+                flush(); // this is essential for large downloads
+            } 
+            fclose($fp);
+        }else{
+            return $respuesta;
         }
     }
 }
