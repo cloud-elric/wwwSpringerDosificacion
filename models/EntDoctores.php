@@ -30,9 +30,10 @@ class EntDoctores extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['txt_nombre', 'txt_apellido_paterno', 'txt_email', 'txt_password'], 'required'],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_email', 'txt_password'], 'required', 'message'=>'Campo requerido'],
             [['b_habilitado'], 'integer'],
-            [['txt_nombre', 'txt_apellido_paterno', 'txt_email', 'txt_password'], 'string', 'max' => 50],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_password'], 'string', 'max' => 50],
+            [['txt_email'], 'email', 'message'=>'Ingrese una dirección válida'],
         ];
     }
 
@@ -42,11 +43,11 @@ class EntDoctores extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_doctor' => 'Id Doctor',
-            'txt_nombre' => 'Txt Nombre',
-            'txt_apellido_paterno' => 'Txt Apellido Paterno',
-            'txt_email' => 'Txt Email',
-            'txt_password' => 'Txt Password',
+            'id_doctor' => 'Id',
+            'txt_nombre' => 'Nombre',
+            'txt_apellido_paterno' => 'Apellido Paterno',
+            'txt_email' => 'Email',
+            'txt_password' => 'Password',
             'b_habilitado' => 'B Habilitado',
         ];
     }

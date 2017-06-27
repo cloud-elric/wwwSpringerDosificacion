@@ -32,10 +32,12 @@ class EntPacientes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['txt_nombre', 'txt_apellido_paterno'], 'required'],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_telefono_contacto', 'txt_email'], 'required', 'message'=>'Campo requerido'],
             [['fch_nacimiento'], 'safe'],
             [['b_habilitado'], 'integer'],
-            [['txt_nombre', 'txt_apellido_paterno', 'txt_apellido_materno', 'txt_email', 'txt_telefono_contacto'], 'string', 'max' => 50],
+            [['txt_telefono_contacto'], 'string', 'message'=>'Debe ser un valor númerico', 'max' => 10],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_apellido_materno'], 'string', 'max' => 50],
+            [['txt_email'], 'email', 'message'=>'Ingrese una dirección válida'],
         ];
     }
 
@@ -45,13 +47,13 @@ class EntPacientes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_paciente' => 'Id Paciente',
-            'txt_nombre' => 'Txt Nombre',
-            'txt_apellido_paterno' => 'Txt Apellido Paterno',
-            'txt_apellido_materno' => 'Txt Apellido Materno',
-            'txt_email' => 'Txt Email',
-            'txt_telefono_contacto' => 'Txt Telefono Contacto',
-            'fch_nacimiento' => 'Fch Nacimiento',
+            'id_paciente' => 'Paciente',
+            'txt_nombre' => 'Nombre',
+            'txt_apellido_paterno' => 'Apellido Paterno',
+            'txt_apellido_materno' => 'Apellido Materno',
+            'txt_email' => 'Email',
+            'txt_telefono_contacto' => 'Telefono ',
+            'fch_nacimiento' => 'Fecha Nacimiento',
             'b_habilitado' => 'B Habilitado',
         ];
     }
