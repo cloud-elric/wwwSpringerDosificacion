@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'defaultRoute' => 'site/secciones',
     'modules' => [ 
         'modUsuarios' => [ 
         'class' => 'app\modules\ModUsuarios\ModUsuarios' 
@@ -80,6 +81,7 @@ $config = [
         ]
     ],
     'params' => $params,
+    
 ];
 
 if (YII_ENV_DEV) {
