@@ -411,13 +411,13 @@ class ApiController extends Controller
                     'password'=>$doctor->txt_password,
                     'email'=>$doctor->txt_email,
                 ];
-                //if($utils->sendCorreoPassword ( $doctor->txt_email, $parametrosEmail )){
+                if($utils->sendCorreoPassword ( $doctor->txt_email, $parametrosEmail )){
                     $respuesta['error'] = false;
                     $respuesta['message'] = 'Correo enviado correctamente';
-                /*}else{
+                }else{
                     $respuesta['error'] = true;
                     $respuesta['message'] = 'Correo no enviado';
-                }*/
+                }
             }else{
                 $respuesta['error'] = true;
                 $respuesta['message'] = 'Email no registrado';
