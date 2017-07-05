@@ -296,7 +296,7 @@ class ApiController extends Controller
                 $paciente->b_habilitado = 0;
                 if($paciente->save()){
                     $respuesta ['error'] = false;
-                    $respuesta ['message'] = 'Doctor eliminado';
+                    $respuesta ['message'] = 'Paciente eliminado';
                 }else{
                     $respuesta ['error'] = true;
                     $respuesta ['message'] = 'Datos invalidos';
@@ -449,6 +449,8 @@ class ApiController extends Controller
     public function actionGenerarPdf(){
         require __DIR__.'\..\vendor\autoload.php';
         $utils = new Utils();
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan datos';
 
         if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita']) ){
             $dosis = new EntDosis();
@@ -462,7 +464,7 @@ class ApiController extends Controller
             $paciente = EntPacientes::find()->where(['id_paciente'=>$_REQUEST['id_paciente']])->one();
             $doctor = EntDoctores::find()->where(['id_doctor'=>$_REQUEST['id_doctor']])->one();
 
-            if($dosis->save()){
+            if($dosis->save() && $doctor && $paciente){
                 $html2pdf = new Html2Pdf();
                 $vistaHtml = $this->renderAjax('plantilla', [
                     'dosis' => $dosis,
@@ -488,13 +490,18 @@ class ApiController extends Controller
                     'email'=>$doctor->txt_email,
                 ];
                 if($utils->sendCorreoArchivo($doctor->txt_email, $parametrosEmail, $pathArchivo)){
-                    echo "<center>Su informacion ha sido enviada correctamente a la direccion de email especificada.</center>";                    
+                    $respuesta['error'] = false;
+                    $respuesta['message'] = 'Email enviado correctamente';                   
                 }else{
-                    echo "<center>Ocurrio un problema al enviar su información, intente mas tarde.<br/>";
-                    echo "Si el problema persiste contacte a un administrador.</center>";
+                    $respuesta['error'] = true;
+                    $respuesta['message'] = 'Error al enviar email';
                 }
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'Error al guardar o no existe paciente o no existe doctor';
             }
         }
+        return $respuesta;
     }
 
     public function actionDownloadPdf(){
