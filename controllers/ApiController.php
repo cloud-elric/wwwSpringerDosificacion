@@ -52,17 +52,14 @@ class ApiController extends Controller
             $doctor->txt_email = $_REQUEST['email'];
             $doctor->txt_password = $_REQUEST['password'];
             if($doctor->save()){
+                $respuesta ['error'] = false;
+                $respuesta ['message'] = 'Doctor guardado';
+                $respuesta ['doctor'] = $doctor;
+            }else{
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'Datos invalidos';
                 $respuesta['errosDoc'] = $doctor->errors;
-            }
-
-            $respuesta ['error'] = false;
-            $respuesta ['message'] = 'Doctor guardado';
-            $respuesta ['doctor'] = $doctor;
-        }else{
-            $respuesta ['error'] = true;
-            $respuesta ['message'] = 'No hay datos';
+            }  
         }
 
         return $respuesta;
