@@ -282,7 +282,6 @@ class ApiController extends Controller
 
         return $respuesta;
     }
-
     public function actionEliminarPaciente($idPaciente = 0){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
