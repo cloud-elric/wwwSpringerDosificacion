@@ -36,10 +36,10 @@ $config = [
             'class' => 'yii\swiftmailer\Mailer',
             'transport' => [ 
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp.gmail.com', // e.g. smtp.mandrillapp.com or smtp.gmail.com
-                'username' => 'humberto2geekonemonkey@gmail.com',
-                'password' => '9&s3Z2L24e9^3GfXt',
-                'port' => '587', // Port 25 is a very common port too
+                'host' => 's210.tmd.cloud', // e.g. smtp.mandrillapp.com or smtp.gmail.com
+                'username' => 'development@2gom.com.mx',
+                'password' => 'monk3yD3v!',
+                'port' => '465', // Port 25 is a very common port too
                 'encryption' => 'tls' 
             ] 
         ],
@@ -75,8 +75,7 @@ $config = [
                 'activar-cuenta/<t:\w+>' => 'modUsuarios/manager/activar-cuenta',
                 'sign-up' => 'modUsuarios/manager/sign-up',
                 'login' => 'modUsuarios/manager/login',
-                'callback-facebook' => 'modUsuarios/manager/callback-facebook',
-                '/' => 'site/index' 
+                'callback-facebook' => 'modUsuarios/manager/callback-facebook', 
             ]
         ]
     ],
