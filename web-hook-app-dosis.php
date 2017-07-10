@@ -26,7 +26,3 @@ if (file_exists($LOCAL_REPO)) {
     echo "Resultado: Repo creado.\n$resultado";
 }
 
-//echo $LOCAL_REPO;
-//$log = new Logger('UPDATES');
-//$log->pushHandler(new StreamHandler('logs/' . $payload->repository->name . '.log', Logger::INFO));
-//$log->addInfo(substr($payload->commits[0]->id, 0, 8) . " " . $payload->commits[0]->message);
