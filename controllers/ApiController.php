@@ -16,6 +16,9 @@ class ApiController extends Controller
 {
     public $enableCsrfValidation = false;
     
+    /**
+    * Validación para registrar al usuario (doctor)
+    */
     public function actionLogin(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
@@ -40,6 +43,7 @@ class ApiController extends Controller
 
     }
 
+        
     public function actionCrearDoctor(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;

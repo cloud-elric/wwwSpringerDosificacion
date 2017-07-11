@@ -99,7 +99,7 @@ class Utils {
 	 */
 	public function sendCorreoPassword($email, $parametrosEmail) {
 		// Envia el correo electronico
-		return $this->sendEmail ( '@app/mail/layouts/recuperarPass', '@app/mail/layouts/activarCuentaText', 'no-reply@onex.mx', $email, 'Recuperacion de password.', $parametrosEmail );
+		return $this->sendEmail ( '@app/mail/layouts/recuperarPass', '@app/mail/layouts/activarCuentaText', 'no-reply@onex.mx', $email, 'Recuperacion de contraseña.', $parametrosEmail );
 	}
 
 	/**
