@@ -40,7 +40,7 @@ $config = [
                 'username' => 'development@2gom.com.mx',
                 'password' => 'monk3yD3v!',
                 'port' => '465', // Port 25 is a very common port too
-                'encryption' => 'tls' 
+                'encryption' => 'ssl' 
             ] 
         ],
         'log' => [
