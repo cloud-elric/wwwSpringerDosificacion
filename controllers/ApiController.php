@@ -10,6 +10,7 @@ use app\models\EntPacientes;
 use yii\data\ActiveDataProvider;
 use app\models\Utils;
 use app\models\EntDosis;
+use app\models\CatClaves;
 use Spipu\Html2Pdf\Html2Pdf;
 
 class ApiController extends Controller
@@ -45,12 +46,28 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
         $doctor =  new EntDoctores();
+        $utils = new Utils();
 
-        if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellido']) && isset($_REQUEST['email']) && isset($_REQUEST['password'])){
+        if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellido']) && isset($_REQUEST['email']) && isset($_REQUEST['password']) && isset($_REQUEST['clave'])){
             $doctor->txt_nombre = $_REQUEST['nombre'];
             $doctor->txt_apellido_paterno = $_REQUEST['apellido'];
             $doctor->txt_email = $_REQUEST['email'];
             $doctor->txt_password = $_REQUEST['password'];
+            $doctor->txt_token = $utils->generateToken();
+
+            $clave = CatClaves::find()->where(['txt_clave'=>$_REQUEST['clave']])->one();
+            if($clave && $clave->b_usado == 0){
+                $clave->b_usado = 1;
+                if($clave->save()){
+                    $doctor->id_clave = $clave->id_clave; 
+                }    
+            }else{
+                $respuesta ['error'] = true;
+                $respuesta ['message'] = 'Clave invalida';
+
+                return $respuesta;
+            }
+
             if($doctor->save()){
                 $respuesta ['error'] = false;
                 $respuesta ['message'] = 'Doctor guardado';
