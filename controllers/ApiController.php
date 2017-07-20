@@ -12,6 +12,8 @@ use app\models\Utils;
 use app\models\EntDosis;
 use app\models\CatClaves;
 use Spipu\Html2Pdf\Html2Pdf;
+use app\models\EntTratamiento;
+use app\models\RelPacienteAviso;
 
 class ApiController extends Controller
 {
@@ -450,9 +452,9 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'No hay dosis asignada';
 
-        if( isset($_REQUEST['idPaciente']) ){
-            $id = $_REQUEST['idPaciente'];
-            $dosis = EntDosis::find()->where(['id_paciente'=>$id])->all();
+        if( isset($_REQUEST['idTratamiento']) ){
+            $id = $_REQUEST['idTratamiento'];
+            $dosis = EntDosis::find()->where(['id_tratamiento'=>$id])->all();
 
             if($dosis){
                 $respuesta['error'] = false;
@@ -473,10 +475,9 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
 
-        if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita']) ){
+        if(isset($_REQUEST['id_tratamiento']) &&  isset($_REQUEST['num_peso']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita']) ){
             $dosis = new EntDosis();
-            $dosis->id_doctor = $_REQUEST['id_doctor'];
-            $dosis->id_paciente = $_REQUEST['id_paciente'];
+            $dosis->id_tratamiento = $_REQUEST['id_tratamiento'];
             $dosis->num_peso = $_REQUEST['num_peso'];
             $dosis->num_estatura = $_REQUEST['num_estatura'];
             $dosis->txt_token = $utils->generateToken();
@@ -553,5 +554,108 @@ class ApiController extends Controller
         }else{
             return $respuesta;
         }
+    }
+
+    public function actionGetPacientesDoctor(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan Datos';
+
+        if(isset($_REQUEST['id_doctor'])){
+             $query = EntPacientes::find()->where(['id_doctor'=>$_REQUEST['id_doctor']]);
+            // add conditions that should always apply here
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
+                'pagination' => [
+                    'pageSize' => 3,
+                    'page' => 0
+                ]
+            ]);
+            if($dataProvider->getModels()){
+                $respuesta['error'] = false;
+                $respuesta['message'] = 'Pacientes encontrados';
+                $respuesta['pacientes'] = $dataProvider->getModels();
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'No hay pacientes';
+            }
+        }
+
+        return $respuesta;
+    } 
+
+    public function actionCrearTratamiento(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan Datos';
+
+        if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['txt_nombre_tratamiento'])){
+            $tratamiento = new EntTratamiento();
+            $tratamiento->id_paciente = $_REQUEST['id_paciente'];
+            $tratamiento->id_doctor = $_REQUEST['id_doctor'];
+            $tratamiento->txt_nombre_tratamiento = $_REQUEST['txt_nombre_tratamiento'];
+
+            if($tratamiento->save()){
+                $respuesta['error'] = false;
+                $respuesta['message'] = 'Tratamiento creado';
+                $respuesta['pacientes'] = $tratamiento;
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'Error al guardar tratamiento';
+                $respuesta['pacientes'] = $tratamiento->errors;
+            }
+        }
+
+        return $respuesta;   
+    }
+
+    public function actionMostrarTratamientos(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan Datos';
+
+        if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente'])){
+            $tratamientos = EntTratamiento::find()->where(['id_paciente'=>$_REQUEST['id_paciente']])->andWhere(['id_doctor'=>$_REQUEST['id_doctor']])->all() ;
+
+            if($tratamientos){
+                $respuesta['error'] = false;
+                $respuesta['message'] = 'Tratamientos mostrados';
+                $respuesta['pacientes'] = $tratamientos;
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'No hay tratamientos';
+            }
+        }
+
+        return $respuesta;   
+    } 
+
+    public function actionRelPacienteAviso(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan Datos';
+
+        if(isset($_REQUEST['id_paciente']) && isset($_REQUEST['id_aviso']) && isset($_REQUEST['b_acepto'])){
+            $relPacienteAviso = RelPacienteAviso::find()->where(['id_paciente'=>$_REQUEST['id_paciente']])->andWhere(['id_aviso'=>$_REQUEST['id_aviso']])->one();;
+
+            if($_REQUEST['b_acepto'] == 1){
+                $relPacienteAviso->b_aceptado = 1;
+                $respuesta['message'] = 'Paciente acepto el aviso';                
+            }else{
+                $relPacienteAviso->b_aceptado = 0;
+                $respuesta['message'] = 'Paciente no acepto el aviso';                                
+            }
+
+            if($relPacienteAviso->save()){
+                $respuesta['error'] = false;
+                $respuesta['relacion'] = 'Relacion guardada correctamente';
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['relacion'] = $relPacienteAviso->errors;
+            }
+        }
+
+        return $respuesta;
     }
 }
