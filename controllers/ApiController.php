@@ -599,11 +599,11 @@ class ApiController extends Controller
             if($tratamiento->save()){
                 $respuesta['error'] = false;
                 $respuesta['message'] = 'Tratamiento creado';
-                $respuesta['pacientes'] = $tratamiento;
+                $respuesta['tratamiento'] = $tratamiento;
             }else{
                 $respuesta['error'] = true;
                 $respuesta['message'] = 'Error al guardar tratamiento';
-                $respuesta['pacientes'] = $tratamiento->errors;
+                $respuesta['tratamientoErr'] = $tratamiento->errors;
             }
         }
 
@@ -621,7 +621,7 @@ class ApiController extends Controller
             if($tratamientos){
                 $respuesta['error'] = false;
                 $respuesta['message'] = 'Tratamientos mostrados';
-                $respuesta['pacientes'] = $tratamientos;
+                $respuesta['tratamientos'] = $tratamientos;
             }else{
                 $respuesta['error'] = true;
                 $respuesta['message'] = 'No hay tratamientos';
@@ -652,7 +652,8 @@ class ApiController extends Controller
                 $respuesta['relacion'] = 'Relacion guardada correctamente';
             }else{
                 $respuesta['error'] = true;
-                $respuesta['relacion'] = $relPacienteAviso->errors;
+                $respuesta['message'] = 'Error al guardar en la BD';                                                
+                $respuesta['relacionErr'] = $relPacienteAviso->errors;
             }
         }
 

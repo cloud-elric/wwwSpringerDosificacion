@@ -173,6 +173,7 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - apellido *
     - email *
     - password *
+    - clave *
 
 
     * campos obligatorios
@@ -421,7 +422,7 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 
 **Parametros del Servico**
 
-    - idPaciente *
+    - idTratamiento *
 
 
     * campo obligatorio al menos uno obligatorio
@@ -451,8 +452,7 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 
 **Parametros del Servico**
 
-    - id_doctor *
-    - id_paciente *
+    - id_tratamiento *
     - num_peso *
     - num_estatura *
     - fch_visita *
@@ -500,4 +500,137 @@ Si estos parametros **no se envia en la peticion** se regresa un json con los si
     - "message" = "Datos incorrectos"
 
 Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+
+## 16.- Servicio para mostrar pacientes de cada doctor
+
+**Nombre del servicio**
+
+    - http://nombre-servidor/web/api/get-pacientes-doctor
+
+**Parametros del Servico**
+
+    - id_doctor *
+
+
+    * campo obligatorio al menos uno obligatorio
+
+Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Faltan datos"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "No hay pacientes"
+
+Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+    - "error" = false
+    - "message" = "Pacientes encontrados"
+    - "pacientes" = JSON con los datos de los pacientes
+
+
+## 17.- Servicio para crear tratamientos de paciente
+
+**Nombre del servicio**
+
+    - http://nombre-servidor/web/api/crear-tratamiento
+
+**Parametros del Servico**
+
+    - id_doctor *
+    - id_paciente *
+    - txt_nombre_tratamiento *
+
+
+    * campo obligatorio al menos uno obligatorio
+
+Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Faltan datos"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Error al guardar tratamiento"
+    - "tratamientoErr" = JSON con errores al guardar en la BD
+
+Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+    - "error" = false
+    - "message" = "Tratamiento creado"
+    - "tratamiento" = JSON con los datos del tratamiento
+
+
+## 18.- Servicio para mostrar tratamientos de paciente
+
+**Nombre del servicio**
+
+    - http://nombre-servidor/web/api/mostrar-tratamientos
+
+**Parametros del Servico**
+
+    - id_doctor *
+    - id_paciente *
+
+
+    * campo obligatorio al menos uno obligatorio
+
+Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Faltan datos"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "No hay tratamientos"
+
+Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+    - "error" = false
+    - "message" = "Tratamientos mostrados"
+    - "tratamientos" = JSON con los datos del tratamiento
+
+
+## 19.- Servicio para crear relacion entre paciente y aviso de privacidad
+
+**Nombre del servicio**
+
+    - http://nombre-servidor/web/api/rel-paciente-aviso
+
+**Parametros del Servico**
+
+    - id_paciente *
+    - id_aviso *
+    - b_acepto *
+
+
+    * campo obligatorio al menos uno obligatorio
+
+Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Faltan datos"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Error al guardar en la BD"
+    - "relacionErr" = JSON con errores al guardar en la BD
+
+Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+    - "error" = false
+    - "message" = "Paciente acepto el aviso"
+    - "relacion" = "Relacion guardada correctamente"
+
+    o
+
+    - "error" = false
+    - "message" = "Paciente no acepto el aviso"
+    - "relacion" = "Relacion guardada correctamente"
 
