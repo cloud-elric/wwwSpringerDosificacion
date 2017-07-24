@@ -60,13 +60,13 @@ class ApiController extends Controller
             $doctor->txt_email = $_REQUEST['email'];
             $doctor->txt_password = $_REQUEST['password'];
             $doctor->txt_token = $utils->generateToken();
+            if(isset($_REQUEST['cedula']))
+                $doctor->txt_cedula = $_REQUEST['cedula'];
 
             $clave = CatClaves::find()->where(['txt_clave'=>$_REQUEST['clave']])->one();
             if($clave && $clave->b_usado == 0){
                 $clave->b_usado = 1;
-                if($clave->save()){
-                    $doctor->id_clave = $clave->id_clave; 
-                }    
+                $doctor->id_clave = $clave->id_clave;   
             }else{
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'Clave invalida';
@@ -75,9 +75,15 @@ class ApiController extends Controller
             }
 
             if($doctor->save()){
-                $respuesta ['error'] = false;
-                $respuesta ['message'] = 'Doctor guardado';
-                $respuesta ['doctor'] = $doctor;
+                if($clave->save()){
+                    $respuesta ['error'] = false;
+                    $respuesta ['message'] = 'Doctor guardado';
+                    $respuesta ['doctor'] = $doctor;
+                }else{
+                    $respuesta ['error'] = true;
+                    $respuesta ['message'] = 'Datos invalidos';
+                    $respuesta['errosClave'] = $clave->errors;
+                }
             }else{
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'Datos invalidos';
