@@ -11,8 +11,9 @@ if (class_exists('yii\debug\Module')) {
         color:red;
     }
 </style>
-<h1>Paciente: <?= $paciente->txt_nombre . ' ' . $paciente->txt_apellido_paterno . ' ' . $paciente->txt_apellido_materno ?> </h1>
-<h2>Email: <?= $paciente->txt_email ?> </h2>
+<h1>Tratamineto: <?= $tratamiento->txt_nombre_tratamiento ?></h1>
+<h2>Paciente: <?= $paciente->txt_nombre . ' ' . $paciente->txt_apellido_paterno . ' ' . $paciente->txt_apellido_materno ?> </h2>
+<h3>Email: <?= $paciente->txt_email ?> </h3>
 
 <p>Peso: <?= $dosis->num_peso ?> </p>
 <p>Estatura: <?= $dosis->num_estatura ?> </p>

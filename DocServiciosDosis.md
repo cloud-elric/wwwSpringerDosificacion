@@ -309,7 +309,7 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 
 **Nombre del servicio**
 
-    - http://nombre-servidor/web/api/leer-doctor
+    - http://nombre-servidor/web/api/leer-paciente
     - Metodo GET.
 
 **Parametros del Servico**
@@ -383,7 +383,6 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Nombre del servicio**
 
     - http://nombre-servidor/web/api/eliminar-paciente
-    - Metodo GET.
 
 **Parametros del Servico**
 
@@ -498,6 +497,11 @@ Si estos parametros **no se envia en la peticion** se regresa un json con los si
 
     - "error" = true
     - "message" = "Datos incorrectos"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "No exixte archivo"
 
 Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
 

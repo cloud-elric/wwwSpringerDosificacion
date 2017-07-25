@@ -110,7 +110,7 @@ class Utils {
 	 */
 	public function sendCorreoArchivo($email, $parametrosEmail, $pathArchivo) {
 		// Envia el correo electronico
-		return $this->sendEmailAdjunto ( '@app/mail/layouts/datosCuenta', '@app/mail/layouts/activarCuentaText', 'no-reply@onex.mx', $email, 'Recuperacion de password.', $parametrosEmail, $pathArchivo );
+		return $this->sendEmailAdjunto ( '@app/mail/layouts/datosCuenta', '@app/mail/layouts/activarCuentaText', 'no-reply@onex.mx', $email, 'Archivo pdf con dosis paciente.', $parametrosEmail, $pathArchivo );
 	}
 	
 	/**

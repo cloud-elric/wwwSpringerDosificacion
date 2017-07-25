@@ -322,7 +322,7 @@ class ApiController extends Controller
         return $respuesta;
     }
     
-    public function actionEliminarPaciente($idPaciente = 0){
+    public function actionEliminarPaciente(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
@@ -363,7 +363,7 @@ class ApiController extends Controller
         if(isset($_REQUEST['idPaciente'])){
             $idPaciente = $_REQUEST['idPaciente'];
 
-            $paciente = EntPacientes::find()->where(['id_paciente'=>$idPaciente])->one();
+            $paciente = EntPacientes::find()->where(['id_paciente'=>$idPaciente])->andWhere(['b_habilitado'=>1])->one();
 
             if($paciente){
                 $respuesta['error'] = false;
@@ -379,55 +379,72 @@ class ApiController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
+
+        $nombre = null;
+        $apPaterno = null;
+        $apMaterno = null;
+        $email = null;
+        $tel = null;
+        $fecha = null;
+        $page = null;
+        $query = EntPacientes::find()->where(['b_habilitado'=>1]);        
         
-        if( (isset($_REQUEST['nombre']) || isset($_REQUEST['apPaterno']) || isset($_REQUEST['apMaterno']) || isset($_REQUEST['email']) || isset($_REQUEST['tel']) || isset($_REQUEST['fecha'])) && isset($_REQUEST['page']) ){
+        if(isset($_REQUEST['nombre'])){
             $nombre = $_REQUEST['nombre'];
+            $query->andFilterWhere(['like', 'txt_nombre', $nombre]);            
+        }
+        if(isset($_REQUEST['apPaterno'])){        
             $apPaterno = $_REQUEST['apPaterno'];
+            $query->andFilterWhere(['like', 'txt_apellido_paterno', $apPaterno]);            
+        }
+        if(isset($_REQUEST['apMaterno'])){                
             $apMaterno = $_REQUEST['apMaterno'];
+            $query->andFilterWhere(['like', 'txt_apellido_materno', $apMaterno]);            
+        }
+        if(isset($_REQUEST['email'])){                
             $email = $_REQUEST['email'];
+            $query->andFilterWhere(['like', 'txt_email', $email]);            
+        }
+        if(isset($_REQUEST['tel'])){                
             $tel = $_REQUEST['tel'];
-            if($_REQUEST['fecha']){
-                $fecha = Utils::changeFormatDateInput($_REQUEST['fecha']);
-            }else{
-                $fecha = $_REQUEST['fecha'];
-            }
-            $page = $_REQUEST['page'];
-
-            $query = EntPacientes::find()->where(['b_habilitado'=>1]);
-            // add conditions that should always apply here
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-                'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
-                'pagination' => [
-                    'pageSize' => 3,
-                    'page' => $page
-                ]
-            ]);
-
+            $query->andFilterWhere(['like', 'txt_telefono_contacto', $tel]);            
+        }
+        if(isset($_REQUEST['fecha'])){
+            //$fecha = Utils::changeFormatDateInput($_REQUEST['fecha']);
+            $fecha = str_replace('/', '-', $_REQUEST['fecha']);
+            $fecha = date('Y-m-d H:i:s', strtotime($fecha));
             // grid filtering conditions
             $query->andFilterWhere([
-                //'id_paciente' => $query->id_paciente,
                 'fch_nacimiento' => $fecha,
-                //'b_habilitado' => $query->b_habilitado,
             ]);
 
-            $query->andFilterWhere(['like', 'txt_nombre', $nombre])
-                ->andFilterWhere(['like', 'txt_apellido_paterno', $apPaterno])
-                ->andFilterWhere(['like', 'txt_apellido_materno', $apMaterno])
-                ->andFilterWhere(['like', 'txt_email', $email])
-                ->andFilterWhere(['like', 'txt_telefono_contacto', $tel]);
-            
-            if($dataProvider->getModels()){
-                $respuesta ['error'] = false;
-                $respuesta ['message'] = 'Paciente mostrado';
-                $respuesta ['paciente'] = $dataProvider->getModels();
-                $respuesta ['request'] = $_REQUEST;
-            }else{
-                $respuesta ['error'] = true;
-                $respuesta ['message'] = 'No hay datos';
-            }
         }
-
+        if(isset($_REQUEST['page'])){                
+            $page = $_REQUEST['page'];
+        }else{
+            return $respuesta;
+        }
+        
+        // add conditions that should always apply here
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
+            'pagination' => [
+                'pageSize' => 3,
+                'page' => $page
+            ]
+        ]);
+        
+        if($dataProvider->getModels()){
+            $respuesta ['error'] = false;
+            $respuesta ['message'] = 'Paciente mostrado';
+            $respuesta ['paciente'] = $dataProvider->getModels();
+            $respuesta ['request'] = $_REQUEST;
+        }else{
+            $respuesta ['error'] = true;
+            $respuesta ['message'] = 'No hay datos';
+        }
+        
         return $respuesta;
     }
 
@@ -487,26 +504,32 @@ class ApiController extends Controller
 
     public function actionGenerarPdf(){
         require __DIR__.'\..\vendor\autoload.php';
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        
         $utils = new Utils();
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
 
-        if(isset($_REQUEST['id_tratamiento']) &&  isset($_REQUEST['num_peso']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita']) ){
+        if(isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita']) ){
             $dosis = new EntDosis();
+            $tratamiento = EntTratamiento::find()->where(['id_tratamiento'=>$_REQUEST['id_tratamiento']])->one();
             $dosis->id_tratamiento = $_REQUEST['id_tratamiento'];
             $dosis->num_peso = $_REQUEST['num_peso'];
             $dosis->num_estatura = $_REQUEST['num_estatura'];
             $dosis->txt_token = $utils->generateToken();
-            $dosis->fch_proxima_visita = Utils::changeFormatDateInput($_REQUEST['fch_visita']);
+            $fecha = str_replace('/', '-', $_REQUEST['fch_visita']);
+            $fecha = date('Y-m-d H:i:s', strtotime($fecha));
+            $dosis->fch_proxima_visita = $fecha;//Utils::changeFormatDateInput($_REQUEST['fch_visita']);
 
-            $paciente = EntPacientes::find()->where(['id_paciente'=>$_REQUEST['id_paciente']])->one();
-            $doctor = EntDoctores::find()->where(['id_doctor'=>$_REQUEST['id_doctor']])->one();
+            $paciente = EntPacientes::find()->where(['id_paciente'=>$tratamiento->id_paciente])->one();
+            $doctor = EntDoctores::find()->where(['id_doctor'=>$tratamiento->id_doctor])->one();
 
             if($dosis->save() && $doctor && $paciente){
                 $html2pdf = new Html2Pdf();
                 $vistaHtml = $this->renderAjax('plantilla', [
                     'dosis' => $dosis,
-                    'paciente' => $paciente
+                    'paciente' => $paciente,
+                    'tratamiento' => $tratamiento
                 ]);
                 
                 $carpeta = 'pdfDosis/'. $paciente->txt_token;
@@ -549,27 +572,33 @@ class ApiController extends Controller
 
         if(isset($_REQUEST['token'])){
             $dosis = EntDosis::find()->where(['txt_token'=>$_REQUEST['token']])->one();
-            $paciente = $dosis->idPaciente;
+            if($dosis){
+                $tratamiento = EntTratamiento::find()->where(['id_tratamiento'=>$dosis->id_tratamiento])->one();
+                $paciente = $tratamiento->idPaciente;
 
-            $path = Yii::$app->homeUrl . 'pdfDosis/';
-            $file = 'pdfDosis/' . $paciente->txt_token . '/' . $_REQUEST['token'] . '.pdf';
-            
-            header("Content-Disposition: attachment; filename=" . urlencode($file));   
-            header("Content-Type: application/octet-stream");
-            header("Content-Type: application/download");
-            header("Content-Description: File Transfer");            
-            header("Content-Length: " . filesize($file));
-            flush(); // this doesn't really matter.
-            $fp = fopen($file, "r");
-            while (!feof($fp))
-            {
-                echo fread($fp, 65536);
-                flush(); // this is essential for large downloads
-            } 
-            fclose($fp);
-        }else{
-            return $respuesta;
+                $path = Yii::$app->homeUrl . 'pdfDosis/';
+                $file = 'pdfDosis/' . $paciente->txt_token . '/' . $_REQUEST['token'] . '.pdf';
+                
+                header("Content-Disposition: attachment; filename=" . urlencode($file));   
+                header("Content-Type: application/octet-stream");
+                header("Content-Type: application/download");
+                header("Content-Description: File Transfer");            
+                header("Content-Length: " . filesize($file));
+                flush(); // this doesn't really matter.
+                $fp = fopen($file, "r");
+                while (!feof($fp))
+                {
+                    echo fread($fp, 65536);
+                    flush(); // this is essential for large downloads
+                } 
+                fclose($fp);
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'No exixte archivo';
+            }
         }
+
+        return $respuesta;
     }
 
     public function actionGetPacientesDoctor(){
