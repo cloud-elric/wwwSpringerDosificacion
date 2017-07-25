@@ -74,6 +74,7 @@ Por ultimo, si todo sale **correctamente** en el servicio se mandara un email al
     - email *
     - telefono *
     - nacimiento *
+    - id_doctor *
 
 
     * campos obligatorios
@@ -174,6 +175,7 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - email *
     - password *
     - clave *
+    - cedula (opcional)
 
 
     * campos obligatorios
@@ -231,7 +233,6 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Nombre del servicio**
 
     - http://nombre-servidor/web/api/actualizar-doctor
-    - Metodo GET.
 
 **Parametros del Servico**
 
@@ -240,6 +241,7 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - apellido **
     - email **
     - password **
+    - cedula **
 
 
     * campo obligatorio 
@@ -273,7 +275,6 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Nombre del servicio**
 
     - http://nombre-servidor/web/api/eliminar-doctor
-    - Metodo GET.
 
 **Parametros del Servico**
 
@@ -339,7 +340,6 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Nombre del servicio**
 
     - http://nombre-servidor/web/api/actualizar-paciente
-    - Metodo GET.
 
 **Parametros del Servico**
 

@@ -121,13 +121,14 @@ class ApiController extends Controller
         return $respuesta;
     }
 
-    public function actionActualizarDoctor($idDoctor = 0, $nombre = null, $apellido = null, $email = null, $password = null){
+    public function actionActualizarDoctor(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
 
         if( (isset($_REQUEST['idDoctor']) && isset($_REQUEST['nombre'])) || (isset($_REQUEST['idDoctor']) && isset($_REQUEST['apellido'])) || 
-        (isset($_REQUEST['idDoctor']) && isset($_REQUEST['email'])) || (isset($_REQUEST['idDoctor']) || isset($_REQUEST['password'])) ){
+        (isset($_REQUEST['idDoctor']) && isset($_REQUEST['email'])) || (isset($_REQUEST['idDoctor']) || isset($_REQUEST['password'])) ||
+        (isset($_REQUEST['idDoctor']) || isset($_REQUEST['cedula'])) ){
             $id = $_REQUEST['idDoctor'];
             $doctor = EntDoctores::find()->where(['id_doctor'=>$id])->andWhere(['b_habilitado'=>1])->one();           
 
@@ -143,6 +144,9 @@ class ApiController extends Controller
                 }
                 if(isset($_REQUEST['password'])){
                     $doctor->txt_password = $_REQUEST['password'];
+                }
+                if(isset($_REQUEST['cedula'])){
+                    $doctor->txt_cedula = $_REQUEST['cedula'];
                 }
 
                 if($doctor->save()){
@@ -168,7 +172,7 @@ class ApiController extends Controller
         return $respuesta;
     }
 
-    public function actionEliminarDoctor($idDoctor = 0){
+    public function actionEliminarDoctor(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
@@ -205,17 +209,21 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
         $paciente = new EntPacientes;
+        $utils = new Utils();        
 
-        if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellidoPat']) && isset($_REQUEST['apellidoMat']) && isset($_REQUEST['email']) && isset($_REQUEST['telefono']) && isset($_REQUEST['nacimiento'])){
+        if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellidoPat']) && isset($_REQUEST['apellidoMat']) && isset($_REQUEST['email']) && 
+        isset($_REQUEST['telefono']) && isset($_REQUEST['nacimiento'])  && isset($_REQUEST['id_doctor'])){
             //Cambio de formato de fecha ej. "2/06/2000" a "2000-06-02" para guadarlo en la BD
             $fecha = str_replace('/', '-', $_REQUEST['nacimiento']);
             $fecha = date('Y-m-d', strtotime($fecha));
 
+            $paciente->id_doctor = $_REQUEST['id_doctor'];
             $paciente->txt_nombre = $_REQUEST['nombre'];
             $paciente->txt_apellido_paterno = $_REQUEST['apellidoPat'];
             $paciente->txt_apellido_materno = $_REQUEST['apellidoMat'];
             $paciente->txt_email = $_REQUEST['email'];
             $paciente->txt_telefono_contacto = $_REQUEST['telefono'];
+            $paciente->txt_token = $utils->generateToken();
             $paciente->fch_nacimiento = $fecha;
             if($paciente->save()){
                 $respuesta ['error'] = false;
@@ -261,7 +269,7 @@ class ApiController extends Controller
         return $respuesta;
     }
 
-    public function actionActualizarPaciente($idPaciente = 0, $nombre = null, $apellidoPat = null, $apellidoMat = null, $email = null, $telefono = null, $nacimiento = null){
+    public function actionActualizarPaciente(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
@@ -288,7 +296,9 @@ class ApiController extends Controller
                     $paciente->txt_telefono_contacto = $_REQUEST['telefono'];
                 }
                 if(isset($_REQUEST['nacimiento'])){
-                    $paciente->fch_nacimiento = $_REQUEST['nacimiento'];
+                    $fecha = str_replace('/', '-', $_REQUEST['nacimiento']);
+                    $fecha = date('Y-m-d', strtotime($fecha));
+                    $paciente->fch_nacimiento = $fecha;
                 }
 
                 if($paciente->save()){
