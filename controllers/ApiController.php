@@ -605,25 +605,42 @@ class ApiController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan Datos';
+        $page = null;
 
-        if(isset($_REQUEST['id_doctor'])){
-             $query = EntPacientes::find()->where(['id_doctor'=>$_REQUEST['id_doctor']]);
-            // add conditions that should always apply here
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-                'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
-                'pagination' => [
-                    'pageSize' => 3,
-                    'page' => 0
-                ]
-            ]);
-            if($dataProvider->getModels()){
-                $respuesta['error'] = false;
-                $respuesta['message'] = 'Pacientes encontrados';
-                $respuesta['pacientes'] = $dataProvider->getModels();
+        if( (isset($_REQUEST['id_doctor']) && isset($_REQUEST['page'])) || isset($_REQUEST['id_doctor'])){
+            if(isset($_REQUEST['page'])){
+                $page = $_REQUEST['page'];
+            }
+
+            if($page != null){
+                $query = EntPacientes::find()->where(['id_doctor'=>$_REQUEST['id_doctor']]);
+                // add conditions that should always apply here
+                $dataProvider = new ActiveDataProvider([
+                    'query' => $query,
+                    'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
+                    'pagination' => [
+                        'pageSize' => 5,
+                        'page' => $page
+                    ]
+                ]);
+                if($dataProvider->getModels()){
+                    $respuesta['error'] = false;
+                    $respuesta['message'] = 'Pacientes encontrados';
+                    $respuesta['pacientes'] = $dataProvider->getModels();
+                }else{
+                    $respuesta['error'] = true;
+                    $respuesta['message'] = 'No hay pacientes';
+                }
             }else{
-                $respuesta['error'] = true;
-                $respuesta['message'] = 'No hay pacientes';
+                $pacientes = EntPacientes::find()->where(['id_doctor'=>$_REQUEST['id_doctor']])->all();
+                if($pacientes){
+                    $respuesta['error'] = false;
+                    $respuesta['message'] = 'Pacientes encontrados';
+                    $respuesta['pacientes'] = $pacientes;
+                }else{
+                    $respuesta['error'] = true;
+                    $respuesta['message'] = 'No hay pacientes';
+                }
             }
         }
 

@@ -515,9 +515,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
 **Parametros del Servico**
 
     - id_doctor *
+    - page **
 
 
     * campo obligatorio al menos uno obligatorio
+    ** campo opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -529,11 +531,17 @@ Si los parametros **se envian correctamente pero hay un error** se regresará un
     - "error" = true
     - "message" = "No hay pacientes"
 
-Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+Por ultimo, si **se envian ambos parametro correctamente** el servicio respondera con.
 
     - "error" = false
     - "message" = "Pacientes encontrados"
-    - "pacientes" = JSON con los datos de los pacientes
+    - "pacientes" = JSON con los datos de los pacientes (maximo 50 registros y con paginacion)
+
+si **se envian solo el parametro de id_doctor correctamente** el servicio respondera con.
+
+    - "error" = false
+    - "message" = "Pacientes encontrados"
+    - "pacientes" = JSON con los datos de los pacientes (todos lo que se han registrado)
 
 
 ## 17.- Servicio para crear tratamientos de paciente
