@@ -8,13 +8,18 @@ use Yii;
  * This is the model class for table "ent_pacientes".
  *
  * @property string $id_paciente
- * @property string $txt_nombre
- * @property string $txt_apellido_paterno
- * @property string $txt_apellido_materno
+ * @property string $id_doctor
+ * @property string $txt_nombre_completo
  * @property string $txt_email
  * @property string $txt_telefono_contacto
- * @property string $fch_nacimiento
+ * @property integer $num_edad
+ * @property string $txt_sexo
+ * @property string $txt_token
  * @property string $b_habilitado
+ *
+ * @property EntDoctores $idDoctor
+ * @property EntTratamiento[] $entTratamientos
+ * @property RelPacienteAviso $relPacienteAviso
  */
 class EntPacientes extends \yii\db\ActiveRecord
 {
@@ -32,12 +37,13 @@ class EntPacientes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['txt_nombre', 'txt_apellido_paterno', 'txt_telefono_contacto', 'txt_email'], 'required', 'message'=>'Campo requerido'],
-            [['fch_nacimiento'], 'safe'],
-            [['b_habilitado'], 'integer'],
-            [['txt_telefono_contacto'], 'string', 'message'=>'Debe ser un valor númerico', 'max' => 10],
-            [['txt_nombre', 'txt_apellido_paterno', 'txt_apellido_materno'], 'string', 'max' => 50],
-            [['txt_email'], 'email', 'message'=>'Ingrese una dirección válida'],
+            [['id_doctor', 'txt_nombre_completo', 'num_edad', 'txt_sexo', 'txt_token'], 'required'],
+            [['id_doctor', 'num_edad', 'b_habilitado'], 'integer'],
+            [['txt_nombre_completo'], 'string', 'max' => 500],
+            [['txt_email', 'txt_telefono_contacto', 'txt_sexo', 'txt_token'], 'string', 'max' => 50],
+            [['txt_token'], 'unique'],
+            [['txt_email'], 'unique'],
+            [['id_doctor'], 'exist', 'skipOnError' => true, 'targetClass' => EntDoctores::className(), 'targetAttribute' => ['id_doctor' => 'id_doctor']],
         ];
     }
 
@@ -47,14 +53,39 @@ class EntPacientes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_paciente' => 'Paciente',
-            'txt_nombre' => 'Nombre',
-            'txt_apellido_paterno' => 'Apellido Paterno',
-            'txt_apellido_materno' => 'Apellido Materno',
-            'txt_email' => 'Email',
-            'txt_telefono_contacto' => 'Telefono ',
-            'fch_nacimiento' => 'Fecha Nacimiento',
+            'id_paciente' => 'Id Paciente',
+            'id_doctor' => 'Id Doctor',
+            'txt_nombre_completo' => 'Txt Nombre Completo',
+            'txt_email' => 'Txt Email',
+            'txt_telefono_contacto' => 'Txt Telefono Contacto',
+            'num_edad' => 'Num Edad',
+            'txt_sexo' => 'Txt Sexo',
+            'txt_token' => 'Txt Token',
             'b_habilitado' => 'B Habilitado',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdDoctor()
+    {
+        return $this->hasOne(EntDoctores::className(), ['id_doctor' => 'id_doctor']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEntTratamientos()
+    {
+        return $this->hasMany(EntTratamiento::className(), ['id_paciente' => 'id_paciente']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRelPacienteAviso()
+    {
+        return $this->hasOne(RelPacienteAviso::className(), ['id_paciente' => 'id_paciente']);
     }
 }

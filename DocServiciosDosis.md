@@ -68,12 +68,11 @@ Por ultimo, si todo sale **correctamente** en el servicio se mandara un email al
 
 **Parametros del Servico**
 
-    - nombre *
-    - apellidoPat *
-    - apellidoMat *
+    - nombre_completo *
     - email *
     - telefono *
-    - nacimiento *
+    - edad *
+    - sexo *
     - id_doctor *
 
 

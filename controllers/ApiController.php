@@ -211,20 +211,17 @@ class ApiController extends Controller
         $paciente = new EntPacientes;
         $utils = new Utils();        
 
-        if(isset($_REQUEST['nombre']) && isset($_REQUEST['apellidoPat']) && isset($_REQUEST['apellidoMat']) && isset($_REQUEST['email']) && 
-        isset($_REQUEST['telefono']) && isset($_REQUEST['nacimiento'])  && isset($_REQUEST['id_doctor'])){
+        if(isset($_REQUEST['nombre_completo']) && isset($_REQUEST['email']) && isset($_REQUEST['telefono']) && 
+        isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor'])){
             //Cambio de formato de fecha ej. "2/06/2000" a "2000-06-02" para guadarlo en la BD
-            $fecha = str_replace('/', '-', $_REQUEST['nacimiento']);
-            $fecha = date('Y-m-d', strtotime($fecha));
 
             $paciente->id_doctor = $_REQUEST['id_doctor'];
-            $paciente->txt_nombre = $_REQUEST['nombre'];
-            $paciente->txt_apellido_paterno = $_REQUEST['apellidoPat'];
-            $paciente->txt_apellido_materno = $_REQUEST['apellidoMat'];
+            $paciente->txt_nombre_completo = $_REQUEST['nombre_completo'];
             $paciente->txt_email = $_REQUEST['email'];
             $paciente->txt_telefono_contacto = $_REQUEST['telefono'];
             $paciente->txt_token = $utils->generateToken();
-            $paciente->fch_nacimiento = $fecha;
+            $paciente->txt_sexo = $_REQUEST['sexo'];
+            $paciente->num_edad = $_REQUEST['edad'];
             if($paciente->save()){
                 $respuesta ['error'] = false;
                 $respuesta ['message'] = 'Paciente guardado';
@@ -274,20 +271,15 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
 
-        if( (isset($_REQUEST['idPaciente']) && isset($_REQUEST['nombre'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['apellidoPat'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['apellidoMat'])) || 
-        (isset($_REQUEST['idPaciente']) && isset($_REQUEST['email'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['telefono'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['nacimiento'])) ){
+        if( (isset($_REQUEST['idPaciente']) && isset($_REQUEST['nombre_completo'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['email'])) ||
+        (isset($_REQUEST['idPaciente']) && isset($_REQUEST['telefono'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['edad'])) || 
+        (isset($_REQUEST['idPaciente']) && isset($_REQUEST['sexo'])) ){
             $id = $_REQUEST['idPaciente'];
             $paciente = EntPacientes::find()->where(['id_paciente'=>$id])->andWhere(['b_habilitado'=>1])->one();           
 
             if($paciente){
                 if(isset($_REQUEST['nombre'])){
-                    $paciente->txt_nombre = $_REQUEST['nombre'];
-                }
-                if(isset($_REQUEST['apellidoPat'])){
-                    $paciente->txt_apellido_paterno = $_REQUEST['apellidoPat'];
-                }
-                if(isset($_REQUEST['apellidoMat'])){
-                    $paciente->txt_apellido_materno = $_REQUEST['apellidoMat'];
+                    $paciente->txt_nombre = $_REQUEST['nombre_completo'];
                 }
                 if(isset($_REQUEST['email'])){
                     $paciente->txt_email = $_REQUEST['email'];
@@ -295,10 +287,14 @@ class ApiController extends Controller
                 if(isset($_REQUEST['telefono'])){
                     $paciente->txt_telefono_contacto = $_REQUEST['telefono'];
                 }
-                if(isset($_REQUEST['nacimiento'])){
-                    $fecha = str_replace('/', '-', $_REQUEST['nacimiento']);
-                    $fecha = date('Y-m-d', strtotime($fecha));
-                    $paciente->fch_nacimiento = $fecha;
+                if(isset($_REQUEST['edad'])){
+                    //$fecha = str_replace('/', '-', $_REQUEST['nacimiento']);
+                    //$fecha = date('Y-m-d', strtotime($fecha));
+                    //$paciente->fch_nacimiento = $fecha;
+                    $paciente->num_edad = $_REQUEST['edad'];
+                }
+                if(isset($_REQUEST['sexo'])){
+                    $paciente->txt_sexo = $_REQUEST['sexo'];
                 }
 
                 if($paciente->save()){
