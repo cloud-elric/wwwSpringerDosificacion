@@ -42,7 +42,7 @@ class EntPacientes extends \yii\db\ActiveRecord
             [['txt_nombre_completo'], 'string', 'max' => 500],
             [['txt_email', 'txt_telefono_contacto', 'txt_sexo', 'txt_token'], 'string', 'max' => 50],
             [['txt_token'], 'unique'],
-            [['txt_email'], 'unique'],
+            [['txt_email'], 'unique', 'message'=>'Correo registrado'],
             [['id_doctor'], 'exist', 'skipOnError' => true, 'targetClass' => EntDoctores::className(), 'targetAttribute' => ['id_doctor' => 'id_doctor']],
         ];
     }
