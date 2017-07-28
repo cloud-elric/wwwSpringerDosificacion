@@ -643,3 +643,34 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
     - "message" = "Paciente no acepto el aviso"
     - "relacion" = "Relacion guardada correctamente"
 
+
+## 20.- Servicio para mostrar tratamiento por id
+
+**Nombre del servicio**
+
+    - http://nombre-servidor/web/api/get-tratamiento
+
+**Parametros del Servico**
+
+    - id_tratamiento *
+
+
+    * campo obligatorio al menos uno obligatorio
+
+Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Faltan datos"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "No hay tratamiento"
+    - "tratamiento" = []    
+
+Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+    - "error" = false
+    - "message" = "Tratamiento mostrado"
+    - "tratamiento" = JSON con los datos del tratamiento
+

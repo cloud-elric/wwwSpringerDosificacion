@@ -672,6 +672,7 @@ class ApiController extends Controller
             }else{
                 $respuesta['error'] = true;
                 $respuesta['message'] = 'No hay tratamientos';
+                $respuesta['tratamientos'] = [];                
             }
         }
 
@@ -705,5 +706,25 @@ class ApiController extends Controller
         }
 
         return $respuesta;
+    }
+
+    public function actionGetTratamiento(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan Datos';
+
+        if(isset($_REQUEST['id_tratamiento'])){
+            $tratamiento = EntTratamiento::find()->where(['id_tratamiento'=>$_REQUEST['id_tratamiento']])->one();
+            if($tratamiento){
+                $respuesta['error'] = false;
+                $respuesta['message'] = 'Tratamiento mostrado';
+                $respuesta['tratamiento'] = $tratamiento;
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'No hay tratamiento';
+                $respuesta['tratamiento'] = [];
+            }
+        }
+        return $respuesta;        
     }
 }
