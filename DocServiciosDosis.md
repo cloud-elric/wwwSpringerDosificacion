@@ -104,12 +104,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 
 **Parametros del Servico**
 
-    - nombre **
-    - apPaterno **
-    - apMaterno **
+    - nombre_completo **
     - email **
     - tel **
-    - fecha **
+    - edad **
+    - sexo **
     - page *
 
 
@@ -343,12 +342,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - idPaciente *
-    - nombre **
-    - apellidoPat **
-    - apellidoMat
+    - nombre_completo **
     - email **
-    - $telefono **
-    - $nacimiento **
+    - telefono **
+    - edad **
+    - sexo**
 
 
     * campo obligatorio

@@ -247,7 +247,7 @@ class ApiController extends Controller
         
         $dataProvider = new ActiveDataProvider([
 			'query' => EntPacientes::find()->where(['b_habilitado'=>1]),
-			'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
+			'sort'=> ['defaultOrder' => ['txt_nombre_completo'=>'asc']],
 			'pagination' => [
 				'pageSize' => 20,
 				'page' => $page
@@ -278,8 +278,8 @@ class ApiController extends Controller
             $paciente = EntPacientes::find()->where(['id_paciente'=>$id])->andWhere(['b_habilitado'=>1])->one();           
 
             if($paciente){
-                if(isset($_REQUEST['nombre'])){
-                    $paciente->txt_nombre = $_REQUEST['nombre_completo'];
+                if(isset($_REQUEST['nombre_completo'])){
+                    $paciente->txt_nombre_completo = $_REQUEST['nombre_completo'];
                 }
                 if(isset($_REQUEST['email'])){
                     $paciente->txt_email = $_REQUEST['email'];
@@ -377,25 +377,16 @@ class ApiController extends Controller
         $respuesta['message'] = 'Faltan datos';
 
         $nombre = null;
-        $apPaterno = null;
-        $apMaterno = null;
         $email = null;
         $tel = null;
-        $fecha = null;
+        $edad = null;
+        $sexo = null;
         $page = null;
         $query = EntPacientes::find()->where(['b_habilitado'=>1]);        
         
-        if(isset($_REQUEST['nombre'])){
-            $nombre = $_REQUEST['nombre'];
-            $query->andFilterWhere(['like', 'txt_nombre', $nombre]);            
-        }
-        if(isset($_REQUEST['apPaterno'])){        
-            $apPaterno = $_REQUEST['apPaterno'];
-            $query->andFilterWhere(['like', 'txt_apellido_paterno', $apPaterno]);            
-        }
-        if(isset($_REQUEST['apMaterno'])){                
-            $apMaterno = $_REQUEST['apMaterno'];
-            $query->andFilterWhere(['like', 'txt_apellido_materno', $apMaterno]);            
+        if(isset($_REQUEST['nombre_completo'])){
+            $nombre = $_REQUEST['nombre_completo'];
+            $query->andFilterWhere(['like', 'txt_nombre_completo', $nombre]);            
         }
         if(isset($_REQUEST['email'])){                
             $email = $_REQUEST['email'];
@@ -405,15 +396,13 @@ class ApiController extends Controller
             $tel = $_REQUEST['tel'];
             $query->andFilterWhere(['like', 'txt_telefono_contacto', $tel]);            
         }
-        if(isset($_REQUEST['fecha'])){
-            //$fecha = Utils::changeFormatDateInput($_REQUEST['fecha']);
-            $fecha = str_replace('/', '-', $_REQUEST['fecha']);
-            $fecha = date('Y-m-d H:i:s', strtotime($fecha));
-            // grid filtering conditions
-            $query->andFilterWhere([
-                'fch_nacimiento' => $fecha,
-            ]);
-
+        if(isset($_REQUEST['edad'])){
+            $edad = $_REQUEST['edad'];
+            $query->andFilterWhere(['num_edad'=>$edad]);
+        }
+        if(isset($_REQUEST['sexo'])){                
+            $sexo = $_REQUEST['sexo'];
+            $query->andFilterWhere(['like', 'txt_sexo', $sexo]);
         }
         if(isset($_REQUEST['page'])){                
             $page = $_REQUEST['page'];
@@ -424,9 +413,9 @@ class ApiController extends Controller
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
+            'sort'=> ['defaultOrder' => ['txt_nombre_completo'=>'asc']],
             'pagination' => [
-                'pageSize' => 3,
+                'pageSize' => 50,
                 'page' => $page
             ]
         ]);
@@ -613,7 +602,7 @@ class ApiController extends Controller
                 // add conditions that should always apply here
                 $dataProvider = new ActiveDataProvider([
                     'query' => $query,
-                    'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
+                    'sort'=> ['defaultOrder' => ['txt_nombre_completo'=>'asc']],
                     'pagination' => [
                         'pageSize' => 5,
                         'page' => $page
