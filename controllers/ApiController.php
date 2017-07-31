@@ -211,14 +211,21 @@ class ApiController extends Controller
         $paciente = new EntPacientes;
         $utils = new Utils();        
 
-        if(isset($_REQUEST['nombre_completo']) && isset($_REQUEST['email']) && isset($_REQUEST['telefono']) && 
-        isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor'])){
-            //Cambio de formato de fecha ej. "2/06/2000" a "2000-06-02" para guadarlo en la BD
-
+        if( (isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor'])) ||
+        (isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor']) && isset($_REQUEST['apMaterno'])) || 
+        (isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor']) && isset($_REQUEST['telefono'])) || 
+        (isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor']) && isset($_REQUEST['apMaterno']) && isset($_REQUEST['telefono'])) ){
+            
             $paciente->id_doctor = $_REQUEST['id_doctor'];
-            $paciente->txt_nombre_completo = $_REQUEST['nombre_completo'];
+            $paciente->txt_nombre = $_REQUEST['nombre'];
+            $paciente->txt_apellido_paterno = $_REQUEST['apPaterno'];
+            if(isset($_REQUEST['apMaterno'])){
+                $paciente->txt_apellido_materno = $_REQUEST['apMaterno'];
+            }
             $paciente->txt_email = $_REQUEST['email'];
-            $paciente->txt_telefono_contacto = $_REQUEST['telefono'];
+            if(isset($_REQUEST['telefono'])){
+                $paciente->txt_telefono_contacto = $_REQUEST['telefono'];
+            }
             $paciente->txt_token = $utils->generateToken();
             $paciente->txt_sexo = $_REQUEST['sexo'];
             $paciente->num_edad = $_REQUEST['edad'];
@@ -247,7 +254,7 @@ class ApiController extends Controller
         
         $dataProvider = new ActiveDataProvider([
 			'query' => EntPacientes::find()->where(['b_habilitado'=>1]),
-			'sort'=> ['defaultOrder' => ['txt_nombre_completo'=>'asc']],
+			'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
 			'pagination' => [
 				'pageSize' => 20,
 				'page' => $page
@@ -271,15 +278,21 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
 
-        if( (isset($_REQUEST['idPaciente']) && isset($_REQUEST['nombre_completo'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['email'])) ||
-        (isset($_REQUEST['idPaciente']) && isset($_REQUEST['telefono'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['edad'])) || 
+        if( (isset($_REQUEST['idPaciente']) && isset($_REQUEST['nombre'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['apPaterno'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['email'])) ||
+        (isset($_REQUEST['idPaciente']) && isset($_REQUEST['apMaterno'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['telefono'])) || (isset($_REQUEST['idPaciente']) && isset($_REQUEST['edad'])) || 
         (isset($_REQUEST['idPaciente']) && isset($_REQUEST['sexo'])) ){
             $id = $_REQUEST['idPaciente'];
             $paciente = EntPacientes::find()->where(['id_paciente'=>$id])->andWhere(['b_habilitado'=>1])->one();           
 
             if($paciente){
-                if(isset($_REQUEST['nombre_completo'])){
-                    $paciente->txt_nombre_completo = $_REQUEST['nombre_completo'];
+                if(isset($_REQUEST['nombre'])){
+                    $paciente->txt_nombre = $_REQUEST['nombre'];
+                }
+                if(isset($_REQUEST['apPaterno'])){
+                    $paciente->txt_apellido_paterno = $_REQUEST['apPaterno'];
+                }
+                if(isset($_REQUEST['apMaterno'])){
+                    $paciente->txt_apellido_materno = $_REQUEST['apMaterno'];
                 }
                 if(isset($_REQUEST['email'])){
                     $paciente->txt_email = $_REQUEST['email'];
@@ -377,6 +390,7 @@ class ApiController extends Controller
         $respuesta['message'] = 'Faltan datos';
 
         $nombre = null;
+        $apellido = null;
         $email = null;
         $tel = null;
         $edad = null;
@@ -384,17 +398,17 @@ class ApiController extends Controller
         $page = null;
         $query = EntPacientes::find()->where(['b_habilitado'=>1]);        
         
-        if(isset($_REQUEST['nombre_completo'])){
-            $nombre = $_REQUEST['nombre_completo'];
-            $query->andFilterWhere(['like', 'txt_nombre_completo', $nombre]);            
+        if(isset($_REQUEST['nombre'])){
+            $nombre = $_REQUEST['nombre'];
+            $query->andFilterWhere(['like', 'txt_nombre', $nombre]);            
+        }
+        if(isset($_REQUEST['apPaterno'])){
+            $apellido = $_REQUEST['apPaterno'];
+            $query->andFilterWhere(['like', 'txt_apellido_paterno', $apellido]);            
         }
         if(isset($_REQUEST['email'])){                
             $email = $_REQUEST['email'];
             $query->andFilterWhere(['like', 'txt_email', $email]);            
-        }
-        if(isset($_REQUEST['tel'])){                
-            $tel = $_REQUEST['tel'];
-            $query->andFilterWhere(['like', 'txt_telefono_contacto', $tel]);            
         }
         if(isset($_REQUEST['edad'])){
             $edad = $_REQUEST['edad'];
@@ -413,7 +427,7 @@ class ApiController extends Controller
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['txt_nombre_completo'=>'asc']],
+            'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
             'pagination' => [
                 'pageSize' => 50,
                 'page' => $page
@@ -495,17 +509,30 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
 
-        if(isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita']) ){
+        if( (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento'])) || /*Solo los campos requeridos*/
+        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['num_estatura'])) || /*Campos requeridos y num_estatura*/
+        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['fch_visita'])) || /*Campos requeridos y fch_visita*/
+        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita'])) /*Todos los campos requeridos y opcionales*/ ){
             $dosis = new EntDosis();
             $tratamiento = EntTratamiento::find()->where(['id_tratamiento'=>$_REQUEST['id_tratamiento']])->one();
-            $dosis->id_tratamiento = $_REQUEST['id_tratamiento'];
-            $dosis->num_peso = $_REQUEST['num_peso'];
-            $dosis->num_estatura = $_REQUEST['num_estatura'];
-            $dosis->txt_token = $utils->generateToken();
-            $fecha = str_replace('/', '-', $_REQUEST['fch_visita']);
-            $fecha = date('Y-m-d H:i:s', strtotime($fecha));
-            $dosis->fch_proxima_visita = $fecha;//Utils::changeFormatDateInput($_REQUEST['fch_visita']);
 
+            $dosis->id_tratamiento = $_REQUEST['id_tratamiento'];
+            $dosis->id_presentacion = $_REQUEST['id_presentacion'];
+            $dosis->num_dosis_sugerida = $_REQUEST['dosisSugerida'];
+            $dosis->num_dosis_acumulada = $_REQUEST['dosisAcumulada'];
+            $dosis->num_dosis_diaria = $_REQUEST['dosisDiaria'];
+            $dosis->num_tiempo_tratamiento = $_REQUEST['tiempoTratamiento'];
+            $dosis->num_dias_tratamiento = $_REQUEST['diasTratamiento'];
+            $dosis->num_peso = $_REQUEST['num_peso'];
+            if(isset($_REQUEST['num_estatura'])){
+                $dosis->num_estatura = $_REQUEST['num_estatura'];
+            }
+            $dosis->txt_token = $utils->generateToken();
+            if(isset($_REQUEST['fch_visita'])){
+                $fecha = str_replace('/', '-', $_REQUEST['fch_visita']);
+                $fecha = date('Y-m-d H:i:s', strtotime($fecha));
+                $dosis->fch_proxima_visita = $fecha;//Utils::changeFormatDateInput($_REQUEST['fch_visita']);
+            }
             $paciente = EntPacientes::find()->where(['id_paciente'=>$tratamiento->id_paciente])->one();
             $doctor = EntDoctores::find()->where(['id_doctor'=>$tratamiento->id_doctor])->one();
 
@@ -516,7 +543,12 @@ class ApiController extends Controller
                     'paciente' => $paciente,
                     'tratamiento' => $tratamiento
                 ]);
-                
+                if($this->actualizarDatosTratamiento($tratamiento, $dosis)){
+                    $respuesta['message2'] = "Se actualizo el tratamiento";
+                }else{
+                    $respuesta['message2'] = "No se actualizo el tratamiento";                    
+                }
+
                 $carpeta = 'pdfDosis/'. $paciente->txt_token;
                 if (!file_exists($carpeta)) {
                     mkdir($carpeta, 0777, true);
@@ -545,9 +577,24 @@ class ApiController extends Controller
             }else{
                 $respuesta['error'] = true;
                 $respuesta['message'] = 'Error al guardar o no existe paciente o no existe doctor';
+                $respuesta['dosisErr'] = $dosis->errors;
             }
         }
         return $respuesta;
+    }
+
+    public function actualizarDatosTratamiento($tratamiento, $dosis){
+        $tratamiento->num_dosis_sugerida = $dosis->num_dosis_sugerida;
+        $tratamiento->num_dosis_acumulada = $dosis->num_dosis_acumulada;
+        $tratamiento->num_dosis_diaria = $dosis->num_dosis_diaria;
+        $tratamiento->num_tiempo_tratamiento = $dosis->num_tiempo_tratamiento;
+        $tratamiento->num_dias_tratamiento = $dosis->num_dias_tratamiento;
+        $tratamiento->num_peso = $dosis->num_peso;
+        if($tratamiento->save()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function actionDownloadPdf(){
@@ -602,7 +649,7 @@ class ApiController extends Controller
                 // add conditions that should always apply here
                 $dataProvider = new ActiveDataProvider([
                     'query' => $query,
-                    'sort'=> ['defaultOrder' => ['txt_nombre_completo'=>'asc']],
+                    'sort'=> ['defaultOrder' => ['txt_nombre'=>'asc']],
                     'pagination' => [
                         'pageSize' => 5,
                         'page' => $page
@@ -637,10 +684,11 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan Datos';
 
-        if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['txt_nombre_tratamiento'])){
+        if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['txt_nombre_tratamiento'])){
             $tratamiento = new EntTratamiento();
             $tratamiento->id_paciente = $_REQUEST['id_paciente'];
             $tratamiento->id_doctor = $_REQUEST['id_doctor'];
+            $tratamiento->id_presentacion = $_REQUEST['id_presentacion'];
             $tratamiento->txt_nombre_tratamiento = $_REQUEST['txt_nombre_tratamiento'];
 
             if($tratamiento->save()){
@@ -724,7 +772,7 @@ class ApiController extends Controller
                 $respuesta['message'] = 'No hay tratamiento';
                 $respuesta['tratamiento'] = [];
             }
-        }
-        return $respuesta;        
+        }   
+        return $respuesta;
     }
 }

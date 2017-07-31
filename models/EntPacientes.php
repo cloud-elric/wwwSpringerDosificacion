@@ -9,7 +9,9 @@ use Yii;
  *
  * @property string $id_paciente
  * @property string $id_doctor
- * @property string $txt_nombre_completo
+ * @property string $txt_nombre
+ * @property string $txt_apellido_paterno
+ * @property string $txt_apellido_materno
  * @property string $txt_email
  * @property string $txt_telefono_contacto
  * @property integer $num_edad
@@ -37,12 +39,12 @@ class EntPacientes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_doctor', 'txt_nombre_completo', 'num_edad', 'txt_sexo', 'txt_token'], 'required'],
+            [['id_doctor', 'txt_nombre', 'txt_apellido_paterno', 'num_edad', 'txt_sexo', 'txt_token'], 'required'],
             [['id_doctor', 'num_edad', 'b_habilitado'], 'integer'],
-            [['txt_nombre_completo'], 'string', 'max' => 500],
+            [['txt_nombre', 'txt_apellido_paterno', 'txt_apellido_materno'], 'string', 'max' => 100],
             [['txt_email', 'txt_telefono_contacto', 'txt_sexo', 'txt_token'], 'string', 'max' => 50],
             [['txt_token'], 'unique'],
-            [['txt_email'], 'unique', 'message'=>'Correo registrado'],
+            [['txt_email'], 'unique'],
             [['id_doctor'], 'exist', 'skipOnError' => true, 'targetClass' => EntDoctores::className(), 'targetAttribute' => ['id_doctor' => 'id_doctor']],
         ];
     }
@@ -55,7 +57,9 @@ class EntPacientes extends \yii\db\ActiveRecord
         return [
             'id_paciente' => 'Id Paciente',
             'id_doctor' => 'Id Doctor',
-            'txt_nombre_completo' => 'Txt Nombre Completo',
+            'txt_nombre' => 'Txt Nombre',
+            'txt_apellido_paterno' => 'Txt Apellido Paterno',
+            'txt_apellido_materno' => 'Txt Apellido Materno',
             'txt_email' => 'Txt Email',
             'txt_telefono_contacto' => 'Txt Telefono Contacto',
             'num_edad' => 'Num Edad',
