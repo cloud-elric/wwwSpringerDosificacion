@@ -68,15 +68,18 @@ Por ultimo, si todo sale **correctamente** en el servicio se mandara un email al
 
 **Parametros del Servico**
 
-    - nombre_completo *
+    - nombre *
+    - apPaterno *
+    - apMaterno **    
     - email *
-    - telefono *
+    - telefono **
     - edad *
     - sexo *
     - id_doctor *
 
 
     * campos obligatorios
+    ** campos opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -104,9 +107,9 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 
 **Parametros del Servico**
 
-    - nombre_completo **
+    - nombre **
+    - apPaterno **
     - email **
-    - tel **
     - edad **
     - sexo **
     - page *
@@ -342,7 +345,9 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - idPaciente *
-    - nombre_completo **
+    - nombre **
+    - apPaterno **
+    - apMaterno **
     - email **
     - telefono **
     - edad **
@@ -449,12 +454,19 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - id_tratamiento *
+    - id_presentacion *
     - num_peso *
-    - num_estatura *
-    - fch_visita *
+    - dosisSugerida *
+    - dosisAcumulada *
+    - dosisDiaria *
+    - tiempoTratamiento *
+    - diasTratamiento *
+    - num_estatura **
+    - fch_visita **
 
 
     * campo obligatorio al menos uno obligatorio
+    ** campo opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
