@@ -633,6 +633,42 @@ class ApiController extends Controller
         return $respuesta;
     }
 
+    
+    public function actionGetDataDoctor(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan parametros';
+        
+
+        if( isset($_REQUEST['txt_token'])){
+                $tokenDoctor = $_REQUEST['txt_token'];
+
+                $doctor = EntDoctores::find()->where(['txt_token'=>$tokenDoctor])->one();
+
+                if($doctor){
+                    $respuesta['error'] = false;
+                    $respuesta['message'] = 'Pacientes encontrados';
+                    $respuesta['pacientes'] = $doctor->entPacientes;
+                    $respuesta['tratamientos'] = $doctor->entTratamientos;
+                    $respuesta['dosis'] = [];
+                    foreach($doctor->entTratamientos as $tratamiento){
+                       foreach($tratamiento->entDoses as $dosis){
+                            $respuesta['dosis'][] = $dosis;
+                       }
+                    }
+
+                }else{
+                    $respuesta['error'] = true;
+                    $respuesta['message'] = 'Doctor no encontrado';
+                }
+
+                
+          
+        }
+
+        return $respuesta;
+    }
+
     public function actionGetPacientesDoctor(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;

@@ -63,4 +63,25 @@ class EntDoctores extends \yii\db\ActiveRecord
 
         return $doctor;
     }
+
+    public function getIdClave()
+   {
+       return $this->hasOne(CatClaves::className(), ['id_clave' => 'id_clave']);
+   }
+
+   /**
+    * @return \yii\db\ActiveQuery
+    */
+   public function getEntPacientes()
+   {
+       return $this->hasMany(EntPacientes::className(), ['id_doctor' => 'id_doctor']);
+   }
+
+   /**
+    * @return \yii\db\ActiveQuery
+    */
+   public function getEntTratamientos()
+   {
+       return $this->hasMany(EntTratamiento::className(), ['id_doctor' => 'id_doctor']);
+   }
 }
