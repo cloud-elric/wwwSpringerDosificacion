@@ -633,7 +633,9 @@ class ApiController extends Controller
         return $respuesta;
     }
 
-    
+    /**
+    * Obtiene toda la información del doctor
+    */
     public function actionGetDataDoctor(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
