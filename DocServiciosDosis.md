@@ -686,3 +686,34 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
     - "message" = "Tratamiento mostrado"
     - "tratamiento" = JSON con los datos del tratamiento
 
+
+## 21.- Servicio para mostrar todos los datos relacionados con el doctor
+
+**Nombre del servicio**
+
+    - http://nombre-servidor/web/api/get-data-doctor
+
+**Parametros del Servico**
+
+    - txt_token *
+
+
+    * campo obligatorio al menos uno obligatorio
+
+Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Faltan parametros"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Doctor no encontrado"  
+
+Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+    - "error" = false
+    - "message" = "Pacientes encontrados"
+    - "pacientes" = JSON con datos de los pacientes
+    - "tratamiento" = JSON con los datos del tratamiento
+    - "dosis" = JSON con datos de las dosis    
