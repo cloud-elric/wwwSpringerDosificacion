@@ -25,8 +25,10 @@ class ApiController extends Controller
     public function beforeAction($action){
 
         if($this->seguridad == true){
-            if($action->id != "login" || $action->id != "mandar-password" || $action->id != "crear-doctor")
-            {
+            echo $action->id;
+            if(($action->id == "login") || ($action->id == "mandar-password") || ($action->id == "crear-doctor")){
+                return parent::beforeAction($action);                                
+            }else{
                 if(isset($_REQUEST['txt_token_seguridad'])){
                     $doctor = EntDoctores::find()->where(['txt_token_seguridad'=>$_REQUEST['txt_token_seguridad']])->one();
                     if($doctor){
@@ -48,15 +50,19 @@ class ApiController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
+        $utils = new Utils();
 
         if(isset($_REQUEST['usuario']) && isset($_REQUEST['password'])){
             $usuario = $_REQUEST['usuario'];
             $password = $_REQUEST['password'];
 
             if($doctor = EntDoctores::getDoctor($usuario, $password)){
-               $respuesta ['error'] = false;
-               $respuesta ['message'] = 'Doctor encontrado';
-               $respuesta ['doctor'] = $doctor;
+                $doctor->txt_token_seguridad = $utils->generateTokenSeg();
+                if($doctor->save()){
+                    $respuesta ['error'] = false;
+                    $respuesta ['message'] = 'Doctor encontrado';
+                    $respuesta ['doctor'] = $doctor;
+                }
             }else{
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'Email y/o contraseña incorrecto(s)';
