@@ -76,6 +76,7 @@ Por ultimo, si todo sale **correctamente** en el servicio se mandara un email al
     - edad *
     - sexo *
     - id_doctor *
+    - peso
 
 
     * campos obligatorios
