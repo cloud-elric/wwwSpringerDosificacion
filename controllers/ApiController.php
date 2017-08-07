@@ -211,10 +211,9 @@ class ApiController extends Controller
         $paciente = new EntPacientes;
         $utils = new Utils();        
 
-        if( (isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor'])) ||
-        (isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor']) && isset($_REQUEST['apMaterno'])) || 
-        (isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor']) && isset($_REQUEST['telefono'])) || 
-        (isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && isset($_REQUEST['id_doctor']) && isset($_REQUEST['apMaterno']) && isset($_REQUEST['telefono'])) ){
+        if( isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && 
+        isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && 
+        isset($_REQUEST['id_doctor']) && isset($_REQUEST['peso'])) {
             
             $paciente->id_doctor = $_REQUEST['id_doctor'];
             $paciente->txt_nombre = $_REQUEST['nombre'];
@@ -229,6 +228,8 @@ class ApiController extends Controller
             $paciente->txt_token = $utils->generateToken();
             $paciente->txt_sexo = $_REQUEST['sexo'];
             $paciente->num_edad = $_REQUEST['edad'];
+            $paciente->num_peso = $_REQUEST['peso'];
+
             if($paciente->save()){
                 $respuesta ['error'] = false;
                 $respuesta ['message'] = 'Paciente guardado';
