@@ -23,9 +23,10 @@ class ApiController extends Controller
     private $seguridad = true;
 
     public function beforeAction($action){
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'No tienes permisos para acceder';
 
         if($this->seguridad == true){
-            echo $action->id;
             if(($action->id == "login") || ($action->id == "mandar-password") || ($action->id == "crear-doctor")){
                 return parent::beforeAction($action);                                
             }else{
@@ -39,7 +40,7 @@ class ApiController extends Controller
         }else{
             return parent::beforeAction($action);
         }
-        echo 'No tienes permiso para acceder a esa info.';
+        echo \json_encode($respuesta);
         exit();
    }
     
