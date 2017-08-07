@@ -15,9 +15,31 @@ use Spipu\Html2Pdf\Html2Pdf;
 use app\models\EntTratamiento;
 use app\models\RelPacienteAviso;
 
+
 class ApiController extends Controller
 {
     public $enableCsrfValidation = false;
+    //Variable para verificar si se quere seguridad en los servicios
+    private $seguridad = true;
+
+    public function beforeAction($action){
+
+        if($this->seguridad == true){
+            if($action->id != "login" || $action->id != "mandar-password" || $action->id != "crear-doctor")
+            {
+                if(isset($_REQUEST['txt_token_seguridad'])){
+                    $doctor = EntDoctores::find()->where(['txt_token_seguridad'=>$_REQUEST['txt_token_seguridad']])->one();
+                    if($doctor){
+                        return parent::beforeAction($action);         
+                    }
+                }
+            }
+        }else{
+            return parent::beforeAction($action);
+        }
+        echo 'No tienes permiso para acceder a esa info.';
+        exit();
+   }
     
     /**
     * Validación para registrar al usuario (doctor)
@@ -398,11 +420,11 @@ class ApiController extends Controller
         $page = null;
         $query = EntPacientes::find()->where(['b_habilitado'=>1]);        
         
-        if(isset($_REQUEST['nombre'])){
+        if(isset($_REQUEST['nombre']) && isset($_REQUEST['txt_token_seguridad'])){
             $nombre = $_REQUEST['nombre'];
             $query->andFilterWhere(['like', 'txt_nombre', $nombre]);            
         }
-        if(isset($_REQUEST['apPaterno'])){
+        if(isset($_REQUEST['apPaterno']) && isset($_REQUEST['txt_token_seguridad'])){
             $apellido = $_REQUEST['apPaterno'];
             $query->andFilterWhere(['like', 'txt_apellido_paterno', $apellido]);            
         }
