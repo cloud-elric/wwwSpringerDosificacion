@@ -77,10 +77,11 @@ Por ultimo, si todo sale **correctamente** en el servicio se mandara un email al
     - sexo *
     - id_doctor *
     - peso
-
+    - txt_token_seguridad ***
 
     * campos obligatorios
     ** campos opcional
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -114,10 +115,12 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - edad **
     - sexo **
     - page *
+    - txt_token_seguridad ***    
 
 
     ** campo opcional pero al menos uno obligatorio.
     * campo oblogatorio.
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -146,6 +149,10 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - idPaciente (obligatorio)
+    - txt_token_seguridad ***
+
+
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si este parametro **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -210,8 +217,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - page *
+    - txt_token_seguridad ***
+
 
     * campo obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -244,10 +254,12 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - email **
     - password **
     - cedula **
+    - txt_token_seguridad ***
 
 
     * campo obligatorio 
     ** campo opcional pero al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -281,9 +293,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - idDoctor *
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -317,8 +331,10 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - page *
+    - txt_token_seguridad ***
 
     * campo obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -353,10 +369,12 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - telefono **
     - edad **
     - sexo**
+    - txt_token_seguridad ***
 
 
     * campo obligatorio
     ** campo opcional pero al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -390,9 +408,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - idPaciente *
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -425,9 +445,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - idTratamiento *
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -464,10 +486,12 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - diasTratamiento *
     - num_estatura **
     - fch_visita **
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
     ** campo opcional
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -499,9 +523,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 **Parametros del Servico**
 
     - token *
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -526,10 +552,12 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
 
     - id_doctor *
     - page **
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
     ** campo opcional
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -565,9 +593,11 @@ si **se envian solo el parametro de id_doctor correctamente** el servicio respon
     - id_doctor *
     - id_paciente *
     - txt_nombre_tratamiento *
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -597,9 +627,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
 
     - id_doctor *
     - id_paciente *
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -629,9 +661,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
     - id_paciente *
     - id_aviso *
     - b_acepto *
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -666,9 +700,11 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
 **Parametros del Servico**
 
     - id_tratamiento *
+    - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
 
 Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
 
@@ -687,3 +723,36 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
     - "message" = "Tratamiento mostrado"
     - "tratamiento" = JSON con los datos del tratamiento
 
+
+## 21.- Servicio para mostrar todos los datos relacionados con el doctor
+
+**Nombre del servicio**
+
+    - http://nombre-servidor/web/api/get-data-doctor
+
+**Parametros del Servico**
+
+    - txt_token *
+    - txt_token_seguridad ***
+
+
+    * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
+
+Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Faltan parametros"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Doctor no encontrado"  
+
+Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+    - "error" = false
+    - "message" = "Pacientes encontrados"
+    - "pacientes" = JSON con datos de los pacientes
+    - "tratamiento" = JSON con los datos del tratamiento
+    - "dosis" = JSON con datos de las dosis    

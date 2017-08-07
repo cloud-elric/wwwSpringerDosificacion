@@ -15,9 +15,34 @@ use Spipu\Html2Pdf\Html2Pdf;
 use app\models\EntTratamiento;
 use app\models\RelPacienteAviso;
 
+
 class ApiController extends Controller
 {
     public $enableCsrfValidation = false;
+    //Variable para verificar si se quere seguridad en los servicios
+    private $seguridad = true;
+
+    public function beforeAction($action){
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'No tienes permisos para acceder';
+
+        if($this->seguridad == true){
+            if(($action->id == "login") || ($action->id == "mandar-password") || ($action->id == "crear-doctor")){
+                return parent::beforeAction($action);                                
+            }else{
+                if(isset($_REQUEST['txt_token_seguridad'])){
+                    $doctor = EntDoctores::find()->where(['txt_token_seguridad'=>$_REQUEST['txt_token_seguridad']])->one();
+                    if($doctor){
+                        return parent::beforeAction($action);         
+                    }
+                }
+            }
+        }else{
+            return parent::beforeAction($action);
+        }
+        echo \json_encode($respuesta);
+        exit();
+   }
     
     /**
     * Validación para registrar al usuario (doctor)
@@ -26,15 +51,19 @@ class ApiController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
+        $utils = new Utils();
 
         if(isset($_REQUEST['usuario']) && isset($_REQUEST['password'])){
             $usuario = $_REQUEST['usuario'];
             $password = $_REQUEST['password'];
 
             if($doctor = EntDoctores::getDoctor($usuario, $password)){
-               $respuesta ['error'] = false;
-               $respuesta ['message'] = 'Doctor encontrado';
-               $respuesta ['doctor'] = $doctor;
+                $doctor->txt_token_seguridad = $utils->generateTokenSeg();
+                if($doctor->save()){
+                    $respuesta ['error'] = false;
+                    $respuesta ['message'] = 'Doctor encontrado';
+                    $respuesta ['doctor'] = $doctor;
+                }
             }else{
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'Email y/o contraseña incorrecto(s)';
@@ -399,11 +428,11 @@ class ApiController extends Controller
         $page = null;
         $query = EntPacientes::find()->where(['b_habilitado'=>1]);        
         
-        if(isset($_REQUEST['nombre'])){
+        if(isset($_REQUEST['nombre']) && isset($_REQUEST['txt_token_seguridad'])){
             $nombre = $_REQUEST['nombre'];
             $query->andFilterWhere(['like', 'txt_nombre', $nombre]);            
         }
-        if(isset($_REQUEST['apPaterno'])){
+        if(isset($_REQUEST['apPaterno']) && isset($_REQUEST['txt_token_seguridad'])){
             $apellido = $_REQUEST['apPaterno'];
             $query->andFilterWhere(['like', 'txt_apellido_paterno', $apellido]);            
         }

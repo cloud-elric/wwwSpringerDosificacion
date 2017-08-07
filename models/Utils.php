@@ -79,6 +79,17 @@ class Utils {
 		$token = $pre . md5 ( uniqid ( $pre ) ) . uniqid ();
 		return $token;
 	}
+
+	/**
+	 * Genera un token para guardarlo en la base de datos
+	 *
+	 * @param string $pre        	
+	 * @return string
+	 */
+	public static function generateTokenSeg($pre = 'seg') {
+		$token = $pre . md5 ( uniqid ( $pre ) ) . uniqid ();
+		return $token;
+	}
 	
 	/**
 	 * Envia el correo electronico para recuperar el correo electronico
