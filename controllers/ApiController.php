@@ -889,7 +889,7 @@ class ApiController extends Controller
                     $respuesta['tratamiento'] = $tratamiento;
                 }else{
                     $respuesta['error'] = true;
-                    $respuesta['message'] = 'Faltan Datos';
+                    $respuesta['message'] = 'Error al guardar tratamiento';
                     $respuesta['tratErrors'] = $tratamiento->errors;
                 }
             }else{
