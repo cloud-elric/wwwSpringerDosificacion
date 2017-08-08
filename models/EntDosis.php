@@ -11,7 +11,6 @@ use Yii;
  * @property string $id_tratamiento
  * @property string $id_presentacion
  * @property double $num_peso
- * @property double $num_estatura
  * @property double $num_dosis_sugerida
  * @property double $num_dosis_acumulada
  * @property string $num_dosis_diaria
@@ -42,7 +41,7 @@ class EntDosis extends \yii\db\ActiveRecord
         return [
             [['id_tratamiento', 'id_presentacion', 'num_peso', 'num_dosis_sugerida', 'num_dosis_acumulada', 'num_dosis_diaria', 'num_tiempo_tratamiento', 'num_dias_tratamiento', 'txt_token'], 'required'],
             [['id_tratamiento', 'id_presentacion', 'num_dosis_diaria', 'num_tiempo_tratamiento', 'num_dias_tratamiento'], 'integer'],
-            [['num_peso', 'num_estatura', 'num_dosis_sugerida', 'num_dosis_acumulada'], 'number'],
+            [['num_peso', 'num_dosis_sugerida', 'num_dosis_acumulada'], 'number'],
             [['fch_creacion', 'fch_proxima_visita'], 'safe'],
             [['txt_token'], 'string', 'max' => 50],
             [['txt_token'], 'unique'],
@@ -61,7 +60,6 @@ class EntDosis extends \yii\db\ActiveRecord
             'id_tratamiento' => 'Id Tratamiento',
             'id_presentacion' => 'Id Presentacion',
             'num_peso' => 'Num Peso',
-            'num_estatura' => 'Num Estatura',
             'num_dosis_sugerida' => 'Num Dosis Sugerida',
             'num_dosis_acumulada' => 'Num Dosis Acumulada',
             'num_dosis_diaria' => 'Num Dosis Diaria',

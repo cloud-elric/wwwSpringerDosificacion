@@ -11,10 +11,9 @@ use Yii;
  * @property string $id_paciente
  * @property string $id_doctor
  * @property string $id_presentacion
- * @property string $id_paciente_cliente
+ * @property string $id_tratamiento_cliente
  * @property string $txt_nombre_tratamiento
  * @property double $num_peso
- * @property double $num_estatura
  * @property double $num_dosis_sugerida
  * @property double $num_dosis_acumulada
  * @property string $num_dosis_diaria
@@ -45,8 +44,8 @@ class EntTratamiento extends \yii\db\ActiveRecord
     {
         return [
             [['id_paciente', 'id_doctor', 'txt_nombre_tratamiento'], 'required'],
-            [['id_paciente', 'id_doctor', 'id_presentacion', 'id_paciente_cliente', 'num_dosis_diaria', 'num_tiempo_tratamiento', 'num_dias_tratamiento', 'b_habilitado'], 'integer'],
-            [['num_peso', 'num_estatura', 'num_dosis_sugerida', 'num_dosis_acumulada'], 'number'],
+            [['id_paciente', 'id_doctor', 'id_presentacion', 'id_tratamiento_cliente', 'num_dosis_diaria', 'num_tiempo_tratamiento', 'num_dias_tratamiento', 'b_habilitado'], 'integer'],
+            [['num_peso', 'num_dosis_sugerida', 'num_dosis_acumulada'], 'number'],
             [['fch_ultima_visita'], 'safe'],
             [['txt_nombre_tratamiento'], 'string', 'max' => 500],
             [['id_doctor'], 'exist', 'skipOnError' => true, 'targetClass' => EntDoctores::className(), 'targetAttribute' => ['id_doctor' => 'id_doctor']],
@@ -65,7 +64,7 @@ class EntTratamiento extends \yii\db\ActiveRecord
             'id_paciente' => 'Id Paciente',
             'id_doctor' => 'Id Doctor',
             'id_presentacion' => 'Id Presentacion',
-            'id_paciente_cliente' => 'Id Paciente Cliente',
+            'id_tratamiento_cliente' => 'Id Tratamiento Cliente',
             'txt_nombre_tratamiento' => 'Txt Nombre Tratamiento',
             'num_peso' => 'Num Peso',
             'num_estatura' => 'Num Estatura',

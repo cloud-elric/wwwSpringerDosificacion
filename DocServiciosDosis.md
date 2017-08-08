@@ -592,7 +592,15 @@ si **se envian solo el parametro de id_doctor correctamente** el servicio respon
 
     - id_doctor *
     - id_paciente *
+    - id_presentacion *
     - txt_nombre_tratamiento *
+    - numPeso *
+    - dosisSugerida *
+    - dosisAcumulada *
+    - dosisDiaria *
+    - tiempoTratamiento *
+    - diasTratamiento *
+    - inicioTratamiento *
     - txt_token_seguridad ***
 
 
@@ -756,3 +764,42 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
     - "pacientes" = JSON con datos de los pacientes
     - "tratamiento" = JSON con los datos del tratamiento
     - "dosis" = JSON con datos de las dosis    
+
+
+## 22.- Servicio para asignar una fecha de finalizacion al tratamiento
+
+**Nombre del servicio**
+
+    - http://nombre-servidor/web/api/finalizar-tratamiento
+
+**Parametros del Servico**
+
+    - tokenTratamiento *
+    - fchFinalizar *
+    - txt_token_seguridad ***
+
+
+    * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
+
+Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Faltan Datos"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "No se encuentra el tratamiento"
+
+    o
+
+    - "error" = true
+    - "message" = "Error al guardar tratamiento"
+    - "tratErrors" = JSON con errores al guardar
+
+Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+    - "error" = false
+    - "message" = "Asignada fecha de finalización"
+    - "tratamiento" = JSON con los datos del tratamiento  

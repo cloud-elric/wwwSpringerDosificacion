@@ -20,7 +20,7 @@ class ApiController extends Controller
 {
     public $enableCsrfValidation = false;
     //Variable para verificar si se quere seguridad en los servicios
-    private $seguridad = true;
+    private $seguridad = false;
 
     public function beforeAction($action){
         $respuesta['error'] = true;
@@ -749,20 +749,50 @@ class ApiController extends Controller
 
     public function actionCrearTratamiento(){
         Yii::$app->response->format = Response::FORMAT_JSON;
+        $utils = new Utils;
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan Datos';
 
-        if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['txt_nombre_tratamiento'])){
+        if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['txt_nombre_tratamiento']) && 
+        isset($_REQUEST['numPeso']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && 
+        isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['inicioTratamiento']) ){
             $tratamiento = new EntTratamiento();
             $tratamiento->id_paciente = $_REQUEST['id_paciente'];
             $tratamiento->id_doctor = $_REQUEST['id_doctor'];
             $tratamiento->id_presentacion = $_REQUEST['id_presentacion'];
             $tratamiento->txt_nombre_tratamiento = $_REQUEST['txt_nombre_tratamiento'];
+            $tratamiento->num_peso = $_REQUEST['numPeso'];
+            $tratamiento->num_dosis_sugerida = $_REQUEST['dosisSugerida'];
+            $tratamiento->num_dosis_acumulada = $_REQUEST['dosisAcumulada'];
+            $tratamiento->num_dosis_diaria = $_REQUEST['dosisDiaria'];
+            $tratamiento->num_tiempo_tratamiento = $_REQUEST['tiempoTratamiento'];
+            $tratamiento->num_dias_tratamiento = $_REQUEST['diasTratamiento'];
+            $tratamiento->fch_ultima_visita = $_REQUEST['inicioTratamiento'];
+            $tratamiento->fch_inicio_tratamiento = $_REQUEST['inicioTratamiento'];
+            $tratamiento->txt_token = $utils->generateToken();
 
             if($tratamiento->save()){
-                $respuesta['error'] = false;
-                $respuesta['message'] = 'Tratamiento creado';
-                $respuesta['tratamiento'] = $tratamiento;
+                $dosis = new EntDosis;
+                $dosis->id_tratamiento = $tratamiento->id_tratamiento;
+                $dosis->id_presentacion = $tratamiento->id_presentacion;
+                $dosis->num_peso = $tratamiento->num_peso;                
+                $dosis->num_dosis_sugerida = $tratamiento->num_dosis_sugerida;
+                $dosis->num_dosis_acumulada = $tratamiento->num_dosis_acumulada;
+                $dosis->num_dosis_diaria = $tratamiento->num_dosis_diaria;
+                $dosis->num_tiempo_tratamiento = $tratamiento->num_tiempo_tratamiento;
+                $dosis->num_dias_tratamiento = $tratamiento->num_dias_tratamiento;
+                $dosis->fch_creacion = $tratamiento->fch_inicio_tratamiento;
+                $dosis->txt_token = $utils->generateToken();
+
+                if($dosis->save()){
+                    $respuesta['error'] = false;
+                    $respuesta['message'] = 'Tratamiento creado';
+                    $respuesta['tratamiento'] = $tratamiento;
+                }else{
+                    $respuesta['error'] = true;
+                    $respuesta['message'] = 'Error al guardar dosis';
+                    $respuesta['dosisoErr'] = $dosis->errors;
+                }
             }else{
                 $respuesta['error'] = true;
                 $respuesta['message'] = 'Error al guardar tratamiento';
@@ -841,6 +871,33 @@ class ApiController extends Controller
                 $respuesta['tratamiento'] = [];
             }
         }   
+        return $respuesta;
+    }
+
+    public function actionFinalizarTratamiento(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan Datos';
+
+        if(isset($_REQUEST['tokenTratamiento']) && isset($_REQUEST['fchFinalizar'])){
+            $tratamiento = EntTratamiento::find()->where(['txt_token'=>$_REQUEST['tokenTratamiento']])->one();
+            if($tratamiento){
+                $tratamiento->fch_fin_tratamiento = $_REQUEST['fchFinalizar'];
+                if($tratamiento->save()){
+                    $respuesta['error'] = false;
+                    $respuesta['message'] = 'Asignada fecha de finalización';
+                    $respuesta['tratamiento'] = $tratamiento;
+                }else{
+                    $respuesta['error'] = true;
+                    $respuesta['message'] = 'Faltan Datos';
+                    $respuesta['tratErrors'] = $tratamiento->errors;
+                }
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'No se encuentra el tratamiento';
+            }
+        }
+
         return $respuesta;
     }
 }
