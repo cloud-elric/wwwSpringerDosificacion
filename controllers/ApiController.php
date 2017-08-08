@@ -242,9 +242,10 @@ class ApiController extends Controller
 
         if( isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && 
         isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && 
-        isset($_REQUEST['id_doctor']) && isset($_REQUEST['peso'])) {
+        isset($_REQUEST['id_doctor']) && isset($_REQUEST['peso']) && isset($_REQUEST['id_paciente_cliente'])) {
             
             $paciente->id_doctor = $_REQUEST['id_doctor'];
+            $paciente->id_paciente_cliente = $_REQUEST['id_paciente_cliente'];            
             $paciente->txt_nombre = $_REQUEST['nombre'];
             $paciente->txt_apellido_paterno = $_REQUEST['apPaterno'];
             if(isset($_REQUEST['apMaterno'])){
@@ -539,14 +540,16 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
 
-        if( (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento'])) || /*Solo los campos requeridos*/
-        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['num_estatura'])) || /*Campos requeridos y num_estatura*/
-        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['fch_visita'])) || /*Campos requeridos y fch_visita*/
-        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita'])) /*Todos los campos requeridos y opcionales*/ ){
+        if( (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente'])) || /*Solo los campos requeridos*/
+        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['num_estatura'])) || /*Campos requeridos y num_estatura*/
+        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['fch_visita'])) || /*Campos requeridos y fch_visita*/
+        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita'])) /*Todos los campos requeridos y opcionales*/ ){
             $dosis = new EntDosis();
             $tratamiento = EntTratamiento::find()->where(['id_tratamiento'=>$_REQUEST['id_tratamiento']])->one();
 
             $dosis->id_tratamiento = $_REQUEST['id_tratamiento'];
+            $dosis->id_tratamiento_cliente = $_REQUEST['id_tratamiento_cliente'];
+            $dosis->id_dosis_cliente = $_REQUEST['id_dosis_cliente'];                    
             $dosis->id_presentacion = $_REQUEST['id_presentacion'];
             $dosis->num_dosis_sugerida = $_REQUEST['dosisSugerida'];
             $dosis->num_dosis_acumulada = $_REQUEST['dosisAcumulada'];
@@ -755,9 +758,12 @@ class ApiController extends Controller
 
         if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['txt_nombre_tratamiento']) && 
         isset($_REQUEST['numPeso']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && 
-        isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['inicioTratamiento']) ){
+        isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['inicioTratamiento']) && 
+        isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_paciente_cliente'])){
             $tratamiento = new EntTratamiento();
+            $tratamiento->id_tratamiento_cliente = $_REQUEST['id_tratamiento_cliente'];            
             $tratamiento->id_paciente = $_REQUEST['id_paciente'];
+            $tratamiento->id_paciente_cliente = $_REQUEST['id_paciente_cliente'];            
             $tratamiento->id_doctor = $_REQUEST['id_doctor'];
             $tratamiento->id_presentacion = $_REQUEST['id_presentacion'];
             $tratamiento->txt_nombre_tratamiento = $_REQUEST['txt_nombre_tratamiento'];
@@ -774,6 +780,7 @@ class ApiController extends Controller
             if($tratamiento->save()){
                 $dosis = new EntDosis;
                 $dosis->id_tratamiento = $tratamiento->id_tratamiento;
+                $dosis->id_tratamiento_cliente = $tratamiento->id_tratamiento_cliente;                
                 $dosis->id_presentacion = $tratamiento->id_presentacion;
                 $dosis->num_peso = $tratamiento->num_peso;                
                 $dosis->num_dosis_sugerida = $tratamiento->num_dosis_sugerida;

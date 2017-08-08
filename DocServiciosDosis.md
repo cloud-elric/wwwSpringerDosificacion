@@ -76,7 +76,8 @@ Por ultimo, si todo sale **correctamente** en el servicio se mandara un email al
     - edad *
     - sexo *
     - id_doctor *
-    - peso
+    - peso *
+    - id_paciente_cliente *
     - txt_token_seguridad ***
 
     * campos obligatorios
@@ -486,6 +487,8 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - diasTratamiento *
     - num_estatura **
     - fch_visita **
+    - id_tratamiento_cliente *
+    - id_dosis_cliente *
     - txt_token_seguridad ***
 
 
@@ -601,6 +604,8 @@ si **se envian solo el parametro de id_doctor correctamente** el servicio respon
     - tiempoTratamiento *
     - diasTratamiento *
     - inicioTratamiento *
+    - id_tratamiento_cliente *
+    - id_paciente_cliente *
     - txt_token_seguridad ***
 
 
