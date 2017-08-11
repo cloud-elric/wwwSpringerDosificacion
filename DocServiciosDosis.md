@@ -489,6 +489,10 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - fch_visita **
     - id_tratamiento_cliente *
     - id_dosis_cliente *
+    - dosisObjetivo *
+    - dosisObjetivoCal *
+    - dosisRedondeada *
+    - numMeses *
     - txt_token_seguridad ***
 
 
@@ -609,6 +613,7 @@ si **se envian solo el parametro de id_doctor correctamente** el servicio respon
     - dosisObjetivo *
     - dosisObjetivoCal *
     - dosisRedondeada *
+    - numMeses *
     - txt_token_seguridad ***
 
 

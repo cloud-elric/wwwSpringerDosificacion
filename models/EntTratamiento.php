@@ -8,18 +8,26 @@ use Yii;
  * This is the model class for table "ent_tratamiento".
  *
  * @property string $id_tratamiento
+ * @property string $id_tratamiento_cliente
  * @property string $id_paciente
+ * @property string $id_paciente_cliente
  * @property string $id_doctor
  * @property string $id_presentacion
- * @property string $id_tratamiento_cliente
  * @property string $txt_nombre_tratamiento
+ * @property string $txt_token
  * @property double $num_peso
  * @property double $num_dosis_sugerida
+ * @property double $num_dosis_objetivo
+ * @property double $num_dosis_objetivo_cal
  * @property double $num_dosis_acumulada
- * @property string $num_dosis_diaria
+ * @property double $num_dosis_diaria
+ * @property double $num_dosis_redondeada
  * @property string $num_tiempo_tratamiento
  * @property string $num_dias_tratamiento
+ * @property string $num_meses
  * @property string $fch_ultima_visita
+ * @property string $fch_inicio_tratamiento
+ * @property string $fch_fin_tratamiento
  * @property string $b_habilitado
  *
  * @property EntDosis[] $entDoses
@@ -43,11 +51,13 @@ class EntTratamiento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_paciente', 'id_doctor', 'txt_nombre_tratamiento'], 'required'],
-            [['id_paciente', 'id_doctor', 'id_presentacion', 'id_tratamiento_cliente', 'num_dosis_diaria', 'num_tiempo_tratamiento', 'num_dias_tratamiento', 'b_habilitado'], 'integer'],
-            [['num_peso', 'num_dosis_sugerida', 'num_dosis_acumulada'], 'number'],
-            [['fch_ultima_visita'], 'safe'],
+            [['id_tratamiento_cliente', 'id_paciente', 'id_paciente_cliente', 'id_doctor', 'id_presentacion', 'num_tiempo_tratamiento', 'num_dias_tratamiento', 'num_meses', 'b_habilitado'], 'integer'],
+            [['id_paciente', 'id_doctor', 'txt_nombre_tratamiento', 'txt_token'], 'required'],
+            [['num_peso', 'num_dosis_sugerida', 'num_dosis_objetivo', 'num_dosis_objetivo_cal', 'num_dosis_acumulada', 'num_dosis_diaria', 'num_dosis_redondeada'], 'number'],
+            [['fch_ultima_visita', 'fch_inicio_tratamiento', 'fch_fin_tratamiento'], 'safe'],
             [['txt_nombre_tratamiento'], 'string', 'max' => 500],
+            [['txt_token'], 'string', 'max' => 70],
+            [['txt_token'], 'unique'],
             [['id_doctor'], 'exist', 'skipOnError' => true, 'targetClass' => EntDoctores::className(), 'targetAttribute' => ['id_doctor' => 'id_doctor']],
             [['id_paciente'], 'exist', 'skipOnError' => true, 'targetClass' => EntPacientes::className(), 'targetAttribute' => ['id_paciente' => 'id_paciente']],
             [['id_presentacion'], 'exist', 'skipOnError' => true, 'targetClass' => CatPresentacionMedicamentos::className(), 'targetAttribute' => ['id_presentacion' => 'id_presentacion']],
@@ -61,19 +71,26 @@ class EntTratamiento extends \yii\db\ActiveRecord
     {
         return [
             'id_tratamiento' => 'Id Tratamiento',
+            'id_tratamiento_cliente' => 'Id Tratamiento Cliente',
             'id_paciente' => 'Id Paciente',
+            'id_paciente_cliente' => 'Id Paciente Cliente',
             'id_doctor' => 'Id Doctor',
             'id_presentacion' => 'Id Presentacion',
-            'id_tratamiento_cliente' => 'Id Tratamiento Cliente',
             'txt_nombre_tratamiento' => 'Txt Nombre Tratamiento',
+            'txt_token' => 'Txt Token',
             'num_peso' => 'Num Peso',
-            'num_estatura' => 'Num Estatura',
             'num_dosis_sugerida' => 'Num Dosis Sugerida',
+            'num_dosis_objetivo' => 'Num Dosis Objetivo',
+            'num_dosis_objetivo_cal' => 'Num Dosis Objetivo Cal',
             'num_dosis_acumulada' => 'Num Dosis Acumulada',
             'num_dosis_diaria' => 'Num Dosis Diaria',
+            'num_dosis_redondeada' => 'Num Dosis Redondeada',
             'num_tiempo_tratamiento' => 'Num Tiempo Tratamiento',
             'num_dias_tratamiento' => 'Num Dias Tratamiento',
+            'num_meses' => 'Num Meses',
             'fch_ultima_visita' => 'Fch Ultima Visita',
+            'fch_inicio_tratamiento' => 'Fch Inicio Tratamiento',
+            'fch_fin_tratamiento' => 'Fch Fin Tratamiento',
             'b_habilitado' => 'B Habilitado',
         ];
     }
