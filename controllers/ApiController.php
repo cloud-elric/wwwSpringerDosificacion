@@ -540,10 +540,8 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
 
-        if( (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente'])) || /*Solo los campos requeridos*/
-        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['num_estatura'])) || /*Campos requeridos y num_estatura*/
-        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['fch_visita'])) || /*Campos requeridos y fch_visita*/
-        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['num_estatura']) && isset($_REQUEST['fch_visita'])) /*Todos los campos requeridos y opcionales*/ ){
+        if( (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['dosisObjetivo']) && isset($_REQUEST['dosisObjetivoCal']) && isset($_REQUEST['dosisRedondeada']) && isset($_REQUEST['numMeses'])) || /*Solo los campos requeridos*/
+        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['dosisObjetivo']) && isset($_REQUEST['dosisObjetivoCal']) && isset($_REQUEST['dosisRedondeada']) && isset($_REQUEST['numMeses']) && isset($_REQUEST['fch_visita']))/*Campos requeridos y fch_visita*/ ){
             $dosis = new EntDosis();
             $tratamiento = EntTratamiento::find()->where(['id_tratamiento'=>$_REQUEST['id_tratamiento']])->one();
 
@@ -557,9 +555,10 @@ class ApiController extends Controller
             $dosis->num_tiempo_tratamiento = $_REQUEST['tiempoTratamiento'];
             $dosis->num_dias_tratamiento = $_REQUEST['diasTratamiento'];
             $dosis->num_peso = $_REQUEST['num_peso'];
-            if(isset($_REQUEST['num_estatura'])){
-                $dosis->num_estatura = $_REQUEST['num_estatura'];
-            }
+            $dosis->num_dosis_objetivo = $_REQUEST['dosisObjetivo'];
+            $dosis->num_dosis_objetivo_cal = $_REQUEST['dosisObjetivoCal'];
+            $dosis->num_dosis_redondeada = $_REQUEST['dosisRedondeada'];
+            $dosis->num_meses = $_REQUEST['numMeses'];
             $dosis->txt_token = $utils->generateToken();
             if(isset($_REQUEST['fch_visita'])){
                 $fecha = str_replace('/', '-', $_REQUEST['fch_visita']);
@@ -759,7 +758,7 @@ class ApiController extends Controller
         if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['txt_nombre_tratamiento']) && 
         isset($_REQUEST['numPeso']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && 
         isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['inicioTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && 
-        isset($_REQUEST['id_paciente_cliente'])  && isset($_REQUEST['dosisObjetivo'])  && isset($_REQUEST['dosisObjetivoCal'])  && isset($_REQUEST['dosisRedondeada'])){
+        isset($_REQUEST['id_paciente_cliente'])  && isset($_REQUEST['dosisObjetivo'])  && isset($_REQUEST['dosisObjetivoCal'])  && isset($_REQUEST['dosisRedondeada']) && isset($_REQUEST['numMeses'])){
             $tratamiento = new EntTratamiento();
             $tratamiento->id_tratamiento_cliente = $_REQUEST['id_tratamiento_cliente'];            
             $tratamiento->id_paciente = $_REQUEST['id_paciente'];
@@ -777,7 +776,8 @@ class ApiController extends Controller
             $tratamiento->fch_inicio_tratamiento = $_REQUEST['inicioTratamiento'];
             $tratamiento->num_dosis_objetivo = $_REQUEST['dosisObjetivo'];
             $tratamiento->num_dosis_objetivo_cal = $_REQUEST['dosisObjetivoCal'];
-            $tratamiento->num_dosis_redondeada = $_REQUEST['dosisObjetivoCal'];
+            $tratamiento->num_dosis_redondeada = $_REQUEST['dosisRedondeada'];
+            $tratamiento->num_meses = $_REQUEST['numMeses'];
             $tratamiento->txt_token = $utils->generateToken();
 
             if($tratamiento->save()){
@@ -792,11 +792,10 @@ class ApiController extends Controller
                 $dosis->num_tiempo_tratamiento = $tratamiento->num_tiempo_tratamiento;
                 $dosis->num_dias_tratamiento = $tratamiento->num_dias_tratamiento;
                 $dosis->fch_creacion = $tratamiento->fch_inicio_tratamiento;
-
                 $dosis->num_dosis_objetivo = $tratamiento->num_dosis_objetivo;
                 $dosis->num_dosis_objetivo_cal = $tratamiento->num_dosis_objetivo_cal;
                 $dosis->num_dosis_redondeada = $tratamiento->num_dosis_redondeada;
-
+                $dosis->num_meses = $tratamiento->num_meses;
                 $dosis->txt_token = $utils->generateToken();
 
                 if($dosis->save()){
