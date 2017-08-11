@@ -816,3 +816,48 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
     - "error" = false
     - "message" = "Asignada fecha de finalización"
     - "tratamiento" = JSON con los datos del tratamiento  
+
+
+## 22.- Servicio para agregar datos de App a base de datos web
+
+**Nombre del servicio**
+
+    - http://nombre-servidor/web/api/set-data-pacientes
+
+**Parametros del Servico**
+
+    - JSON con todos los datos del paciente, tratamientos y dosis *
+    - txt_token_seguridad ***
+
+
+    * campo obligatorio al menos uno obligatorio
+    *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
+
+Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Faltan Datos"
+
+Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
+
+    - "error" = true
+    - "message" = "Error al guardar dosis"
+    - "dosisErr" = JSON con los errores al guardar en la BD
+
+    o
+
+    - "error" = true
+    - "message" = "Error al guardar tratamiento"
+    - "tratamientoErr" = JSON con los errores al guardar en la BD
+
+    o
+
+    - "error" = true
+    - "message" = "Error al guardar paciente"
+    - "pacienteErr" = JSON con los errores al guardar en la BD
+
+Por ultimo, si todo sale **correctamente** en el servicio este descarga el archivo.
+
+    - "error" = false
+    - "message" = "Asignada fecha de finalización"
+    - "tratamiento" = JSON con los datos del tratamiento  
