@@ -914,4 +914,113 @@ class ApiController extends Controller
 
         return $respuesta;
     }
+
+    public function actionSetDataPacientes(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan Datos';
+
+        //Receive the RAW post data.
+        $content = trim(file_get_contents("php://input"));
+        //Attempt to decode the incoming RAW post data from JSON.
+        $decoded = json_decode($content, true);
+
+        $utils = new Utils();
+        $respuesta['dosis'] = [];   
+        $respuesta['tratamientos'] = [];  
+        $respuesta['pacientes'] = [];        
+        $i = 0;
+
+        foreach($decoded["pacientes"] as $pacienteJSON){
+            $pacienteNuevo = new EntPacientes();
+            
+            $pacienteNuevo->id_doctor = $pacienteJSON["id_doctor"];
+            $pacienteNuevo->id_paciente_cliente = $pacienteJSON["id_paciente_cliente"];            
+            $pacienteNuevo->txt_nombre = $pacienteJSON['nombrePaciente'];
+            $pacienteNuevo->txt_apellido_paterno = $pacienteJSON['apellidoPaterno'];
+            $pacienteNuevo->txt_apellido_materno = $pacienteJSON['apellidoMaterno'];
+            $pacienteNuevo->txt_email = $pacienteJSON['email'];
+            $pacienteNuevo->txt_telefono_contacto = $pacienteJSON['telefonoContacto'];
+            $pacienteNuevo->txt_sexo = $pacienteJSON['sexo'];
+            $pacienteNuevo->num_edad = $pacienteJSON['edad'];
+            $pacienteNuevo->num_peso = $pacienteJSON['peso'];
+            $pacienteNuevo->txt_token = $utils->generateToken();
+            
+            if($pacienteNuevo->save()){
+                $respuesta['pacientes'][$i] = $pacienteNuevo;
+
+                foreach($pacienteJSON["tratamientos"] as $tratamientoJSON){
+                    $tratamientoNuevo = new EntTratamiento();
+                    
+                    $tratamientoNuevo->id_tratamiento_cliente = $tratamientoJSON['id_tratamiento_cliente'];            
+                    $tratamientoNuevo->id_paciente = $pacienteNuevo->id_paciente;
+                    $tratamientoNuevo->id_paciente_cliente = $tratamientoJSON['id_paciente_cliente'];            
+                    $tratamientoNuevo->id_doctor = $tratamientoJSON['id_doctor'];
+                    $tratamientoNuevo->id_presentacion = $tratamientoJSON['id_presentacion'];
+                    $tratamientoNuevo->txt_nombre_tratamiento = $tratamientoJSON['nombreTratamiento'];
+                    $tratamientoNuevo->num_peso = $tratamientoJSON['peso'];
+                    $tratamientoNuevo->num_dosis_sugerida = $tratamientoJSON['dosisSugerida'];
+                    $tratamientoNuevo->num_dosis_acumulada = $tratamientoJSON['dosisAcumulada'];
+                    $tratamientoNuevo->num_dosis_diaria = $tratamientoJSON['dosisDiaria'];
+                    $tratamientoNuevo->num_tiempo_tratamiento = $tratamientoJSON['tiempoTratamiento'];
+                    $tratamientoNuevo->num_dias_tratamiento = $tratamientoJSON['diasTratamiento'];
+                    $tratamientoNuevo->fch_ultima_visita = $tratamientoJSON['fchInicioTratamiento'];
+                    $tratamientoNuevo->fch_inicio_tratamiento = $tratamientoJSON['fchInicioTratamiento'];
+                    $tratamientoNuevo->num_dosis_objetivo = $tratamientoJSON['dosisObjetivo'];
+                    $tratamientoNuevo->num_dosis_objetivo_cal = $tratamientoJSON['dosisObjetivoCal'];
+                    $tratamientoNuevo->num_dosis_redondeada = $tratamientoJSON['dosisRedondeada'];
+                    $tratamientoNuevo->num_meses = $tratamientoJSON['meses'];
+                    $tratamientoNuevo->txt_token = $utils->generateToken();
+                
+                    if($tratamientoNuevo->save()){
+                        $respuesta['tratamientos'][$i] = $tratamientoNuevo;                
+
+                        foreach($tratamientoJSON["dosis"] as $dosisJSON){
+                            $dosisNueva = new EntDosis();
+
+                            $dosisNueva->id_tratamiento = $tratamientoNuevo->id_tratamiento;
+                            $dosisNueva->id_tratamiento_cliente = $dosisJSON['id_tratamiento_cliente'];
+                            $dosisNueva->id_dosis_cliente = $dosisJSON['id_dosis_cliente'];                                            
+                            $dosisNueva->id_presentacion = $dosisJSON['id_presentacion'];
+                            $dosisNueva->num_peso = $dosisJSON['peso'];
+                            $dosisNueva->num_dosis_sugerida = $dosisJSON['dosisSugerida'];
+                            $dosisNueva->num_dosis_acumulada = $dosisJSON['dosisAcumulada'];
+                            $dosisNueva->num_dosis_diaria = $dosisJSON['dosisDiaria'];
+                            $dosisNueva->num_tiempo_tratamiento = $dosisJSON['tiempoTratamiento'];
+                            $dosisNueva->num_dias_tratamiento = $dosisJSON['diasTratamiento'];
+                            $dosisNueva->fch_creacion = $dosisJSON['peso'];
+                            $dosisNueva->num_dosis_objetivo = $dosisJSON['dosisObjetivo'];
+                            $dosisNueva->num_dosis_objetivo_cal = $dosisJSON['dosisObjetivoCal'];
+                            $dosisNueva->num_dosis_redondeada = $dosisJSON['dosisRedondeada'];
+                            $dosisNueva->num_meses = $dosisJSON['meses'];
+                            $dosisNueva->txt_token = $utils->generateToken();
+
+                            if($dosisNueva->save()){
+                                $respuesta['dosis'][$i] = $dosisNueva;
+                                $i = $i + 1;                
+
+                                $respuesta['error'] = false;
+                                $respuesta['message'] = 'Datos guardados correctamente';
+                                
+                            }else{
+                                $respuesta['error'] = true;
+                                $respuesta['message'] = 'Error al guardar dosis';
+                                $respuesta['dosisErr'] = $dosisNueva->errors;
+                            }
+                        }
+                    }else{
+                        $respuesta['error'] = true;
+                        $respuesta['message'] = 'Error al guardar tratamiento';
+                        $respuesta['tratamientoErr'] = $tratamientoNuevo->errors;
+                    }
+                }
+            }else{
+                $respuesta['error'] = true;
+                $respuesta['message'] = 'Error al guardar paciente';
+                $respuesta['pacienteErr'] = $pacienteNuevo->errors;
+            }
+        }
+
+        return $respuesta;
+    }
 }
