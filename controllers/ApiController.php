@@ -758,8 +758,8 @@ class ApiController extends Controller
 
         if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['txt_nombre_tratamiento']) && 
         isset($_REQUEST['numPeso']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && 
-        isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['inicioTratamiento']) && 
-        isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_paciente_cliente'])){
+        isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['inicioTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && 
+        isset($_REQUEST['id_paciente_cliente'])  && isset($_REQUEST['dosisObjetivo'])  && isset($_REQUEST['dosisObjetivoCal'])  && isset($_REQUEST['dosisRedondeada'])){
             $tratamiento = new EntTratamiento();
             $tratamiento->id_tratamiento_cliente = $_REQUEST['id_tratamiento_cliente'];            
             $tratamiento->id_paciente = $_REQUEST['id_paciente'];
@@ -775,6 +775,9 @@ class ApiController extends Controller
             $tratamiento->num_dias_tratamiento = $_REQUEST['diasTratamiento'];
             $tratamiento->fch_ultima_visita = $_REQUEST['inicioTratamiento'];
             $tratamiento->fch_inicio_tratamiento = $_REQUEST['inicioTratamiento'];
+            $tratamiento->num_dosis_objetivo = $_REQUEST['dosisObjetivo'];
+            $tratamiento->num_dosis_objetivo_cal = $_REQUEST['dosisObjetivoCal'];
+            $tratamiento->num_dosis_redondeada = $_REQUEST['dosisObjetivoCal'];
             $tratamiento->txt_token = $utils->generateToken();
 
             if($tratamiento->save()){
@@ -789,6 +792,11 @@ class ApiController extends Controller
                 $dosis->num_tiempo_tratamiento = $tratamiento->num_tiempo_tratamiento;
                 $dosis->num_dias_tratamiento = $tratamiento->num_dias_tratamiento;
                 $dosis->fch_creacion = $tratamiento->fch_inicio_tratamiento;
+
+                $dosis->num_dosis_objetivo = $tratamiento->num_dosis_objetivo;
+                $dosis->num_dosis_objetivo_cal = $tratamiento->num_dosis_objetivo_cal;
+                $dosis->num_dosis_redondeada = $tratamiento->num_dosis_redondeada;
+
                 $dosis->txt_token = $utils->generateToken();
 
                 if($dosis->save()){

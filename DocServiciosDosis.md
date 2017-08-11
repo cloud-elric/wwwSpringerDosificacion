@@ -606,6 +606,9 @@ si **se envian solo el parametro de id_doctor correctamente** el servicio respon
     - inicioTratamiento *
     - id_tratamiento_cliente *
     - id_paciente_cliente *
+    - dosisObjetivo *
+    - dosisObjetivoCal *
+    - dosisRedondeada *
     - txt_token_seguridad ***
 
 
