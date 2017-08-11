@@ -926,6 +926,9 @@ class ApiController extends Controller
         $decoded = json_decode($content, true);
 
         $utils = new Utils();
+        $respuesta['dosis'] = [];   
+        $respuesta['tratamientos'] = [];  
+        $respuesta['pacientes'] = [];        
         $i = 0;
 
         foreach($decoded["pacientes"] as $pacienteJSON){
@@ -944,8 +947,7 @@ class ApiController extends Controller
             $pacienteNuevo->txt_token = $utils->generateToken();
             
             if($pacienteNuevo->save()){
-                $respuesta['pacientes'] = [];
-                array_push($respuesta['pacientes'][$i], $pacienteNuevo);
+                $respuesta['pacientes'][$i] = $pacienteNuevo;
 
                 foreach($pacienteJSON["tratamientos"] as $tratamientoJSON){
                     $tratamientoNuevo = new EntTratamiento();
@@ -971,7 +973,6 @@ class ApiController extends Controller
                     $tratamientoNuevo->txt_token = $utils->generateToken();
                 
                     if($tratamientoNuevo->save()){
-                        $respuesta['tratamientos'] = []; 
                         $respuesta['tratamientos'][$i] = $tratamientoNuevo;                
 
                         foreach($tratamientoJSON["dosis"] as $dosisJSON){
@@ -995,8 +996,7 @@ class ApiController extends Controller
                             $dosisNueva->txt_token = $utils->generateToken();
 
                             if($dosisNueva->save()){
-                                $respuesta['dosis'] = [];                
-                                array_push($respuesta['dosis'][$i], $dosisNueva);
+                                $respuesta['dosis'][$i] = $dosisNueva;
                                 $i = $i + 1;                
 
                                 $respuesta['error'] = false;
