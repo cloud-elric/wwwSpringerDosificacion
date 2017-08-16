@@ -493,6 +493,7 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - dosisObjetivoCal *
     - dosisRedondeada *
     - numMeses *
+    - numCapsulas *
     - txt_token_seguridad ***
 
 
@@ -614,6 +615,7 @@ si **se envian solo el parametro de id_doctor correctamente** el servicio respon
     - dosisObjetivoCal *
     - dosisRedondeada *
     - numMeses *
+    - numCapsulas *
     - txt_token_seguridad ***
 
 
