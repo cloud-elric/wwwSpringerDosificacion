@@ -78,8 +78,6 @@ Por ultimo, si todo sale **correctamente** en el servicio se mandara un email al
     - id_doctor *
     - peso *
     - id_paciente_cliente *
-    - id_aviso *
-    - b_acepto *
     - txt_token_seguridad ***
 
     * campos obligatorios
