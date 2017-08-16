@@ -243,8 +243,7 @@ class ApiController extends Controller
 
         if( isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && 
         isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && 
-        isset($_REQUEST['id_doctor']) && isset($_REQUEST['peso']) && isset($_REQUEST['id_paciente_cliente']) && 
-        isset($_REQUEST['id_aviso']) && isset($_REQUEST['b_acepto']) ){
+        isset($_REQUEST['id_doctor']) && isset($_REQUEST['peso']) && isset($_REQUEST['id_paciente_cliente']) ){
 
             $paciente->id_doctor = $_REQUEST['id_doctor'];
             $paciente->id_paciente_cliente = $_REQUEST['id_paciente_cliente'];            
@@ -265,16 +264,12 @@ class ApiController extends Controller
             if($paciente->save()){
 
                 $relPacienteAviso = new RelPacienteAviso();
-                
-                $relPacienteAviso->id_aviso = $_REQUEST['id_aviso'];
+                $aviso = EntAvisosPrivacidad::find()->where(['b_habilitado'=>1])->one();
+
+                $relPacienteAviso->id_aviso = $aviso->id_aviso;
                 $relPacienteAviso->id_paciente = $paciente->id_paciente;
-                if($_REQUEST['b_acepto'] == 1){
-                    $relPacienteAviso->b_aceptado = 1;
-                    $respuesta['messageAviso'] = 'Paciente acepto el aviso';                
-                }else{
-                    $relPacienteAviso->b_aceptado = 0;
-                    $respuesta['messageAviso'] = 'Paciente no acepto el aviso';                                
-                }
+                $relPacienteAviso->b_aceptado = 1;
+                $respuesta['messageAviso'] = 'Paciente acepto el aviso';                
     
                 if($relPacienteAviso->save()){
                     $respuesta['error'] = false;
