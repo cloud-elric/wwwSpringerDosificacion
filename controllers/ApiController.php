@@ -14,6 +14,7 @@ use app\models\CatClaves;
 use Spipu\Html2Pdf\Html2Pdf;
 use app\models\EntTratamiento;
 use app\models\RelPacienteAviso;
+use app\models\EntAvisosPrivacidad;
 
 
 class ApiController extends Controller
@@ -242,8 +243,9 @@ class ApiController extends Controller
 
         if( isset($_REQUEST['nombre']) && isset($_REQUEST['apPaterno']) && 
         isset($_REQUEST['email']) && isset($_REQUEST['edad'])  && isset($_REQUEST['sexo']) && 
-        isset($_REQUEST['id_doctor']) && isset($_REQUEST['peso']) && isset($_REQUEST['id_paciente_cliente'])) {
-            
+        isset($_REQUEST['id_doctor']) && isset($_REQUEST['peso']) && isset($_REQUEST['id_paciente_cliente']) && 
+        isset($_REQUEST['id_aviso']) && isset($_REQUEST['b_acepto']) ){
+
             $paciente->id_doctor = $_REQUEST['id_doctor'];
             $paciente->id_paciente_cliente = $_REQUEST['id_paciente_cliente'];            
             $paciente->txt_nombre = $_REQUEST['nombre'];
@@ -261,6 +263,28 @@ class ApiController extends Controller
             $paciente->num_peso = $_REQUEST['peso'];
 
             if($paciente->save()){
+
+                $relPacienteAviso = new RelPacienteAviso();
+                
+                $relPacienteAviso->id_aviso = $_REQUEST['id_aviso'];
+                $relPacienteAviso->id_paciente = $paciente->id_paciente;
+                if($_REQUEST['b_acepto'] == 1){
+                    $relPacienteAviso->b_aceptado = 1;
+                    $respuesta['messageAviso'] = 'Paciente acepto el aviso';                
+                }else{
+                    $relPacienteAviso->b_aceptado = 0;
+                    $respuesta['messageAviso'] = 'Paciente no acepto el aviso';                                
+                }
+    
+                if($relPacienteAviso->save()){
+                    $respuesta['error'] = false;
+                    $respuesta['relacion'] = 'Relacion guardada correctamente';
+                }else{
+                    $respuesta['error'] = true;
+                    $respuesta['message'] = 'Error al guardar en la BD';                                                
+                    $respuesta['relacionErr'] = $relPacienteAviso->errors;
+                }
+
                 $respuesta ['error'] = false;
                 $respuesta ['message'] = 'Paciente guardado';
                 $respuesta ['paciente'] = $paciente;
