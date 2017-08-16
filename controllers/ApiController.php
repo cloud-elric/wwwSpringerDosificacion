@@ -803,7 +803,7 @@ class ApiController extends Controller
             $tratamiento->num_dosis_objetivo = $_REQUEST['dosisObjetivo'];
             $tratamiento->num_dosis_objetivo_cal = $_REQUEST['dosisObjetivoCal'];
             $tratamiento->num_dosis_redondeada = $_REQUEST['dosisRedondeada'];
-            $tratamiento->num_meses = $_REQUEST['numMeses'];
+            $tratamiento->num_meses = intval($_REQUEST['numMeses']);
             $tratamiento->num_capsulas = $_REQUEST['numCapsulas'];            
             $tratamiento->txt_token = $utils->generateToken();
 
@@ -816,7 +816,6 @@ class ApiController extends Controller
                 $dosis->num_dosis_sugerida = $tratamiento->num_dosis_sugerida;
                 $dosis->num_dosis_acumulada = $tratamiento->num_dosis_acumulada;
                 $dosis->num_dosis_diaria = $tratamiento->num_dosis_diaria;
-                $dosis->num_tiempo_tratamiento = $tratamiento->num_tiempo_tratamiento;
                 $dosis->num_dias_tratamiento = $tratamiento->num_dias_tratamiento;
                 $dosis->fch_creacion = $tratamiento->fch_inicio_tratamiento;
                 $dosis->num_dosis_objetivo = $tratamiento->num_dosis_objetivo;
