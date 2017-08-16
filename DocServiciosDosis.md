@@ -606,7 +606,6 @@ si **se envian solo el parametro de id_doctor correctamente** el servicio respon
     - dosisSugerida *
     - dosisAcumulada *
     - dosisDiaria *
-    - tiempoTratamiento *
     - diasTratamiento *
     - inicioTratamiento *
     - id_tratamiento_cliente *

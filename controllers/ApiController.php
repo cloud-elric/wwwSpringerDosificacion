@@ -783,7 +783,7 @@ class ApiController extends Controller
 
         if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['txt_nombre_tratamiento']) && 
         isset($_REQUEST['numPeso']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && 
-        isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['inicioTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && 
+         isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['inicioTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && 
         isset($_REQUEST['id_paciente_cliente'])  && isset($_REQUEST['dosisObjetivo'])  && isset($_REQUEST['dosisObjetivoCal'])  && isset($_REQUEST['dosisRedondeada']) && isset($_REQUEST['numMeses']) && 
         isset($_REQUEST['numCapsulas'])){
             $tratamiento = new EntTratamiento();
@@ -797,7 +797,6 @@ class ApiController extends Controller
             $tratamiento->num_dosis_sugerida = $_REQUEST['dosisSugerida'];
             $tratamiento->num_dosis_acumulada = $_REQUEST['dosisAcumulada'];
             $tratamiento->num_dosis_diaria = $_REQUEST['dosisDiaria'];
-            $tratamiento->num_tiempo_tratamiento = $_REQUEST['tiempoTratamiento'];
             $tratamiento->num_dias_tratamiento = $_REQUEST['diasTratamiento'];
             $tratamiento->fch_ultima_visita = $_REQUEST['inicioTratamiento'];
             $tratamiento->fch_inicio_tratamiento = $_REQUEST['inicioTratamiento'];
@@ -827,15 +826,15 @@ class ApiController extends Controller
                 $dosis->num_capsulas = $tratamiento->num_capsulas;                
                 $dosis->txt_token = $utils->generateToken();
 
-                if($dosis->save()){
-                    $respuesta['error'] = false;
-                    $respuesta['message'] = 'Tratamiento creado';
-                    $respuesta['tratamiento'] = $tratamiento;
-                }else{
-                    $respuesta['error'] = true;
-                    $respuesta['message'] = 'Error al guardar dosis';
-                    $respuesta['dosisoErr'] = $dosis->errors;
-                }
+                // if($dosis->save()){
+                //     $respuesta['error'] = false;
+                //     $respuesta['message'] = 'Tratamiento creado';
+                //     $respuesta['tratamiento'] = $tratamiento;
+                // }else{
+                //     $respuesta['error'] = true;
+                //     $respuesta['message'] = 'Error al guardar dosis';
+                //     $respuesta['dosisoErr'] = $dosis->errors;
+                // }
             }else{
                 $respuesta['error'] = true;
                 $respuesta['message'] = 'Error al guardar tratamiento';

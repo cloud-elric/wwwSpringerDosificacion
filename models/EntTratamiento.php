@@ -22,7 +22,6 @@ use Yii;
  * @property double $num_dosis_acumulada
  * @property double $num_dosis_diaria
  * @property double $num_dosis_redondeada
- * @property string $num_tiempo_tratamiento
  * @property string $num_dias_tratamiento
  * @property string $num_meses
  * @property string $fch_ultima_visita
@@ -51,7 +50,7 @@ class EntTratamiento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tratamiento_cliente', 'id_paciente', 'id_paciente_cliente', 'id_doctor', 'id_presentacion', 'num_tiempo_tratamiento', 'num_dias_tratamiento', 'num_meses', 'b_habilitado'], 'integer'],
+            [['id_tratamiento_cliente', 'id_paciente', 'id_paciente_cliente', 'id_doctor', 'id_presentacion', 'num_dias_tratamiento', 'num_meses', 'b_habilitado'], 'integer'],
             [['id_paciente', 'id_doctor', 'txt_nombre_tratamiento', 'txt_token'], 'required'],
             [['num_peso', 'num_dosis_sugerida', 'num_dosis_objetivo', 'num_dosis_objetivo_cal', 'num_dosis_acumulada', 'num_dosis_diaria', 'num_dosis_redondeada'], 'number'],
             [['fch_ultima_visita', 'fch_inicio_tratamiento', 'fch_fin_tratamiento'], 'safe'],
@@ -85,7 +84,6 @@ class EntTratamiento extends \yii\db\ActiveRecord
             'num_dosis_acumulada' => 'Num Dosis Acumulada',
             'num_dosis_diaria' => 'Num Dosis Diaria',
             'num_dosis_redondeada' => 'Num Dosis Redondeada',
-            'num_tiempo_tratamiento' => 'Num Tiempo Tratamiento',
             'num_dias_tratamiento' => 'Num Dias Tratamiento',
             'num_meses' => 'Num Meses',
             'fch_ultima_visita' => 'Fch Ultima Visita',
