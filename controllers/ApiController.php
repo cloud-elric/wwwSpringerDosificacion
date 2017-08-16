@@ -897,6 +897,7 @@ class ApiController extends Controller
             $tratamiento = EntTratamiento::find()->where(['txt_token'=>$_REQUEST['tokenTratamiento']])->one();
             if($tratamiento){
                 $tratamiento->fch_fin_tratamiento = $_REQUEST['fchFinalizar'];
+                $tratamiento->b_habilitado = 0;
                 if($tratamiento->save()){
                     $respuesta['error'] = false;
                     $respuesta['message'] = 'Asignada fecha de finalización';
