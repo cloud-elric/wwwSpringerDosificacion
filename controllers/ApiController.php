@@ -15,6 +15,8 @@ use Spipu\Html2Pdf\Html2Pdf;
 use app\models\EntTratamiento;
 use app\models\RelPacienteAviso;
 
+use app\models\Mensajes;
+
 
 class ApiController extends Controller
 {
@@ -261,6 +263,10 @@ class ApiController extends Controller
             $paciente->num_peso = $_REQUEST['peso'];
 
             if($paciente->save()){
+
+                $mensajes = new Mensajes();
+                $resp = $mensajes->mandarMensage("Hola, Bienvenido al sistema de Dosificacion", $paciente->txt_telefono_contacto);
+
                 $respuesta ['error'] = false;
                 $respuesta ['message'] = 'Paciente guardado';
                 $respuesta ['paciente'] = $paciente;
