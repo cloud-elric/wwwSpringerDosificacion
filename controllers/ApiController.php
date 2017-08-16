@@ -826,9 +826,9 @@ class ApiController extends Controller
                 $dosis->txt_token = $utils->generateToken();
 
                 // if($dosis->save()){
-                //     $respuesta['error'] = false;
-                //     $respuesta['message'] = 'Tratamiento creado';
-                //     $respuesta['tratamiento'] = $tratamiento;
+                     $respuesta['error'] = false;
+                     $respuesta['message'] = 'Tratamiento creado';
+                     $respuesta['tratamiento'] = $tratamiento;
                 // }else{
                 //     $respuesta['error'] = true;
                 //     $respuesta['message'] = 'Error al guardar dosis';
