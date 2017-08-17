@@ -559,8 +559,14 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan datos';
 
-        if( (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['dosisObjetivo']) && isset($_REQUEST['dosisObjetivoCal']) && isset($_REQUEST['dosisRedondeada']) && isset($_REQUEST['numMeses']) && isset($_REQUEST['numCapsulas'])) || /*Solo los campos requeridos*/
-        (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && isset($_REQUEST['tiempoTratamiento']) && isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['dosisObjetivo']) && isset($_REQUEST['dosisObjetivoCal']) && isset($_REQUEST['dosisRedondeada']) && isset($_REQUEST['numMeses']) && isset($_REQUEST['numCapsulas']) && isset($_REQUEST['fch_visita']))/*Campos requeridos y fch_visita*/ ){
+        if( (isset($_REQUEST['id_tratamiento']) && isset($_REQUEST['num_peso']) && 
+        isset($_REQUEST['id_presentacion']) && isset($_REQUEST['dosisSugerida']) && 
+        isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && 
+        isset($_REQUEST['diasTratamiento']) && 
+        isset($_REQUEST['id_tratamiento_cliente']) && 
+        isset($_REQUEST['id_dosis_cliente']) && isset($_REQUEST['dosisObjetivo']) && 
+        isset($_REQUEST['dosisObjetivoCal']) && isset($_REQUEST['dosisRedondeada']) && 
+        isset($_REQUEST['numMeses']) && isset($_REQUEST['numCapsulas'])) /*Campos requeridos y fch_visita*/ ){
             $dosis = new EntDosis();
             $tratamiento = EntTratamiento::find()->where(['id_tratamiento'=>$_REQUEST['id_tratamiento']])->one();
 
@@ -571,8 +577,6 @@ class ApiController extends Controller
             $dosis->num_dosis_sugerida = $_REQUEST['dosisSugerida'];
             $dosis->num_dosis_acumulada = $_REQUEST['dosisAcumulada'];
             $dosis->num_dosis_diaria = $_REQUEST['dosisDiaria'];
-            $dosis->num_tiempo_tratamiento = $_REQUEST['tiempoTratamiento'];
-            $dosis->num_dias_tratamiento = $_REQUEST['diasTratamiento'];
             $dosis->num_peso = $_REQUEST['num_peso'];
             $dosis->num_dosis_objetivo = $_REQUEST['dosisObjetivo'];
             $dosis->num_dosis_objetivo_cal = $_REQUEST['dosisObjetivoCal'];

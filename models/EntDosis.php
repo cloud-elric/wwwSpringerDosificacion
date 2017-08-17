@@ -20,7 +20,6 @@ use Yii;
  * @property double $num_dosis_acumulada
  * @property string $num_dosis_diaria
  * @property double $num_dosis_redondeada
- * @property string $num_tiempo_tratamiento
  * @property string $num_dias_tratamiento
  * @property string $num_meses
  * @property string $fch_creacion
@@ -45,7 +44,7 @@ class EntDosis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tratamiento', 'id_presentacion', 'txt_token', 'num_peso', 'num_dosis_sugerida', 'num_dosis_objetivo', 'num_dosis_objetivo_cal', 'num_dosis_acumulada', 'num_dosis_diaria', 'num_dosis_redondeada', 'num_tiempo_tratamiento', 'num_dias_tratamiento', 'num_meses'], 'required'],
+            [['id_tratamiento', 'id_presentacion', 'txt_token', 'num_peso', 'num_dosis_sugerida', 'num_dosis_objetivo', 'num_dosis_objetivo_cal', 'num_dosis_acumulada', 'num_dosis_diaria', 'num_dosis_redondeada', 'num_dias_tratamiento', 'num_meses'], 'required'],
             [['id_dosis_cliente', 'id_tratamiento', 'id_tratamiento_cliente', 'id_presentacion', 'num_dosis_diaria', 'num_tiempo_tratamiento', 'num_dias_tratamiento', 'num_meses'], 'integer'],
             [['num_peso', 'num_dosis_sugerida', 'num_dosis_objetivo', 'num_dosis_objetivo_cal', 'num_dosis_acumulada', 'num_dosis_redondeada'], 'number'],
             [['fch_creacion', 'fch_proxima_visita'], 'safe'],
@@ -75,7 +74,6 @@ class EntDosis extends \yii\db\ActiveRecord
             'num_dosis_acumulada' => 'Num Dosis Acumulada',
             'num_dosis_diaria' => 'Num Dosis Diaria',
             'num_dosis_redondeada' => 'Num Dosis Redondeada',
-            'num_tiempo_tratamiento' => 'Num Tiempo Tratamiento',
             'num_dias_tratamiento' => 'Num Dias Tratamiento',
             'num_meses' => 'Num Meses',
             'fch_creacion' => 'Fch Creacion',
