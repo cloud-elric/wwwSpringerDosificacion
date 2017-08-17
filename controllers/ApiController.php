@@ -552,7 +552,6 @@ class ApiController extends Controller
     }
 
     public function actionGenerarPdf(){
-        require __DIR__.'\..\vendor\autoload.php';
         Yii::$app->response->format = Response::FORMAT_JSON;
         
         $utils = new Utils();
