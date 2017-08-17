@@ -601,6 +601,8 @@ class ApiController extends Controller
                 ]);
                 if($this->actualizarDatosTratamiento($tratamiento, $dosis)){
                     $respuesta['message2'] = "Se actualizo el tratamiento";
+                    $respuesta['consulta'] = $dosis;
+                    $respuesta['tratamiento'] = $tratamiento;
                 }else{
                     $respuesta['message2'] = "No se actualizo el tratamiento";                    
                 }
@@ -647,7 +649,6 @@ class ApiController extends Controller
         $tratamiento->num_dosis_acumulada = $dosis->num_dosis_acumulada;
         $tratamiento->num_dosis_diaria = $dosis->num_dosis_diaria;
         $tratamiento->num_dosis_redondeada = $dosis->num_dosis_redondeada;
-        $tratamiento->num_tiempo_tratamiento = $dosis->num_tiempo_tratamiento;
         $tratamiento->num_dias_tratamiento = $dosis->num_dias_tratamiento;
         $tratamiento->num_meses = $dosis->num_meses;
         $tratamiento->num_capsulas = $dosis->num_capsulas;        

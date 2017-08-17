@@ -519,6 +519,8 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
 
     - "error" = false
     - "message" = "Email enviado correctamente"
+    - "consulta" = "Json con datos de dosis del paciente"
+    - "tratamiento" = "Json con los datos del tratamiento actualizado"
 
 
 ## 15.- Servicio para descargar PDF de Dosis de un Paciente
