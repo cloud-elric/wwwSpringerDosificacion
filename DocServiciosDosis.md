@@ -483,7 +483,6 @@ Por ultimo, si todo sale **correctamente** en el servicio este responderá con u
     - dosisSugerida *
     - dosisAcumulada *
     - dosisDiaria *
-    - tiempoTratamiento *
     - diasTratamiento *
     - num_estatura **
     - fch_visita **
