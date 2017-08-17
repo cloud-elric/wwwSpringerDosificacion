@@ -44,14 +44,14 @@ class EntDosis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tratamiento', 'id_presentacion', 'txt_token', 'num_peso', 'num_dosis_sugerida', 'num_dosis_objetivo', 'num_dosis_objetivo_cal', 'num_dosis_acumulada', 'num_dosis_diaria', 'num_dosis_redondeada', 'num_dias_tratamiento', 'num_meses'], 'required'],
+            [['id_presentacion', 'txt_token', 'num_peso', 'num_dosis_sugerida', 'num_dosis_objetivo', 'num_dosis_objetivo_cal', 'num_dosis_acumulada', 'num_dosis_diaria', 'num_dosis_redondeada', 'num_dias_tratamiento', 'num_meses'], 'required'],
             [['id_dosis_cliente', 'id_tratamiento', 'id_tratamiento_cliente', 'id_presentacion', 'num_dosis_diaria', 'num_dias_tratamiento', 'num_meses'], 'integer'],
             [['num_peso', 'num_dosis_sugerida', 'num_dosis_objetivo', 'num_dosis_objetivo_cal', 'num_dosis_acumulada', 'num_dosis_redondeada'], 'number'],
             [['fch_creacion', 'fch_proxima_visita'], 'safe'],
             [['txt_token'], 'string', 'max' => 70],
             [['txt_token'], 'unique'],
             [['id_presentacion'], 'exist', 'skipOnError' => true, 'targetClass' => CatPresentacionMedicamentos::className(), 'targetAttribute' => ['id_presentacion' => 'id_presentacion']],
-            [['id_tratamiento'], 'exist', 'skipOnError' => true, 'targetClass' => EntTratamiento::className(), 'targetAttribute' => ['id_tratamiento' => 'id_tratamiento']],
+            //[['id_tratamiento'], 'exist', 'skipOnError' => true, 'targetClass' => EntTratamiento::className(), 'targetAttribute' => ['id_tratamiento' => 'id_tratamiento']],
         ];
     }
 

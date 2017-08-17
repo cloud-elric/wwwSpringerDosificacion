@@ -603,29 +603,24 @@ si **se envian solo el parametro de id_doctor correctamente** el servicio respon
     - id_paciente *
     - id_presentacion *
     - txt_nombre_tratamiento *
-    - numPeso *
-    - dosisSugerida *
-    - dosisAcumulada *
-    - dosisDiaria *
-    - diasTratamiento *
-    - inicioTratamiento *
+    - num_peso *
+    - num_dosis_sugerida *
+    - num_dosis_acumulada *
+    - num_dosis_diaria *
+    - num_dias_tratamiento *
+    - fch_inicio_tratamiento *
     - id_tratamiento_cliente *
     - id_paciente_cliente *
-    - dosisObjetivo *
-    - dosisObjetivoCal *
-    - dosisRedondeada *
-    - numMeses *
-    - numCapsulas *
+    - num_dosis_objetivo *
+    - num_dosis_objetivo_cal *
+    - num_dosis_redondeada *
+    - num_meses *
+    - num_capsulas *
     - txt_token_seguridad ***
 
 
     * campo obligatorio al menos uno obligatorio
     *** Si la variable privada $seguridad en ApiController es true este campo es obligatorio si no opcional
-
-Si estos parametros **no se envia en la peticion** se regresa un json con los siguientes valores
-
-    - "error" = true
-    - "message" = "Faltan datos"
 
 Si los parametros **se envian correctamente pero hay un error** se regresará un json con los siguientes valores
 

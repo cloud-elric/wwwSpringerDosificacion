@@ -46,7 +46,7 @@ class ApiController extends Controller
    }
     
     /**
-    * Validación para registrar al usuario (doctor)
+    * Action para loguear al doctor
     */
     public function actionLogin(){
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -76,7 +76,9 @@ class ApiController extends Controller
 
     }
 
-        
+       /**
+       * Action para registrar al doctor
+       */ 
     public function actionCrearDoctor(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $respuesta['error'] = true;
@@ -779,86 +781,61 @@ class ApiController extends Controller
         return $respuesta;
     } 
 
-    public function actionCrearTratamientoDosis(){
+    public function actionGuardarDosis(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         
         $respuesta['error'] = true;
         $respuesta['message'] = 'Faltan Datos';
 
-        $tratamiento = new EntTratamiento();
-        $tratamiento->attributes = $_REQUEST;
+        $dosis = new EntTratamiento();
+        $dosis->attributes = $_REQUEST;
 
-        print_r($tratamiento);
+       if($dosis->validate()){
+
+            if($dosis->id_tratamiento){
+
+            }
+
+
+       }else{
+           $respuesta['errores'] = $dosis->errors;
+           $respuesta['message'] = 'Datos no validos';
+       }
 
         return $respuesta;   
         
                 
     }
 
+    /**
+    * Guarda un tratamiento
+    */
     public function actionCrearTratamiento(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $utils = new Utils;
         $respuesta['error'] = true;
-        $respuesta['message'] = 'Faltan Datos';
 
-        if(isset($_REQUEST['id_doctor']) && isset($_REQUEST['id_paciente']) && isset($_REQUEST['id_presentacion']) && isset($_REQUEST['txt_nombre_tratamiento']) && 
-        isset($_REQUEST['numPeso']) && isset($_REQUEST['dosisSugerida']) && isset($_REQUEST['dosisAcumulada']) && isset($_REQUEST['dosisDiaria']) && 
-         isset($_REQUEST['diasTratamiento']) && isset($_REQUEST['inicioTratamiento']) && isset($_REQUEST['id_tratamiento_cliente']) && 
-        isset($_REQUEST['id_paciente_cliente'])  && isset($_REQUEST['dosisObjetivo'])  && isset($_REQUEST['dosisObjetivoCal'])  && isset($_REQUEST['dosisRedondeada']) && isset($_REQUEST['numMeses']) && 
-        isset($_REQUEST['numCapsulas'])){
-            $tratamiento = new EntTratamiento();
-            $tratamiento->id_tratamiento_cliente = $_REQUEST['id_tratamiento_cliente'];            
-            $tratamiento->id_paciente = $_REQUEST['id_paciente'];
-            $tratamiento->id_paciente_cliente = $_REQUEST['id_paciente_cliente'];            
-            $tratamiento->id_doctor = $_REQUEST['id_doctor'];
-            $tratamiento->id_presentacion = $_REQUEST['id_presentacion'];
-            $tratamiento->txt_nombre_tratamiento = $_REQUEST['txt_nombre_tratamiento'];
-            $tratamiento->num_peso = $_REQUEST['numPeso'];
-            $tratamiento->num_dosis_sugerida = $_REQUEST['dosisSugerida'];
-            $tratamiento->num_dosis_acumulada = $_REQUEST['dosisAcumulada'];
-            $tratamiento->num_dosis_diaria = $_REQUEST['dosisDiaria'];
-            $tratamiento->num_dias_tratamiento = $_REQUEST['diasTratamiento'];
-            $tratamiento->fch_ultima_visita = $_REQUEST['inicioTratamiento'];
-            $tratamiento->fch_inicio_tratamiento = $_REQUEST['inicioTratamiento'];
-            $tratamiento->num_dosis_objetivo = $_REQUEST['dosisObjetivo'];
-            $tratamiento->num_dosis_objetivo_cal = $_REQUEST['dosisObjetivoCal'];
-            $tratamiento->num_dosis_redondeada = $_REQUEST['dosisRedondeada'];
-            $tratamiento->num_meses = intval($_REQUEST['numMeses']);
-            $tratamiento->num_capsulas = $_REQUEST['numCapsulas'];            
+        $tratamiento = new EntTratamiento();
+        $tratamineto->attributes = $_REQUEST;
+
+        if($tratamiento->validate()){            
             $tratamiento->txt_token = $utils->generateToken();
 
             if($tratamiento->save()){
-                $dosis = new EntDosis;
-                $dosis->id_tratamiento = $tratamiento->id_tratamiento;
-                $dosis->id_tratamiento_cliente = $tratamiento->id_tratamiento_cliente;                
-                $dosis->id_presentacion = $tratamiento->id_presentacion;
-                $dosis->num_peso = $tratamiento->num_peso;                
-                $dosis->num_dosis_sugerida = $tratamiento->num_dosis_sugerida;
-                $dosis->num_dosis_acumulada = $tratamiento->num_dosis_acumulada;
-                $dosis->num_dosis_diaria = $tratamiento->num_dosis_diaria;
-                $dosis->num_dias_tratamiento = $tratamiento->num_dias_tratamiento;
-                $dosis->fch_creacion = $tratamiento->fch_inicio_tratamiento;
-                $dosis->num_dosis_objetivo = $tratamiento->num_dosis_objetivo;
-                $dosis->num_dosis_objetivo_cal = $tratamiento->num_dosis_objetivo_cal;
-                $dosis->num_dosis_redondeada = $tratamiento->num_dosis_redondeada;
-                $dosis->num_meses = $tratamiento->num_meses;
-                $dosis->num_capsulas = $tratamiento->num_capsulas;                
-                $dosis->txt_token = $utils->generateToken();
-
-                // if($dosis->save()){
+                
                      $respuesta['error'] = false;
                      $respuesta['message'] = 'Tratamiento creado';
                      $respuesta['tratamiento'] = $tratamiento;
-                // }else{
-                //     $respuesta['error'] = true;
-                //     $respuesta['message'] = 'Error al guardar dosis';
-                //     $respuesta['dosisoErr'] = $dosis->errors;
-                // }
+              
             }else{
                 $respuesta['error'] = true;
                 $respuesta['message'] = 'Error al guardar tratamiento';
                 $respuesta['tratamientoErr'] = $tratamiento->errors;
             }
+        }else{
+
+            $respuesta['message'] = "Datos no validos";
+            $respuesta['errores'] = $tratamiento->errors;
         }
 
         return $respuesta;   
