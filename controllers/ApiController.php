@@ -779,6 +779,22 @@ class ApiController extends Controller
         return $respuesta;
     } 
 
+    public function actionCrearTratamientoDosis(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan Datos';
+
+        $tratamiento = new EntTratamiento();
+        $tratamiento->attributes = $_REQUEST;
+
+        print_r($tratamiento);
+
+        return $respuesta;   
+        
+                
+    }
+
     public function actionCrearTratamiento(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $utils = new Utils;
