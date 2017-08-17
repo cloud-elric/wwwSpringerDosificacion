@@ -816,7 +816,7 @@ class ApiController extends Controller
         $respuesta['error'] = true;
 
         $tratamiento = new EntTratamiento();
-        $tratamineto->attributes = $_REQUEST;
+        $tratamiento->attributes = $_REQUEST;
 
         if($tratamiento->validate()){            
             $tratamiento->txt_token = $utils->generateToken();
