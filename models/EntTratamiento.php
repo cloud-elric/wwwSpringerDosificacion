@@ -58,8 +58,6 @@ class EntTratamiento extends \yii\db\ActiveRecord
             [['txt_token'], 'string', 'max' => 70],
             [['txt_token'], 'unique'],
             [['id_doctor'], 'exist', 'skipOnError' => true, 'targetClass' => EntDoctores::className(), 'targetAttribute' => ['id_doctor' => 'id_doctor']],
-            [['id_paciente'], 'exist', 'skipOnError' => true, 'targetClass' => EntPacientes::className(), 'targetAttribute' => ['id_paciente' => 'id_paciente']],
-            [['id_presentacion'], 'exist', 'skipOnError' => true, 'targetClass' => CatPresentacionMedicamentos::className(), 'targetAttribute' => ['id_presentacion' => 'id_presentacion']],
         ];
     }
 
