@@ -994,7 +994,6 @@ class ApiController extends Controller
                     $tratamientoNuevo->num_dosis_sugerida = $tratamientoJSON['dosisSugerida'];
                     $tratamientoNuevo->num_dosis_acumulada = $tratamientoJSON['dosisAcumulada'];
                     $tratamientoNuevo->num_dosis_diaria = $tratamientoJSON['dosisDiaria'];
-                    $tratamientoNuevo->num_tiempo_tratamiento = $tratamientoJSON['tiempoTratamiento'];
                     $tratamientoNuevo->num_dias_tratamiento = $tratamientoJSON['diasTratamiento'];
                     $tratamientoNuevo->fch_ultima_visita = $tratamientoJSON['fchInicioTratamiento'];
                     $tratamientoNuevo->fch_inicio_tratamiento = $tratamientoJSON['fchInicioTratamiento'];
@@ -1018,7 +1017,6 @@ class ApiController extends Controller
                             $dosisNueva->num_dosis_sugerida = $dosisJSON['dosisSugerida'];
                             $dosisNueva->num_dosis_acumulada = $dosisJSON['dosisAcumulada'];
                             $dosisNueva->num_dosis_diaria = $dosisJSON['dosisDiaria'];
-                            $dosisNueva->num_tiempo_tratamiento = $dosisJSON['tiempoTratamiento'];
                             $dosisNueva->num_dias_tratamiento = $dosisJSON['diasTratamiento'];
                             $dosisNueva->fch_creacion = $dosisJSON['peso'];
                             $dosisNueva->num_dosis_objetivo = $dosisJSON['dosisObjetivo'];
