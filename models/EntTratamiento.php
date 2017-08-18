@@ -122,7 +122,7 @@ class EntTratamiento extends \yii\db\ActiveRecord
         return $this->hasOne(CatPresentacionMedicamentos::className(), ['id_presentacion' => 'id_presentacion']);
     }
 
-    public function validarDatos()
+    public function verificacionDatos()
     {
 
         $this->txt_token = Utils::generateToken();

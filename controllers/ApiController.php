@@ -817,7 +817,7 @@ class ApiController extends Controller
 
         $tratamiento = new EntTratamiento();
         $tratamiento->attributes = $_REQUEST;
-
+        $tratamiento->verificacionDatos();
         if($tratamiento->validate()){            
 
             if($tratamiento->save()){
