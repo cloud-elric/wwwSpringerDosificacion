@@ -2,6 +2,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Utils;
 
 /**
  * This is the model class for table "ent_tratamiento".
