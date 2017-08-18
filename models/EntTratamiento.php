@@ -49,8 +49,8 @@ class EntTratamiento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tratamiento_cliente', 'id_paciente_cliente', 'id_doctor', 'id_presentacion', 'num_dias_tratamiento', 'num_meses', 'b_habilitado'], 'integer'],
-            [['id_paciente', 'id_doctor', 'txt_nombre_tratamiento', 'txt_token'], 'required'],
+            [['id_tratamiento_cliente', 'id_paciente', 'id_paciente_cliente', 'id_doctor', 'id_presentacion', 'num_dias_tratamiento', 'num_meses', 'b_habilitado'], 'integer'],
+            [['id_doctor', 'txt_nombre_tratamiento', 'txt_token'], 'required'],
             [['num_peso', 'num_dosis_sugerida', 'num_dosis_objetivo', 'num_dosis_objetivo_cal', 'num_dosis_acumulada', 'num_dosis_diaria', 'num_dosis_redondeada'], 'number'],
             [['fch_ultima_visita', 'fch_inicio_tratamiento', 'fch_fin_tratamiento'], 'safe'],
             [['txt_nombre_tratamiento'], 'string', 'max' => 500],
