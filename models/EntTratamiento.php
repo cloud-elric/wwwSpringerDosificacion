@@ -133,5 +133,9 @@ class EntTratamiento extends \yii\db\ActiveRecord
             $this->id_paciente = null;
         }
 
+        if(!$this->id_presentacion){
+            $this->id_presentacion = null;
+        }
+
     }
 }
