@@ -812,13 +812,11 @@ class ApiController extends Controller
     */
     public function actionCrearTratamiento(){
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $utils = new Utils;
+        
         $respuesta['error'] = true;
 
         $tratamiento = new EntTratamiento();
         $tratamiento->attributes = $_REQUEST;
-        $tratamiento->txt_token = $utils->generateToken();
-        $tratamiento->num_meses = intval($tratamiento->num_meses);
 
         if($tratamiento->validate()){            
 

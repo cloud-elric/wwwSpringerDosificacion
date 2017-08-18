@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models;
 
 use Yii;
@@ -121,5 +120,17 @@ class EntTratamiento extends \yii\db\ActiveRecord
     public function getIdPresentacion()
     {
         return $this->hasOne(CatPresentacionMedicamentos::className(), ['id_presentacion' => 'id_presentacion']);
+    }
+
+    public function validarDatos()
+    {
+
+        $this->txt_token = Utils::generateToken();
+        $this->num_meses = intval($this->num_meses);
+
+        if (!$this->id_paciente) {
+            $this->id_paciente = null;
+        }
+
     }
 }
