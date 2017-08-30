@@ -710,13 +710,14 @@ class ApiController extends Controller
                 $tokenDoctor = $_REQUEST['txt_token'];
 
                 $doctor = EntDoctores::find()->where(['txt_token'=>$tokenDoctor])->one();
-
+                $avisoPrivacidad = EntAvisosPrivacidad::find()->where("b_habilitado=1");
                 if($doctor){
                     $respuesta['error'] = false;
                     $respuesta['message'] = 'Pacientes encontrados';
                     $respuesta['pacientes'] = $doctor->entPacientes;
                     $respuesta['tratamientos'] = $doctor->entTratamientos;
                     $respuesta['dosis'] = [];
+                    $respuesta['avisoPrivacidad'] = $avisoPrivacidad;
                     foreach($doctor->entTratamientos as $tratamiento){
                        foreach($tratamiento->entDoses as $dosis){
                             $respuesta['dosis'][] = $dosis;

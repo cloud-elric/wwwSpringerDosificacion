@@ -773,7 +773,8 @@ Por ultimo, si todo sale **correctamente** en el servicio este descarga el archi
     - "message" = "Pacientes encontrados"
     - "pacientes" = JSON con datos de los pacientes
     - "tratamiento" = JSON con los datos del tratamiento
-    - "dosis" = JSON con datos de las dosis    
+    - "dosis" = JSON con datos de las dosis
+    - "avisoPrivacidad" = JSON con datos del aviso de privacidad     
 
 
 ## 22.- Servicio para asignar una fecha de finalizacion al tratamiento
