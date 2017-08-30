@@ -710,7 +710,7 @@ class ApiController extends Controller
                 $tokenDoctor = $_REQUEST['txt_token'];
 
                 $doctor = EntDoctores::find()->where(['txt_token'=>$tokenDoctor])->one();
-                $avisoPrivacidad = EntAvisosPrivacidad::find()->where("b_habilitado=1");
+                $avisoPrivacidad = EntAvisosPrivacidad::find()->where("b_habilitado=1")->one();
                 if($doctor){
                     $respuesta['error'] = false;
                     $respuesta['message'] = 'Pacientes encontrados';
