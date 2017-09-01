@@ -577,12 +577,12 @@ class ApiController extends Controller
             $dosis->id_presentacion = $_REQUEST['id_presentacion'];
             $dosis->num_dosis_sugerida = $_REQUEST['dosisSugerida'];
             $dosis->num_dosis_acumulada = $_REQUEST['dosisAcumulada'];
-            $dosis->num_dosis_diaria = $_REQUEST['dosisDiaria'];
+            $dosis->num_dosis_diaria = intval($_REQUEST['dosisDiaria']);
             $dosis->num_peso = $_REQUEST['num_peso'];
             $dosis->num_dosis_objetivo = $_REQUEST['dosisObjetivo'];
             $dosis->num_dosis_objetivo_cal = $_REQUEST['dosisObjetivoCal'];
             $dosis->num_dosis_redondeada = $_REQUEST['dosisRedondeada'];
-            $dosis->num_meses = $_REQUEST['numMeses'];
+            $dosis->num_meses = intval($_REQUEST['numMeses']);
             $dosis->num_capsulas = $_REQUEST['numCapsulas'];
             $dosis->txt_token = $utils->generateToken();
             if(isset($_REQUEST['fch_visita'])){
