@@ -586,10 +586,12 @@ class ApiController extends Controller
             $dosis->num_meses = intval($_REQUEST['numMeses']);
             $dosis->num_capsulas = $_REQUEST['numCapsulas'];
             $dosis->txt_token = $utils->generateToken();
+            
             if(isset($_REQUEST['fch_visita'])){
                 $fecha = str_replace('/', '-', $_REQUEST['fch_visita']);
                 $fecha = date('Y-m-d H:i:s', strtotime($fecha));
                 $dosis->fch_proxima_visita = $fecha;//Utils::changeFormatDateInput($_REQUEST['fch_visita']);
+                $dosis->fch_creacion = $fecha;
             }
             $paciente = EntPacientes::find()->where(['id_paciente'=>$tratamiento->id_paciente])->one();
             $doctor = EntDoctores::find()->where(['id_doctor'=>$tratamiento->id_doctor])->one();
