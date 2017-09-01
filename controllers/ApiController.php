@@ -575,6 +575,7 @@ class ApiController extends Controller
             $dosis->id_tratamiento_cliente = $_REQUEST['id_tratamiento_cliente'];
             $dosis->id_dosis_cliente = $_REQUEST['id_dosis_cliente'];                    
             $dosis->id_presentacion = $_REQUEST['id_presentacion'];
+            $dosis->num_dias_tratamiento = $_REQUEST['diasTratamiento'];
             $dosis->num_dosis_sugerida = $_REQUEST['dosisSugerida'];
             $dosis->num_dosis_acumulada = $_REQUEST['dosisAcumulada'];
             $dosis->num_dosis_diaria = intval($_REQUEST['dosisDiaria']);
