@@ -1049,4 +1049,11 @@ class ApiController extends Controller
 
         return $respuesta;
     }
+
+    /**
+    * Guarda
+    */
+    public function actionGuardarPacientes(){
+        print_r($_REQUEST['pacientes']);
+    }
 }
