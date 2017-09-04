@@ -1054,6 +1054,7 @@ class ApiController extends Controller
     * Guarda
     */
     public function actionGuardarPacientes(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
         print_r($_REQUEST['pacientes']);
     }
 }
