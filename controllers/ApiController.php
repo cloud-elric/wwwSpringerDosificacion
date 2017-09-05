@@ -1063,7 +1063,7 @@ class ApiController extends Controller
         foreach($pacientes as $paciente){
             $pacienteGuardar = new EntPacientes();
             $pacienteGuardar->attributes = $paciente;
-            $respuesta["paciente"] = $pacienteGuardar;
+            $respuesta["pacientes"][] = $pacienteGuardar;
         }
 
         echo $respuesta;
