@@ -15,6 +15,7 @@ use Spipu\Html2Pdf\Html2Pdf;
 use app\models\EntTratamiento;
 use app\models\RelPacienteAviso;
 use app\models\EntAvisosPrivacidad;
+use app\models\Calendario;
 
 
 class ApiController extends Controller
@@ -598,10 +599,23 @@ class ApiController extends Controller
 
             if($dosis->save() && $doctor && $paciente){
                 $html2pdf = new Html2Pdf();
+
+                $diaNombre = Calendario::getDayName();
+                $diaNumero =  Calendario::getDayNumber();
+                $mes = Calendario::getMonthName();
+                $anio = Calendario::getYearLastDigit();
+
                 $vistaHtml = $this->renderAjax('plantilla', [
-                    'dosis' => $dosis,
-                    'paciente' => $paciente,
-                    'tratamiento' => $tratamiento
+                    'diaNombre'=>$diaNombre,
+                    'diaNumero'=>$diaNumero,
+                    'mes'=>$mes,
+                    'anio'=>$anio,
+                    'nombreDoctor'=>$doctor->txt_nombre.' '.$doctor->txt_apellido_paterno,
+                    'cedulaDoctor'=>$doctor->txt_cedula,
+                    'nombrePaciente'=> $paciente->txt_nombre.' '.$paciente->txt_apellido_paterno,
+                    // 'dosis' => $dosis,
+                    // 'paciente' => $paciente,
+                    // 'tratamiento' => $tratamiento
                 ]);
                 if($this->actualizarDatosTratamiento($tratamiento, $dosis)){
                     $respuesta['message2'] = "Se actualizo el tratamiento";
@@ -1050,6 +1064,20 @@ class ApiController extends Controller
         return $respuesta;
     }
 
+    public function actionIndex(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $respuesta[] = Calendario::getDayName();
+
+        $respuesta[] = Calendario::getDayNumber();
+
+        $respuesta[] = Calendario::getMonthName();
+
+        $respuesta[] = Calendario::getYearLastDigit();
+
+        return $respuesta;
+    }
+
     /**
     * Guarda
     */
@@ -1057,15 +1085,22 @@ class ApiController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         
 
-        $pacientes = json_decode($_REQUEST['pacientes']);
+        $pacientes = $_REQUEST['pacientes'];
+    echo ($pacientes);
+    exit;
         $respuesta['error'] = false;
+        $respuesta['message'] = "Este es un mensaje";
 
         foreach($pacientes as $paciente){
+            //$paciente = json_decode($paciente[0], true);
+var_dump($paciente);
+
+exit;
             $pacienteGuardar = new EntPacientes();
             $pacienteGuardar->attributes = $paciente;
             $respuesta["pacientes"][] = $pacienteGuardar;
         }
 
-        echo $respuesta;
+        return $respuesta;
     }
 }
