@@ -135,7 +135,7 @@ if (class_exists('yii\debug\Module')) {
         <p>Por medio del presente CONSENTIMIENTO INFORMADO, se autoriza y acepta que el Médico Especialista
             <u><?=$nombreDoctor?></u>, con cédula profesional
             <u><?=$cedulaDoctor?></u> prescriba a
-            <u><?=$nombrePaciente?></u> <b>isotretinoína</b>.
+            <u><?=$nombrePaciente?></u> <b>isotretinoína</b>.</p>
     </div>
 
     <h3>Información y Advertencias Importantes</h3>
@@ -293,6 +293,7 @@ if (class_exists('yii\debug\Module')) {
         </div>
     </footer>
     <div class="clear"></div>
+
 </body>
 
 </html>
