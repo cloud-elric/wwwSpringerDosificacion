@@ -36,7 +36,7 @@ if (class_exists('yii\debug\Module')) {
             color: #6D6E70;
         }
 
-        header {
+        .header {
             text-align: center;
         }
 
@@ -117,10 +117,10 @@ if (class_exists('yii\debug\Module')) {
 
 <body>
 
-    <header>
+    <div class="header">
         <h1>CONSENTIEMIENTO INFORMADO</h1>
         <p>Para pacientes bajo tratamiento con <b>isotretinoína</b></p>
-    </header>
+    </div>
 
     <div class="text-right">
         <p>México
