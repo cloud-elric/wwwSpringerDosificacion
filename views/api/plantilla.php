@@ -146,7 +146,7 @@ if (class_exists('yii\debug\Module')) {
         <ul>
             <li><b>Si está embarazada al comenzar este tratamiento</b></li>
             <li>Si se <b>embaraza</b> durante el tratamiento</li>
-            <li>Si se <b>embaraza</b> 1 mes después de finalizar el tratamiento
+            <li>Si se <b>embaraza</b> 1 mes después de finalizar el tratamiento</li>
         </ul>
     </div>
 
