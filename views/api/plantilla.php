@@ -284,14 +284,14 @@ if (class_exists('yii\debug\Module')) {
     </div>
     <div class="clear"></div>
 
-    <footer>
+    <div class="footer">
         <div class="bar-solid">
 
         </div>
         <div class="logo-footer">
 
         </div>
-    </footer>
+    </div>
     <div class="clear"></div>
 
 </body>
