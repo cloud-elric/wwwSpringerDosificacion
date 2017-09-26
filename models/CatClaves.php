@@ -29,7 +29,6 @@ class CatClaves extends \yii\db\ActiveRecord
         return [
             [['txt_clave'], 'required'],
             [['b_usado'], 'integer'],
-            [['txt_clave'], 'string', 'max' => 6],
             [['txt_clave'], 'unique'],
         ];
     }
