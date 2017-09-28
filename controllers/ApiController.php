@@ -684,7 +684,7 @@ class ApiController extends Controller
                 if (!file_exists($carpeta)) {
                     mkdir($carpeta, 0777, true);
                 }
-
+                $pathArchivo = $carpeta . '/' . $dosis->txt_token . '.pdf';
 
                 $pdf = new Pdf([
                     // set to use core fonts only
@@ -693,7 +693,7 @@ class ApiController extends Controller
                     'format' => Pdf::FORMAT_A4, 
                     // portrait orientation
                     'orientation' => Pdf::ORIENT_PORTRAIT,
-                    'filename' =>$carpeta."/".uniqid().".pdf",
+                    'filename' =>$pathArchivo,
                     // stream to browser inline
                     'destination' => Pdf::DEST_FILE, 
                     // your html content input
@@ -717,7 +717,7 @@ class ApiController extends Controller
                 
                 /* *********CORREO CON ARCHIVO ADJUNTO**********  */
 
-                $pathArchivo = $carpeta . '/' . $dosis->txt_token . '.pdf';
+                
                 $utils = new Utils();
                 $parametrosEmail = [
                     'nombre' => $doctor->txt_nombre,
