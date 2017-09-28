@@ -14,104 +14,10 @@ if (class_exists('yii\debug\Module')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Consentimiento Isotretinoina</title>
+    
 
     <!-- Estilos-->
-    <style>
-        body {
-            padding: 20px;
-            padding-bottom: 0px;
-            margin-bottom: 0px;
-        }
-
-        h1,
-        h3,
-        b,
-        .number,
-        .contenedor-nota p {
-            color: #006298
-        }
-
-        p {
-            color: #6D6E70;
-        }
-
-        .header {
-            text-align: center;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        ul li b {
-            color: black;
-        }
-
-        .contenedor-nota {
-            background-color: #D0ECEC;
-            padding: 30px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            border-radius: 8px;
-        }
-
-        .seccion-1,
-        .seccion-2 {
-            width: 45%;
-            float: left;
-            margin-top: 25px;
-            padding-right: 5%;
-        }
-
-        .number {
-            float: left;
-            height: 30px;
-            width: 30px;
-            line-height: 30px;
-            -moz-border-radius: 50%;
-            border-radius: 50%;
-            border: 2px solid #00B1B1;
-            text-align: center;
-            font-size: 1em;
-            margin-right: 15px;
-        }
-
-        .seccion p {
-            margin: 0;
-        }
-
-        .container-number {
-            overflow: auto;
-            margin-top: 10px;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .clear {
-            clear: both;
-        }
-        .sign-line{
-            margin-top: 20px;
-            border-bottom: 1px solid #6D6E70;
-            margin-bottom: 30px;
-            min-height: 20px;
-        }
-        .bar-solid, .logo-footer{
-            min-height: 50px;
-            float:left;
-        }
-        .bar-solid{
-            width: 80%;
-            background: #006298;
-        }
-
-        .logo-footer{
-            width: 20%;
-        }
-    </style>
+    
 
 </head>
 

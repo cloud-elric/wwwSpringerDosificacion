@@ -16,6 +16,7 @@ use app\models\EntTratamiento;
 use app\models\RelPacienteAviso;
 use app\models\EntAvisosPrivacidad;
 use app\models\Calendario;
+use kartik\mpdf\Pdf;
 
 
 class ApiController extends Controller
@@ -554,6 +555,60 @@ class ApiController extends Controller
         return $respuesta;
     }
 
+    public function actionIndex(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+    
+
+        $vistaHtml = $this->renderAjax('plantilla', [
+            'diaNombre'=>"Mes",
+            'diaNumero'=>"Numero",
+            'mes'=>"otro mes",
+            'anio'=>"17",
+            'nombreDoctor'=>"Nombre doctor",
+            'cedulaDoctor'=>"cedula",
+            'nombrePaciente'=> "Nombre paciente",
+            // 'dosis' => $dosis,
+            // 'paciente' => $paciente,
+            // 'tratamiento' => $tratamiento
+        ]);
+
+        $carpeta = 'pdfDosis/test';
+        if (!file_exists($carpeta)) {
+            mkdir($carpeta, 0777, true);
+        }
+
+
+        $pdf = new Pdf([
+            // set to use core fonts only
+            'mode' => Pdf::MODE_CORE, 
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4, 
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'filename' =>$carpeta."/".uniqid().".pdf",
+            // stream to browser inline
+            'destination' => Pdf::DEST_FILE, 
+            // your html content input
+            'content' => $vistaHtml,  
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting 
+            'cssFile' => 'webAssets/css/plantilla-pdf.css',
+            // any css to be embedded if required
+            //'cssInline' => '.kv-heading-1{font-size:18px}', 
+             // set mPDF properties on the fly
+            //'options' => ['title' => 'Krajee Report Title'],
+             // call mPDF methods on the fly
+            'methods' => [ 
+              //  'SetHeader'=>['Krajee Report Header'], 
+                //'SetFooter'=>['{PAGENO}'],
+            ]
+        ]);
+
+        $pdf->render();
+        $respuestas['response'] = "Esta es una respuesta";
+        return $respuestas;
+    }
+
     public function actionGenerarPdf(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         
@@ -630,8 +685,35 @@ class ApiController extends Controller
                     mkdir($carpeta, 0777, true);
                 }
 
-                $html2pdf->writeHTML($vistaHtml);
-                $html2pdf->output($carpeta . '/' . $dosis->txt_token . '.pdf', 'F');
+
+                $pdf = new Pdf([
+                    // set to use core fonts only
+                    'mode' => Pdf::MODE_CORE, 
+                    // A4 paper format
+                    'format' => Pdf::FORMAT_A4, 
+                    // portrait orientation
+                    'orientation' => Pdf::ORIENT_PORTRAIT,
+                    'filename' =>$carpeta."/".uniqid().".pdf",
+                    // stream to browser inline
+                    'destination' => Pdf::DEST_FILE, 
+                    // your html content input
+                    'content' => $vistaHtml,  
+                    // format content from your own css file if needed or use the
+                    // enhanced bootstrap css built by Krajee for mPDF formatting 
+                    'cssFile' => 'webAssets/css/plantilla-pdf.css',
+                    // any css to be embedded if required
+                    //'cssInline' => '.kv-heading-1{font-size:18px}', 
+                     // set mPDF properties on the fly
+                    //'options' => ['title' => 'Krajee Report Title'],
+                     // call mPDF methods on the fly
+                    'methods' => [ 
+                      //  'SetHeader'=>['Krajee Report Header'], 
+                        //'SetFooter'=>['{PAGENO}'],
+                    ]
+                ]);
+        
+                $pdf->render();
+               
                 
                 /* *********CORREO CON ARCHIVO ADJUNTO**********  */
 
@@ -1060,20 +1142,6 @@ class ApiController extends Controller
                 $respuesta['pacienteErr'] = $pacienteNuevo->errors;
             }
         }
-
-        return $respuesta;
-    }
-
-    public function actionIndex(){
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
-        $respuesta[] = Calendario::getDayName();
-
-        $respuesta[] = Calendario::getDayNumber();
-
-        $respuesta[] = Calendario::getMonthName();
-
-        $respuesta[] = Calendario::getYearLastDigit();
 
         return $respuesta;
     }
