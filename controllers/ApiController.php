@@ -624,7 +624,7 @@ class ApiController extends Controller
 
             if($dosis && $doctor){
 
-                $carpeta = 'pdfDosis/'. $dosis->idPaciente->txt_token;
+                $carpeta = 'pdfDosis/'. $dosis->idTratamiento->idPaciente->txt_token;
                 
                 $pathArchivo = $carpeta . '/' . $dosis->txt_token . '.pdf';
 
