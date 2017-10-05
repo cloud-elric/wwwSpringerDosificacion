@@ -29,7 +29,7 @@ class ApiController extends Controller
         $respuesta['error'] = true;
         $respuesta['message'] = 'No tienes permisos para acceder';
 
-        if($this->seguridad == true){
+        if($this->seguridad){
             if(($action->id == "login") || ($action->id == "mandar-password") || ($action->id == "crear-doctor")){
                 return parent::beforeAction($action);                                
             }else{
@@ -607,6 +607,45 @@ class ApiController extends Controller
         $pdf->render();
         $respuestas['response'] = "Esta es una respuesta";
         return $respuestas;
+    }
+
+
+    public function actionUno(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $respuesta['error'] = true;
+        $respuesta['message'] = 'Faltan datos';
+
+        if(isset($_REQUEST['txt_token']) && isset($_REQUEST['id_doctor'])){
+            $token = $_REQUEST['token'];
+            $idDoctor = $_REQUEST['id_doctor'];
+            $dosis = EntDosis::find()->where(['txt_token'=>$token])->one();
+            $doctor = EntDoctor::find()->where(['id_doctor'=>$idDoctor])->one();
+
+            if($dosis && $doctor){
+
+                $carpeta = 'pdfDosis/'. $dosis->idPaciente->txt_token;
+                
+                $pathArchivo = $carpeta . '/' . $dosis->txt_token . '.pdf';
+
+                $utils = new Utils();
+                $parametrosEmail = [
+                    'nombre' => $doctor->txt_nombre,
+                    'apellido' => $doctor->txt_apellido_paterno,
+                    'password'=>$doctor->txt_password,
+                    'email'=>$doctor->txt_email,
+                ];
+                if($utils->sendCorreoArchivo($doctor->txt_email, $parametrosEmail, $pathArchivo)){
+                    $respuesta['error'] = false;
+                    $respuesta['message'] = 'Email enviado correctamente';                   
+                }else{
+                    $respuesta['error'] = true;
+                    $respuesta['message'] = 'Error al enviar email';
+                }
+            }else{
+                $respuesta['message'] = 'No se encontro el doctor o consulta';
+            }
+        }
     }
 
     public function actionGenerarPdf(){
