@@ -610,7 +610,7 @@ class ApiController extends Controller
     }
 
 
-    public function actionUno(){
+    public function actionReenviarPdf(){
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $respuesta['error'] = true;
