@@ -646,6 +646,8 @@ class ApiController extends Controller
                 $respuesta['message'] = 'No se encontro el doctor o consulta';
             }
         }
+
+        return $respuesta;
     }
 
     public function actionGenerarPdf(){
