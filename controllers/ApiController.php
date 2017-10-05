@@ -620,7 +620,7 @@ class ApiController extends Controller
             $token = $_REQUEST['token'];
             $idDoctor = $_REQUEST['id_doctor'];
             $dosis = EntDosis::find()->where(['txt_token'=>$token])->one();
-            $doctor = EntDoctor::find()->where(['id_doctor'=>$idDoctor])->one();
+            $doctor = EntDoctores::find()->where(['id_doctor'=>$idDoctor])->one();
 
             if($dosis && $doctor){
 
