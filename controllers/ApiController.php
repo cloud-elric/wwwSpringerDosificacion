@@ -617,7 +617,7 @@ class ApiController extends Controller
         $respuesta['message'] = 'Faltan datos';
 
         if(isset($_REQUEST['txt_token']) && isset($_REQUEST['id_doctor'])){
-            $token = $_REQUEST['token'];
+            $token = $_REQUEST['txt_token'];
             $idDoctor = $_REQUEST['id_doctor'];
             $dosis = EntDosis::find()->where(['txt_token'=>$token])->one();
             $doctor = EntDoctores::find()->where(['id_doctor'=>$idDoctor])->one();
