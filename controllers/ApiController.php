@@ -189,7 +189,7 @@ class ApiController extends Controller
                     $respuesta ['doctor'] = $doctor;
                 }else{
                     $respuesta ['error'] = true;
-                    $respuesta ['message'] = 'Correo ya utilizado';
+                    $respuesta ['message'] = 'Datos invalidos';
                     $respuesta['errosDoc'] = $doctor->errors;
                 }
                 
@@ -370,7 +370,7 @@ class ApiController extends Controller
                     $respuesta ['paciente'] = $paciente;
                 }else{
                     $respuesta ['error'] = true;
-                    $respuesta ['message'] = 'Correo ya utilizado';
+                    $respuesta ['message'] = 'Datos invalidos';
                     $respuesta['errosPac'] = $paciente->errors;
                 }
             }else{
