@@ -1211,5 +1211,23 @@ exit;
         }
 
         return $respuesta;
+ 
     }
+
+    // public function actionPdf(){
+    //     return $this->renderAjax('plantilla' , [
+    //         'diaNombre'=>"Mes",
+    //         'diaNumero'=>"Numero",
+    //         'mes'=>"otro mes",
+    //         'anio'=>"17",
+    //         'nombreDoctor'=>"Nombre doctor",
+    //         'cedulaDoctor'=>"cedula",
+    //         'nombrePaciente'=> "Nombre paciente",
+    //         // 'dosis' => $dosis,
+    //         // 'paciente' => $paciente,
+    //         // 'tratamiento' => $tratamiento
+    //     ]);
+    // }
 }
+
+
