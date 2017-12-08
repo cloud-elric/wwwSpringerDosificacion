@@ -121,7 +121,7 @@ class Utils {
 	 */
 	public function sendCorreoArchivo($email, $parametrosEmail, $pathArchivo) {
 		// Envia el correo electronico
-		return $this->sendEmailAdjunto ( '@app/mail/layouts/datosCuenta', '@app/mail/layouts/datosCuentaText', 'development@2gom.com.mx', $email, 'Archivo pdf con dosis paciente.', $parametrosEmail, $pathArchivo );
+		return $this->sendEmailAdjunto ( '@app/mail/layouts/pdf', '@app/mail/layouts/pdfText', 'development@2gom.com.mx', $email, 'Archivo pdf con dosis paciente.', $parametrosEmail, $pathArchivo );
 	}
 	
 	/**
