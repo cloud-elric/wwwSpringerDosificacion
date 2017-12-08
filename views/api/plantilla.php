@@ -24,7 +24,7 @@ if (class_exists('yii\debug\Module')) {
 <body>
 
     <div class="header">
-        <h1>CONSENTIEMIENTO INFORMADO</h1>
+        <h1>CONSENTIMIENTO INFORMADO</h1>
         <p>Para pacientes bajo tratamiento con <b>isotretinoína</b></p>
     </div>
 
