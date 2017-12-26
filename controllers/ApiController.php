@@ -98,12 +98,20 @@ class ApiController extends Controller
                 $doctor->txt_cedula = $_REQUEST['cedula'];
 
             $clave = CatClaves::find()->where(['txt_clave'=>$_REQUEST['clave']])->one();
+
+            if(!$clave){
+                $respuesta ['error'] = true;
+                $respuesta ['message'] = 'Clave invalida';
+                $respuesta ['errosClave'] = ['txt_clave'=>'Clave invalida'];
+            }
+
             if($clave && $clave->b_usado == 0){
                 $clave->b_usado = 1;
                 $doctor->id_clave = $clave->id_clave;   
             }else{
                 $respuesta ['error'] = true;
-                $respuesta ['message'] = 'Clave invalida';
+                $respuesta ['message'] = 'Clave usada';
+                $respuesta ['errosClave'] = ['txt_clave'=>'Clave usada'];
 
                 return $respuesta;
             }
