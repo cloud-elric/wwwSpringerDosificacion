@@ -103,6 +103,8 @@ class ApiController extends Controller
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'Clave invalida';
                 $respuesta ['errosClave'] = ['txt_clave'=>'Clave invalida'];
+                $doctor->validate();
+                $respuesta['errosDoc'] = $doctor->errors;
             }
 
             if($clave && $clave->b_usado == 0){
@@ -112,6 +114,8 @@ class ApiController extends Controller
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'Clave usada';
                 $respuesta ['errosClave'] = ['txt_clave'=>'Clave usada'];
+                $doctor->validate();
+                $respuesta['errosDoc'] = $doctor->errors;
 
                 return $respuesta;
             }
@@ -125,6 +129,8 @@ class ApiController extends Controller
                     $respuesta ['error'] = true;
                     $respuesta ['message'] = 'Datos invalidos';
                     $respuesta['errosClave'] = $clave->errors;
+                    $doctor->validate();
+                    $respuesta['errosDoc'] = $doctor->errors;
                 }
             }else{
                 $respuesta ['error'] = true;
