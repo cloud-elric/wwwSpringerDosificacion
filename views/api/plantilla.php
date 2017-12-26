@@ -1,11 +1,21 @@
 <?php
 
 use app\models\Utils;
+use yii\helpers\Url;
 
 if (class_exists('yii\debug\Module')) {
     $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
 }
+
+$this->registerCssFile(
+    '@web/webAssets/css/plantilla-pdf.css',
+    ['depends' => [\app\assets\AppAsset::className()]]
+);
 ?>
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +24,7 @@ if (class_exists('yii\debug\Module')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-
     <!-- Estilos-->
-    
-
 </head>
 
 <body>
@@ -30,33 +36,34 @@ if (class_exists('yii\debug\Module')) {
 
     <div class="text-right">
         <p>México
-            <u><?=$diaNombre?></u> a
-            <u><?=$diaNumero?></u> de
-            <u><?=$mes?></u> 20
-            <u><?=$anio?></u>
+            <u class="data"><?=$diaNombre?></u> a
+            <u class="data"><?=$diaNumero?></u> de
+            <u class="data"><?=$mes?></u> 20
+            <u class="data"><?=$anio?></u>
         </p>
     </div>
 
     <div>
         <p>Por medio del presente CONSENTIMIENTO INFORMADO, se autoriza y acepta que el Médico Especialista
-            <u><?=$nombreDoctor?></u>, con cédula profesional
-            <u><?=$cedulaDoctor?></u> prescriba a
-            <u><?=$nombrePaciente?></u> <b>isotretinoína</b>.</p>
+            <u class="data"><?=$nombreDoctor?></u>, con cédula profesional
+            <u class="data"><?=$cedulaDoctor?></u> prescriba a
+            <u class="data"><?=$nombrePaciente?></u> <b>isotretinoína</b>.</p>
     </div>
 
-    <h3>Información y Advertencias Importantes</h3>
-    <div>
+    <img class="bullet" src="<?=Url::base()."/webAssets/images/bullet.png"?>" alt=""><h3>Información y Advertencias Importantes</h3>
+    <div class="pos-relative">
         <p>La isotretinoína puede producir graves malformaciones fetales si se toma, incluso en pequeñas cantidades, durante
             el embarazo.</p>
         <p>El riesto de tener un hijo con una malformación grave es extremadamente alto:</p>
-        <ul>
+        <ul class="riesgos-bullets">
             <li><b>Si está embarazada al comenzar este tratamiento</b></li>
             <li>Si se <b>embaraza</b> durante el tratamiento</li>
             <li>Si se <b>embaraza</b> 1 mes después de finalizar el tratamiento</li>
         </ul>
+        <img class="icon-embarazada" src="<?=Url::base()."/webAssets/images/icon-embarazada.png"?>" alt="">
     </div>
 
-    <h3>Debe ser llenado y firmado por la paciente, padre o tutor</h3>
+    <img class="bullet" src="<?=Url::base()."/webAssets/images/bullet.png"?>" alt=""><h3>Debe ser llenado y firmado por la paciente, padre o tutor</h3>
     <div class="contenedor-nota">
         <p>
             Lea detenidamente cada uno de los siguientes puntos, y firme este formulario de consentimiento informado, si ha entendido
@@ -67,7 +74,7 @@ if (class_exists('yii\debug\Module')) {
         </p>
     </div>
 
-    <div>
+    <div class="secciones-wrapper">
         <div class="seccion seccion-1">
             <div class="container-number">
                 <div class="number">
@@ -102,7 +109,7 @@ if (class_exists('yii\debug\Module')) {
                     <b>4</b>
                 </div>
                 <p>
-                    He sido informado que debo utilizar métodos de anticonceptivos eficaces y complementarios 1 mes antes de comenzar el tratamiento
+                    He sido informada que debo utilizar métodos de anticonceptivos eficaces y complementarios 1 mes antes de comenzar el tratamiento
                     durante y <b>1 mes después de
                     haber finalizado</b>. Deberé utilizar un método fiable de control de natalidad incluso aunque piense
                     que no puedo quedar embarazada.
@@ -184,18 +191,18 @@ if (class_exists('yii\debug\Module')) {
         <div class="seccion seccion-2">
                 <p>Nombre del padre/tutor (en caso necesario):</p>
                 <div class="sign-line"></div>
-                <p>Nombre del padre/tutor (en caso necesario):</p>
+                <p>Firma del padre/tutor (en caso necesario):</p>
                 <div class="sign-line"></div>
         </div>
     </div>
     <div class="clear"></div>
 
-    <div class="footer">
+    <div class="footer-pdf">
         <div class="bar-solid">
 
         </div>
         <div class="logo-footer">
-
+            <img src="<?=Url::base()."/webAssets/images/logo-italmex.png"?>" alt="">
         </div>
     </div>
     <div class="clear"></div>
