@@ -1,218 +1,216 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
-    <!--[if gte mso 9]><xml>
-     <o:OfficeDocumentSettings>
-      <o:AllowPNG/>
-      <o:PixelsPerInch>96</o:PixelsPerInch>
-     </o:OfficeDocumentSettings>
-    </xml><![endif]-->
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width">
-    <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
-    <title>Bienvendio</title>
-    
-    
-    <style type="text/css" id="media-query">
-      body {
-  margin: 0;
-  padding: 0; }
-
-table, tr, td {
-  vertical-align: top;
-  border-collapse: collapse; }
-
-.ie-browser table, .mso-container table {
-  table-layout: fixed; }
-
-* {
-  line-height: inherit; }
-
-a[x-apple-data-detectors=true] {
-  color: inherit !important;
-  text-decoration: none !important; }
-
-[owa] .img-container div, [owa] .img-container button {
-  display: block !important; }
-
-[owa] .fullwidth button {
-  width: 100% !important; }
-
-[owa] .block-grid .col {
-  display: table-cell;
-  float: none !important;
-  vertical-align: top; }
-
-.ie-browser .num12, .ie-browser .block-grid, [owa] .num12, [owa] .block-grid {
-  width: 500px !important; }
-
-.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
-  line-height: 100%; }
-
-.ie-browser .mixed-two-up .num4, [owa] .mixed-two-up .num4 {
-  width: 164px !important; }
-
-.ie-browser .mixed-two-up .num8, [owa] .mixed-two-up .num8 {
-  width: 328px !important; }
-
-.ie-browser .block-grid.two-up .col, [owa] .block-grid.two-up .col {
-  width: 250px !important; }
-
-.ie-browser .block-grid.three-up .col, [owa] .block-grid.three-up .col {
-  width: 166px !important; }
-
-.ie-browser .block-grid.four-up .col, [owa] .block-grid.four-up .col {
-  width: 125px !important; }
-
-.ie-browser .block-grid.five-up .col, [owa] .block-grid.five-up .col {
-  width: 100px !important; }
-
-.ie-browser .block-grid.six-up .col, [owa] .block-grid.six-up .col {
-  width: 83px !important; }
-
-.ie-browser .block-grid.seven-up .col, [owa] .block-grid.seven-up .col {
-  width: 71px !important; }
-
-.ie-browser .block-grid.eight-up .col, [owa] .block-grid.eight-up .col {
-  width: 62px !important; }
-
-.ie-browser .block-grid.nine-up .col, [owa] .block-grid.nine-up .col {
-  width: 55px !important; }
-
-.ie-browser .block-grid.ten-up .col, [owa] .block-grid.ten-up .col {
-  width: 50px !important; }
-
-.ie-browser .block-grid.eleven-up .col, [owa] .block-grid.eleven-up .col {
-  width: 45px !important; }
-
-.ie-browser .block-grid.twelve-up .col, [owa] .block-grid.twelve-up .col {
-  width: 41px !important; }
-
-@media only screen and (min-width: 520px) {
-  .block-grid {
-    width: 500px !important; }
-  .block-grid .col {
-    display: table-cell;
-    Float: none !important;
-    vertical-align: top; }
-    .block-grid .col.num12 {
-      width: 500px !important; }
-  .block-grid.mixed-two-up .col.num4 {
-    width: 164px !important; }
-  .block-grid.mixed-two-up .col.num8 {
-    width: 328px !important; }
-  .block-grid.two-up .col {
-    width: 250px !important; }
-  .block-grid.three-up .col {
-    width: 166px !important; }
-  .block-grid.four-up .col {
-    width: 125px !important; }
-  .block-grid.five-up .col {
-    width: 100px !important; }
-  .block-grid.six-up .col {
-    width: 83px !important; }
-  .block-grid.seven-up .col {
-    width: 71px !important; }
-  .block-grid.eight-up .col {
-    width: 62px !important; }
-  .block-grid.nine-up .col {
-    width: 55px !important; }
-  .block-grid.ten-up .col {
-    width: 50px !important; }
-  .block-grid.eleven-up .col {
-    width: 45px !important; }
-  .block-grid.twelve-up .col {
-    width: 41px !important; } }
-
-@media (max-width: 520px) {
-  .block-grid, .col {
-    min-width: 320px !important;
-    max-width: 100% !important; }
-  .block-grid {
-    width: calc(100% - 40px) !important; }
-  .col {
-    width: 100% !important; }
-    .col > div {
-      margin: 0 auto; }
-  img.fullwidth {
-    max-width: 100% !important; } }
-
-    </style>
-</head>
-<body class="clean-body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: transparent">
-
-  <!--[if IE]><div class="ie-browser"><![endif]-->
-  <!--[if mso]><div class="mso-container"><![endif]-->
-  <div class="nl-container" style="min-width: 320px;Margin: 0 auto;background-color: transparent">
-    <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: transparent;"><![endif]-->
-
-    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 500px;width: 500px;width: calc(19000% - 98300px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #d9dadb;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 500px;"><tr class="layout-full-width" style="background-color:#d9dadb;"><![endif]-->
-
-              <!--[if (mso)|(IE)]><td align="center" width="500" style=" width:500px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 500px;width: 500px;width: calc(18000% - 89500px);background-color: #d9dadb;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-                  
-                    <div align="left" class="img-container left" style="padding-right: 15px;  padding-left: 30px;">
-<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 15px; padding-left: 30px;" align="left"><![endif]-->
-<div style="line-height:15px;font-size:1px">&nbsp;</div>  <img class="left" align="left" border="0" src="http://www.springerhealthcare.com/media/1001/springer-healthcare-logo.png" alt="Springer Healthcare" title="Springer Healthcare" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block !important;border: 0;height: auto;float: none;width: 100%;max-width: 250px" width="250">
-<div style="line-height:15px;font-size:1px">&nbsp;</div><!--[if mso]></td></tr></table><![endif]-->
-</div>
-
-                  
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>    <div style="background-color:transparent;">
-      <div style="Margin: 0 auto;min-width: 320px;max-width: 500px;width: 500px;width: calc(19000% - 98300px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;" class="block-grid ">
-        <div style="border-collapse: collapse;display: table;width: 100%;">
-          <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="background-color:transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width: 500px;"><tr class="layout-full-width" style="background-color:#ffffff;"><![endif]-->
-
-              <!--[if (mso)|(IE)]><td align="center" width="500" style=" width:500px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><![endif]-->
-            <div class="col num12" style="min-width: 320px;max-width: 500px;width: 500px;width: calc(18000% - 89500px);background-color: #ffffff;">
-              <div style="background-color: transparent; width: 100% !important;">
-              <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
-
-                  
-                    <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 15px; padding-left: 15px; padding-top: 15px; padding-bottom: 15px;"><![endif]-->
-<div style="color:#404041;line-height:120%;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif; padding-right: 15px; padding-left: 15px; padding-top: 15px; padding-bottom: 15px;">	
+<?php	
+	
+	use app\models\Utils;
+	
+	
+	if (class_exists('yii\debug\Module')) {
+	$this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
+	}
+	
+	
+	
+	
+	
+	?>
+	
+	
+	
+	
+	
+	<!DOCTYPE html>
+	<html lang="en">
+	
+	<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		
+		
+		<!-- Estilos-->
+		
+		
+	</head>
+	
+	<body>
+	
+	<div class="header">
+	<h1>CONSENTIMIENTO INFORMADO</h1>
+	<p>Para pacientes bajo tratamiento con <b>isotretinoína</b></p>
+	</div>
+	
+	<div class="text-right">
+	<p>México
+	<u><?=$diaNombre?></u> a
+	<u><?=$diaNumero?></u> de
+	<u><?=$mes?></u> 20
+	<u><?=$anio?></u>
+	</p>
+	</div>
+	
 	<div>
-	<p style="margin: 0;font-size: 12px;line-height: 14px">
-		Hola <span style="font-size: 12px; line-height: 14px;">
-            Doctor</span> <?=$nombre . " " . $apellido?>.</p>
-            <p style="margin: 0;font-size: 12px;line-height: 14px">&nbsp;<br></p>
-            <p style="margin: 0;font-size: 12px;line-height: 14px">
-            Adjunto a este correo encontrará el consentimiento informado que su paciente deberá firmar para poder concluir la consulta realizada.</p>
-                <p style="margin: 0;font-size: 12px;line-height: 14px">&nbsp;<br></p>
-                
-                <p style="margin: 0;font-size: 12px;line-height: 14px">
-                    <br>
-                </p>
-                <p style="margin: 0;font-size: 12px;line-height: 14px">
-                </p>
-                <p style="margin: 0;font-size: 12px;line-height: 14px">&nbsp;<br></p>
-                <p style="margin: 0;font-size: 12px;line-height: 14px">&nbsp;<br></p>
-                <p style="margin: 0;font-size: 12px;line-height: 14px">
-                    Este correo se genera automáticamente. Favor de no responder.</p>
-                    <p style="margin: 0;font-size: 12px;line-height: 14px">&nbsp;<br></p><p style="margin: 0;font-size: 12px;line-height: 14px;text-align: right"><em>- Saludos de parte del equipo de Springer&nbsp;healthcare</em></p></div>	
-</div>
-<!--[if mso]></td></tr></table><![endif]-->
-
-                  
-              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
-              </div>
-            </div>
-          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
-        </div>
-      </div>
-    </div>   <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
-  </div>
-  <!--[if (mso)|(IE)]></div><![endif]-->
-
-
-</body></html>
+	<p>Por medio del presente CONSENTIMIENTO INFORMADO, se autoriza y acepta que el Médico Especialista
+	<u><?=$nombreDoctor?></u>, con cédula profesional
+	<u><?=$cedulaDoctor?></u> prescriba a
+	<u><?=$nombrePaciente?></u> <b>isotretinoína</b>.</p>
+	</div>
+	
+	<h3>Información y Advertencias Importantes</h3>
+	<div>
+	<p>La isotretinoína puede producir graves malformaciones fetales si se toma, incluso en pequeñas cantidades, durante
+	el embarazo.</p>
+	<p>El riesto de tener un hijo con una malformación grave es extremadamente alto:</p>
+	<ul>
+	<li><b>Si está embarazada al comenzar este tratamiento</b></li>
+	<li>Si se <b>embaraza</b> durante el tratamiento</li>
+	<li>Si se <b>embaraza</b> 1 mes después de finalizar el tratamiento</li>
+	</ul>
+	
+	</div>
+	
+	<h3>Debe ser llenado y firmado por la paciente, padre o tutor</h3>
+	<div class="contenedor-nota">
+	<p>
+	Lea detenidamente cada uno de los siguientes puntos, y firme este formulario de consentimiento informado, si ha entendido
+	completamente cada uno de los puntos y acepta seguir las instrucciones del especialista. En caso necesario, el
+	padre o tutor debe firmar el formulario de consentimiento después de haberlo leído y entendido en su totalidad.
+	No firme este consentimiento ni comience el tratamiento si hay algo que no entiende sobre la información que
+	ha recibido acerca del uso de este medicamento.
+	</p>
+	</div>
+	
+	<div>
+	<div class="seccion seccion-1">
+	<div class="container-number">
+	<div class="number">
+	<b>1</b>
+	</div>
+	<p>
+	Mi médico especialista me ha advertido sobre el riego de graves daños a mi futuro hijo(a) si estoy o voy a quedar embarazada
+	mientras tomo isotretinoína.
+	</p>
+	</div>
+	
+	<div class="container-number">
+	<div class="number">
+	<b>2</b>
+	</div>
+	<p>
+	Entiendo que debo esperar hasta el segundo o tercer día de mi próximo periodo menstrual antes de empezar a tomar isotretinoína.
+	</p>
+	</div>
+	
+	<div class="container-number">
+	<div class="number">
+	<b>3</b>
+	</div>
+	<p>
+	Entiendo que debo contar con una prueba de embarazo negativa antes de empezar mi tratamiento.
+	</p>
+	</div>
+	
+	<div class="container-number">
+	<div class="number">
+	<b>4</b>
+	</div>
+	<p>
+	He sido informado que debo utilizar métodos de anticonceptivos eficaces y complementarios 1 mes antes de comenzar el tratamiento
+	durante y <b>1 mes después de
+	haber finalizado</b>. Deberé utilizar un método fiable de control de natalidad incluso aunque piense
+	que no puedo quedar embarazada.
+	</p>
+	</div>
+	
+	<div class="container-number">
+	<div class="number">
+	<b>5</b>
+	</div>
+	<p>
+	Entiendo que dado que todos los métodos anticonceptivos pueden fallar, debo repetir la prueba de embarazo mensualmente durante
+	el tratamiento y 1 mes posterior a la suspensión del mismo.
+	</p>
+	</div>
+	
+	</div>
+	<div class="seccion seccion-2">
+	<div class="container-number">
+	<div class="number">
+	<b>6</b>
+	</div>
+	<p>
+	Entiendo que determinados medicamentos pueden disminuir el efecto de los métodos anticonceptivos hormonales. Por ello, informare
+	a mi médico especialista sobre cualquier medicamento que esté tomando o pretenda tomar, durante el tratamiento
+	con isotretinoína.
+	</p>
+	</div>
+	<div class="container-number">
+	<div class="number">
+	<b>7</b>
+	</div>
+	<p>
+	Si me embarazo durante el tratamiento o al siguiente mes después de haberlo concluido, debo informar inmediatamente de ello
+	a mi médico especialista.
+	</p>
+	</div>
+	<div class="container-number">
+	<div class="number">
+	<b>8</b>
+	</div>
+	<p>
+	Entiendo que por ningún motivo debo dar o compartir mi medicamento con otras personas.
+	</p>
+	</div>
+	<div class="container-number">
+	<div class="number">
+	<b>9</b>
+	</div>
+	<p>
+	Entiendo que no debo ingerir bebidas alcohólicas, ya que pueden potencializar los efectos de la isotretinoína y reflejarse
+	en un incremento de las reacciones adversas.
+	</p>
+	</div>
+	</div>
+	</div>
+	
+	<div class="clear"></div>
+	<br>
+	<div class="contenedor-nota text-center">
+	<p>Acepto recibir el tratamiento con isotretinoína.
+	<br>Acepto el riego y las medidas de precaución que debo seguir y que mi médico especialista me han explicado
+	a detalle.<br> Mi médico especialista ha contestado a todas mis preguntas sobre mi tratamiento.</p>
+	</div>
+	
+	<div>
+	<div class="seccion seccion-1">
+	<p>Nombre del paciente:</p>
+	<div class="sign-line">
+	<?=$nombrePaciente?>
+	</div>
+	
+	<p>Firma del paciente:</p>
+	<div class="sign-line">
+	
+	</div>
+	</div>
+	
+	<div class="seccion seccion-2">
+	<p>Nombre del padre/tutor (en caso necesario):</p>
+	<div class="sign-line"></div>
+	 <p>Nombre del padre/tutor (en caso necesario):</p>
+	<div class="sign-line"></div>
+	</div>
+	</div>
+	<div class="clear"></div>
+	
+	 <div class="footer">
+	<div class="bar-solid">
+	
+	</div>
+	<div class="logo-footer">
+	
+	</div>
+	</div>
+	<div class="clear"></div>
+	
+	</body>
+	
+	</html>
