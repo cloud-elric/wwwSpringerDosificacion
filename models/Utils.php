@@ -99,7 +99,7 @@ class Utils {
 	 */
 	public function sendCorreoBienvenida($email, $parametrosEmail) {
 		// Envia el correo electronico
-		return $this->sendEmail ( '@app/mail/layouts/datosCuenta', '@app/mail/layouts/datosCuentaText', 'development@2gom.com.mx', $email, 'Bienvenido al Sistema Dosificacion.', $parametrosEmail );
+		return $this->sendEmail ( '@app/mail/layouts/datosCuenta', '@app/mail/layouts/datosCuentaText', 'calculadora-dosificacion@2gom.com.mx', $email, 'Bienvenido al Sistema Dosificacion.', $parametrosEmail );
 	}
 
 	/**
@@ -110,7 +110,7 @@ class Utils {
 	 */
 	public function sendCorreoPassword($email, $parametrosEmail) {
 		// Envia el correo electronico
-		return $this->sendEmail ( '@app/mail/layouts/recuperarPass', '@app/mail/layouts/recuperarPassText', 'development@2gom.com.mx', $email, 'Recuperacion de contraseña.', $parametrosEmail );
+		return $this->sendEmail ( '@app/mail/layouts/recuperarPass', '@app/mail/layouts/recuperarPassText', 'calculadora-dosificacion@2gom.com.mx', $email, 'Recuperacion de contraseña.', $parametrosEmail );
 	}
 
 	/**
@@ -121,7 +121,7 @@ class Utils {
 	 */
 	public function sendCorreoArchivo($email, $parametrosEmail, $pathArchivo) {
 		// Envia el correo electronico
-		return $this->sendEmailAdjunto ( '@app/mail/layouts/pdf', '@app/mail/layouts/pdfText', 'development@2gom.com.mx', $email, 'Archivo pdf con dosis paciente.', $parametrosEmail, $pathArchivo );
+		return $this->sendEmailAdjunto ( '@app/mail/layouts/pdf', '@app/mail/layouts/pdfText', 'calculadora-dosificacion@2gom.com.mx', $email, 'Archivo pdf con dosis paciente.', $parametrosEmail, $pathArchivo );
 	}
 	
 	/**
