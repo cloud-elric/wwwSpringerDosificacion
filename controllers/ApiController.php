@@ -105,9 +105,7 @@ class ApiController extends Controller
                 $respuesta ['errosClave'] = ['txt_clave'=>'Clave invalida'];
                 $doctor->validate();
                 $respuesta['errosDoc'] = $doctor->errors;
-            }
-
-            if($clave && $clave->b_usado == 0){
+            }else if($clave && $clave->b_usado == 0){
                 $clave->b_usado = 1;
                 $doctor->id_clave = $clave->id_clave;   
             }else{
