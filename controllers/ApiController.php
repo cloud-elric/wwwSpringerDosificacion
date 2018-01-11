@@ -102,7 +102,7 @@ class ApiController extends Controller
             if(!$clave){
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'Clave invalida';
-                $respuesta ['errosClave'] = ['txt_clave'=>'Código de activación incorrecto'];
+                $respuesta ['errosClave'] = ['txt_clave'=>'Folio de activación incorrecto'];
                 $doctor->validate();
                 $respuesta['errosDoc'] = $doctor->errors;
                 return $respuesta;
@@ -112,7 +112,7 @@ class ApiController extends Controller
             }else{
                 $respuesta ['error'] = true;
                 $respuesta ['message'] = 'Clave usada';
-                $respuesta ['errosClave'] = ['txt_clave'=>'Código de activación ya ha sido utilizado'];
+                $respuesta ['errosClave'] = ['txt_clave'=>'Folio de activación ya ha sido utilizado'];
                 $doctor->validate();
                 $respuesta['errosDoc'] = $doctor->errors;
 
